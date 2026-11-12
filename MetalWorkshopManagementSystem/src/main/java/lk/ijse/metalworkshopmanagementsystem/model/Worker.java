@@ -6,7 +6,7 @@ public class Worker {
     private int workerId;
     private int userId;
     private String fullName;
-    private String roleTitle;
+    private Role role;
     private String phone;
     private double dailyWage;
     private LocalDate joinDate;
@@ -15,11 +15,11 @@ public class Worker {
     public Worker() {
     }
 
-    public Worker(int workerId, int userId, String fullName, String roleTitle, String phone, double dailyWage, LocalDate joinDate, boolean isActive) {
+    public Worker(int workerId, int userId, String fullName, Role role, String phone, double dailyWage, LocalDate joinDate, boolean isActive) {
         this.workerId = workerId;
         this.userId = userId;
         this.fullName = fullName;
-        this.roleTitle = roleTitle;
+        this.role = role;
         this.phone = phone;
         this.dailyWage = dailyWage;
         this.joinDate = joinDate;
@@ -50,12 +50,12 @@ public class Worker {
         this.fullName = fullName;
     }
 
-    public String getRoleTitle() {
-        return roleTitle;
+    public Role getRoleTitle() {
+        return role;
     }
 
-    public void setRoleTitle(String roleTitle) {
-        this.roleTitle = roleTitle;
+    public void setRoleTitle(Role role) {
+        this.role = role;
     }
 
     public String getPhone() {
@@ -92,7 +92,7 @@ public class Worker {
 
     @Override
     public String toString() {
-        return "Worker{" + "workerId=" + workerId + ", userId=" + userId + ", fullName=" + fullName + ", roleTitle=" + roleTitle + ", phone=" + phone + ", dailyWage=" + dailyWage + ", joinDate=" + joinDate + ", isActive=" + isActive + '}';
+        return "Worker{" + "workerId=" + workerId + ", userId=" + userId + ", fullName=" + fullName + ", roleTitle=" + role + ", phone=" + phone + ", dailyWage=" + dailyWage + ", joinDate=" + joinDate + ", isActive=" + isActive + '}';
     }
     
 }

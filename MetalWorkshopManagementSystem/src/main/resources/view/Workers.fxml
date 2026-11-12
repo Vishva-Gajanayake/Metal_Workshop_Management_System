@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="workersPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.WorkersController">
+   <children>
+      <VBox prefHeight="720.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="60.0" prefWidth="1080.0" style="-fx-background-color: #000025;">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Worker Management" wrappingWidth="206.88006591796875">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" top="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Assign tasks and sub-jobs to workers" wrappingWidth="186.90234375">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+            <HBox prefHeight="440.0" prefWidth="1080.0">
+               <children>
+                  <VBox prefHeight="275.0" prefWidth="597.0" style="-fx-border-radius: 10;">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                     <children>
+                        <HBox prefHeight="79.0" prefWidth="582.0">
+                           <children>
+                              <TextField prefHeight="46.0" prefWidth="346.0" style="-fx-border-radius: 30; -fx-background-radius: 30;">
+                                 <HBox.margin>
+                                    <Insets left="10.0" top="15.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="154.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="+  NEW">
+                                 <HBox.margin>
+                                    <Insets left="60.0" top="15.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <TableView prefHeight="251.0" prefWidth="582.0">
+                           <columns>
+                              <TableColumn prefWidth="81.60001569986343" text="ID" />
+                              <TableColumn prefWidth="119.99995422363281" text="Name" />
+                              <TableColumn prefWidth="107.73330688476562" text="Role" />
+                              <TableColumn prefWidth="122.93331909179688" text="Phone" />
+                              <TableColumn prefWidth="136.0000061035156" text="Daily Wage" />
+                           </columns>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <Label text="Showing 4 of 12 records">
+                           <VBox.margin>
+                              <Insets left="15.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="835.0" prefWidth="450.0" style="-fx-border-color: gray; -fx-border-radius: 10;">
+                     <HBox.margin>
+                        <Insets left="15.0" right="15.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label text="Worker Details ">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <VBox prefHeight="55.0" prefWidth="449.0">
+                           <children>
+                              <Label text="Full Name">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="77.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox prefHeight="55.0" prefWidth="449.0">
+                           <children>
+                              <Label text="Role Title">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="77.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox prefHeight="55.0" prefWidth="449.0">
+                           <children>
+                              <Label text="Phone">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="77.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox prefHeight="55.0" prefWidth="449.0">
+                           <children>
+                              <Label text="Daily Wage(Rs.)">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="77.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox prefHeight="55.0" prefWidth="449.0">
+                           <children>
+                              <Label text="Linked User Account">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="449.0">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Save">
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Update">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Delete">
+                                 <HBox.margin>
+                                    <Insets left="15.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="449.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Clear Form">
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="15.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

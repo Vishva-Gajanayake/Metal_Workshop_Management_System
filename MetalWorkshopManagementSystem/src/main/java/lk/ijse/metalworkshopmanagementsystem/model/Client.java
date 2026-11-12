@@ -3,7 +3,7 @@ package lk.ijse.metalworkshopmanagementsystem.model;
 import java.time.LocalDateTime;
 
 public class Client {
-    private int clientId;
+    private String clientId;
     private String fullName;
     private String phone;
     private String email;
@@ -14,8 +14,8 @@ public class Client {
     public Client() {
     }
 
-    public Client(int clientId, String fullName, String phone, String email, String address, LocalDateTime createdAt, boolean isActive) {
-        this.clientId = clientId;
+    public Client(String fullName, String phone, String email, String address, LocalDateTime createdAt, boolean isActive) {
+        
         this.fullName = fullName;
         this.phone = phone;
         this.email = email;
@@ -23,12 +23,21 @@ public class Client {
         this.createdAt = createdAt;
         this.isActive = isActive;
     }
+    
+    public Client(String clientID, String fullName, String phone, String email, String address) {
+        
+        this.clientId = clientID;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+    }
 
-    public int getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 

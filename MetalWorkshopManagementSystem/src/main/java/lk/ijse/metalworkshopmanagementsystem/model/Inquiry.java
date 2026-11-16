@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 
 public class Inquiry {
-    private int inquiryId;
-    private int clientId;
-    private int categoryId;
+    private String inquiryId;
+    private String clientId;
+    private String categoryId;
     private LocalDateTime inquiryDate;
     private String siteLocation;
     private String description;
@@ -16,7 +16,7 @@ public class Inquiry {
     public Inquiry() {
     }
 
-    public Inquiry(int inquiryId, int clientId, int categoryId, LocalDateTime inquiryDate, String siteLocation, String description, LocalDate siteVisitDate, InquiryStatus inquiryStatus) {
+    public Inquiry(String inquiryId, String clientId, String categoryId, LocalDateTime inquiryDate, String siteLocation, String description, LocalDate siteVisitDate, InquiryStatus inquiryStatus) {
         this.inquiryId = inquiryId;
         this.clientId = clientId;
         this.categoryId = categoryId;
@@ -26,28 +26,39 @@ public class Inquiry {
         this.siteVisitDate = siteVisitDate;
         this.inquiryStatus = inquiryStatus;
     }
+    
+    public Inquiry(String clientId, String categoryId, LocalDateTime inquiryDate, String siteLocation, String description, LocalDate siteVisitDate, InquiryStatus inquiryStatus) {
+        
+        this.clientId = clientId;
+        this.categoryId = categoryId;
+        this.inquiryDate = inquiryDate;
+        this.siteLocation = siteLocation;
+        this.description = description;
+        this.siteVisitDate = siteVisitDate;
+        this.inquiryStatus = inquiryStatus;
+    }
 
-    public int getInquiryId() {
+    public String getInquiryId() {
         return inquiryId;
     }
 
-    public void setInquiryId(int inquiryId) {
+    public void setInquiryId(String inquiryId) {
         this.inquiryId = inquiryId;
     }
 
-    public int getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
-    public int getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 

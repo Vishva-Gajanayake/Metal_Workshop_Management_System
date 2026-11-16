@@ -90,10 +90,8 @@ public class ClientsController implements Initializable {
     //---------------------- REGEX ----------------------
     
     private final String CLIENT_NAME_REGEX = "^[A-Za-z]+(?:\\s+[A-Za-z]+)*$";
-    private final String CLIENT_PHONE_REGEX = 
-            "^(?:(?:\\+94|0094|94)[\\s.-]?(?:0)?[1-9]\\d{8}|0(?:[1-9]\\d{8}))$";
-    private final String CLIENT_EMAIL_REGEX = 
-            "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+    private final String CLIENT_PHONE_REGEX = "^(?:(?:\\+94|0094|94)[\\s.-]?(?:0)?[1-9]\\d{8}|0(?:[1-9]\\d{8}))$";
+    private final String CLIENT_EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
     private final String CLIENT_ADDRESS_REGEX = "^[A-Za-z0-9,\\/\\\\]+$";
 
     @Override
@@ -145,8 +143,8 @@ public class ClientsController implements Initializable {
         try {
             
             conn = DBConnection.getInstance().getConnection();
-
-            String query = "INSERT INTO clients("
+            
+            String queryInsert = "INSERT INTO clients("
                     + "full_name, "
                     + "phone, "
                     + "email, "
@@ -155,18 +153,18 @@ public class ClientsController implements Initializable {
                     + "is_active) "
                     + "VALUES(?,?,?,?,?,?)";
             
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(queryInsert);
 
             pstmt.setString(1, clientModel.getFullName());
-            pstmt.setString(2, clientModel.getAddress());
-            pstmt.setString(3, clientModel.getPhone());
-            pstmt.setString(4, clientModel.getEmail());
+            pstmt.setString(2, clientModel.getPhone());
+            pstmt.setString(3, clientModel.getEmail());
+            pstmt.setString(4, clientModel.getAddress());
             pstmt.setObject(5, clientModel.getCreatedAt());
             pstmt.setObject(6, clientModel.isIsActive());
 
-            int result = pstmt.executeUpdate();
+            int result1 = pstmt.executeUpdate();
 
-            if (result > 0) {
+            if (result1 > 0) {
                 new Alert(Alert.AlertType.INFORMATION, 
                         "Client saved successfully!").show();
                 loadClientTable();
@@ -211,14 +209,15 @@ public class ClientsController implements Initializable {
                     clientName, 
                     clientPhone, 
                     clientEmail, 
-                    clientAddress);
+                    clientAddress
+            );
             
             updateClient(clientModel);
 
         }
     }
     
-    public void updateClient(Client client) {
+    private void updateClient(Client client) {
         
         try {
             conn = DBConnection.getInstance().getConnection();
@@ -228,7 +227,7 @@ public class ClientsController implements Initializable {
                     + "phone=?, "
                     + "email=?, "
                     + "address=? "
-                    + "WHERE id=?";
+                    + "WHERE client_id=?";
             
             PreparedStatement pstmt = conn.prepareStatement(query);
 
@@ -261,6 +260,47 @@ public class ClientsController implements Initializable {
         }
     }
     
+    //---------------------- DELETE CLIENTS ----------------------
+    
+    @FXML
+    void clickBtnDelete(ActionEvent event) {
+
+        String clientId = searchTxtField.getText().trim();
+        
+        try {
+            conn = DBConnection.getInstance().getConnection();
+            
+            String query = "UPDATE clients SET "
+                    + "is_active=false "
+                    + "WHERE client_id=?";
+
+            PreparedStatement pstmt = conn.prepareStatement(query);
+
+            pstmt.setString(1, clientId.substring(1));
+            
+            int result = pstmt.executeUpdate();
+            
+            if (result > 0) {
+
+                new Alert(Alert.AlertType.INFORMATION,
+                        "Client delete successfully!").show();
+
+                loadClientTable();
+                cleanClientFields();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR,
+                        "Something went wrong!").show();
+            }
+
+            pstmt.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Something went wrong!");
+        }
+    }
+    
     //---------------------- LOAD CLIENTS TABLE ----------------------
     
     private void loadClientTable() {
@@ -287,13 +327,13 @@ public class ClientsController implements Initializable {
         clientsTbl.setItems(obList);
     }
     
-    public List<Client> getAllClients() {
+    private List<Client> getAllClients() {
 
         List<Client> clientsList = new ArrayList<>();
 
         try {
             conn = DBConnection.getInstance().getConnection();
-
+                
             String query = "SELECT "
                     + "client_id, "
                     + "full_name, "
@@ -340,7 +380,8 @@ public class ClientsController implements Initializable {
     }
     
     private void cleanClientFields() {
-
+        
+        searchTxtField.setText("");
         nameTxtField.setText("");
         addressTxtField.setText("");
         phoneTxtField.setText("");
@@ -379,7 +420,7 @@ public class ClientsController implements Initializable {
         }
     }
     
-    public Client searchCustomer(String id) {
+    private Client searchCustomer(String id) {
 
         Client client = null;
 
@@ -402,7 +443,12 @@ public class ClientsController implements Initializable {
                 String email = result.getString("email");
                 String address = result.getString("address");
 
-                client = new Client(id, name, phone, email, address);
+                client = new Client();
+                
+                client.setFullName(name);
+                client.setPhone(phone);
+                client.setEmail(email);
+                client.setAddress(address);
 
             } else {
                 new Alert(Alert.AlertType.ERROR, "Client not found!").show();

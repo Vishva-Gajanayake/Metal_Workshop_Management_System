@@ -1,9 +1,9 @@
 package lk.ijse.metalworkshopmanagementsystem.model;
 
 public class ServiceCategory {
-    private int categoryId;
+    private String categoryId;
     private String categoryName;
-    private String unitOfMeasure;
+    private UnitOfMeasure unitOfMeasure;
     private double labourRate;
     private double defaultWastagePct;
     private boolean isActive;
@@ -11,8 +11,15 @@ public class ServiceCategory {
     public ServiceCategory() {
     }
 
-    public ServiceCategory(int categoryId, String categoryName, String unitOfMeasure, double labourRate, double defaultWastagePct, boolean isActive) {
+    public ServiceCategory(String categoryId, String categoryName, UnitOfMeasure unitOfMeasure, double labourRate, double defaultWastagePct) {
         this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.unitOfMeasure = unitOfMeasure;
+        this.labourRate = labourRate;
+        this.defaultWastagePct = defaultWastagePct;
+    }
+    
+    public ServiceCategory(String categoryName, UnitOfMeasure unitOfMeasure, double labourRate, double defaultWastagePct, boolean isActive) {
         this.categoryName = categoryName;
         this.unitOfMeasure = unitOfMeasure;
         this.labourRate = labourRate;
@@ -20,11 +27,11 @@ public class ServiceCategory {
         this.isActive = isActive;
     }
 
-    public int getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -36,11 +43,11 @@ public class ServiceCategory {
         this.categoryName = categoryName;
     }
 
-    public String getUnitOfMeasure() {
+    public UnitOfMeasure getUnitOfMeasure() {
         return unitOfMeasure;
     }
 
-    public void setUnitOfMeasure(String unitOfMeasure) {
+    public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
     }
 

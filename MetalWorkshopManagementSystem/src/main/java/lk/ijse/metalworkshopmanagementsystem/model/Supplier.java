@@ -1,8 +1,8 @@
 package lk.ijse.metalworkshopmanagementsystem.model;
 
 public class Supplier {
-    private int supplierId;
-    private String suppliierName;
+    private String supplierId;
+    private String supplierName;
     private String contactPerson;
     private String phone;
     private String address;
@@ -11,29 +11,37 @@ public class Supplier {
     public Supplier() {
     }
 
-    public Supplier(int supplierId, String suppliierName, String contactPerson, String phone, String address, boolean isActive) {
-        this.supplierId = supplierId;
-        this.suppliierName = suppliierName;
+    public Supplier(String suppliierName, String contactPerson, String phone, String address, boolean isActive) {
+        
+        this.supplierName = suppliierName;
         this.contactPerson = contactPerson;
         this.phone = phone;
         this.address = address;
         this.isActive = isActive;
     }
+    
+    public Supplier(String supplierId, String suppliierName, String contactPerson, String phone, String address) {
+        this.supplierId = supplierId;
+        this.supplierName = suppliierName;
+        this.contactPerson = contactPerson;
+        this.phone = phone;
+        this.address = address;
+    }
 
-    public int getSupplierId() {
+    public String getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(int supplierId) {
+    public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
 
-    public String getSuppliierName() {
-        return suppliierName;
+    public String getSupplierName() {
+        return supplierName;
     }
 
-    public void setSuppliierName(String suppliierName) {
-        this.suppliierName = suppliierName;
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
     public String getContactPerson() {
@@ -70,7 +78,7 @@ public class Supplier {
 
     @Override
     public String toString() {
-        return "Supplier{" + "supplierId=" + supplierId + ", suppliierName=" + suppliierName + ", contactPerson=" + contactPerson + ", phone=" + phone + ", address=" + address + ", isActive=" + isActive + '}';
+        return "Supplier{" + "supplierId=" + supplierId + ", suppliierName=" + supplierName + ", contactPerson=" + contactPerson + ", phone=" + phone + ", address=" + address + ", isActive=" + isActive + '}';
     }
     
 }

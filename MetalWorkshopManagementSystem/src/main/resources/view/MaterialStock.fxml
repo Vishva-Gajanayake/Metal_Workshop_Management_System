@@ -10,32 +10,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="MaterialStockPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.MaterialStockController">
    <children>
       <VBox prefHeight="720.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="60.0" prefWidth="1080.0" style="-fx-background-color: #000025;">
-               <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Materials &amp; Stock" wrappingWidth="236.74668884277344">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="20.0" top="5.0" />
-                     </VBox.margin>
-                  </Text>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Catelogue, stock levels and re-order alerts" wrappingWidth="254.90235900878906">
-                     <VBox.margin>
-                        <Insets left="20.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Text>
-               </children>
-            </VBox>
             <VBox prefHeight="363.0" prefWidth="1080.0">
                <children>
                   <VBox prefHeight="355.0" prefWidth="1080.0" style="-fx-border-radius: 10;">

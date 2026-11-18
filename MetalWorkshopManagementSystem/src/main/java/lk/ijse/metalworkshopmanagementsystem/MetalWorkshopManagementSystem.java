@@ -10,10 +10,14 @@ import javafx.stage.Stage;
 public class MetalWorkshopManagementSystem extends Application{
     
     private static Scene scene;
+
+    public static Scene getScene() {
+        return scene;
+    }
     
     @Override
     public void start(Stage stage) throws Exception {
-        scene = new Scene(loadFxml("Layout"));
+        scene = new Scene(loadFxml("Layout"), 1280, 720);
         stage.setScene(scene);
         stage.show();
     }

@@ -3,7 +3,7 @@ package lk.ijse.metalworkshopmanagementsystem.model;
 import java.time.LocalDateTime;
 
 public class User {
-    private int userId;
+    private String userId;
     private String username;
     private String passwordHash;
     private String fullName;
@@ -14,7 +14,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String username, String passwordHash, String fullName, Role role, boolean isActive, LocalDateTime createdAt) {
+    public User(String userId, String username, String passwordHash, String fullName, Role role, boolean isActive, LocalDateTime createdAt) {
         this.userId = userId;
         this.username = username;
         this.passwordHash = passwordHash;
@@ -23,12 +23,20 @@ public class User {
         this.isActive = isActive;
         this.createdAt = createdAt;
     }
+    
+    public User(String userId, String username, String passwordHash, String fullName, Role role) {
+        this.userId = userId;
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.fullName = fullName;
+        this.role = role;
+    }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

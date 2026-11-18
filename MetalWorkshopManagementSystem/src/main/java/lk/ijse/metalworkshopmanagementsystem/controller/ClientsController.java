@@ -433,9 +433,9 @@ public class ClientsController implements Initializable {
             
             String numId = id.substring(1);
             pstmt.setString(1, numId);
-
+            
             ResultSet result = pstmt.executeQuery();
-
+            
             if (result.next()) {
 
                 String name = result.getString("full_name");

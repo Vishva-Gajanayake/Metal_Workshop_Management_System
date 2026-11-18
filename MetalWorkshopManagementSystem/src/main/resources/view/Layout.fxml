@@ -4,15 +4,16 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.LayoutController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.LayoutController">
    <left>
       <AnchorPane prefHeight="720.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="200.0" style="-fx-background-color: #000035;">
+            <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="200.0" style="-fx-background-color: #00274D;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Gajanayake" VBox.vgrow="ALWAYS">
                      <font>
@@ -30,23 +31,15 @@
                         <Font size="10.0" />
                      </font>
                   </Text>
-                  <Button fx:id="dashboardBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnDashboard" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Dashboard" textFill="WHITE">
+                  <Button fx:id="dashboardBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnDashboard" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Dashboard" textFill="WHITE">
                      <VBox.margin>
-                        <Insets left="15.0" top="10.0" />
+                        <Insets left="15.0" top="20.0" />
                      </VBox.margin>
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="clientsBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnClients" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Clients" textFill="WHITE">
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="inquiriesBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnInquiries" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Inquiries" textFill="WHITE">
+                  <Button fx:id="clientsBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnClients" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Clients" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -54,7 +47,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="EstimatorBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnEstimator" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Estimator" textFill="WHITE">
+                  <Button fx:id="inquiriesBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnInquiries" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Inquiries" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -62,7 +55,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="quotationsBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnQuotations" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Quotations" textFill="WHITE">
+                  <Button fx:id="EstimatorBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnEstimator" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Estimator" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -70,7 +63,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="jobOrdersBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Job Orders" textFill="WHITE">
+                  <Button fx:id="quotationsBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnQuotations" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Quotations" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -78,7 +71,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="tasksBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnTasks" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Tasks" textFill="WHITE">
+                  <Button fx:id="jobOrdersBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Job Orders" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -86,7 +79,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="materialStockBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnMaterialStock" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Material &amp; Stock" textFill="WHITE">
+                  <Button fx:id="tasksBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnTasks" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Tasks" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -94,7 +87,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="goodsReceivedBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Goods Received" textFill="WHITE">
+                  <Button fx:id="materialStockBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnMaterialStock" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Material &amp; Stock" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -102,7 +95,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="offCutsBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Off-Cuts" textFill="WHITE">
+                  <Button fx:id="goodsReceivedBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Goods Received" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -110,7 +103,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="suppliersBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnSuppliers" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Suppliers" textFill="WHITE">
+                  <Button fx:id="offCutsBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Off-Cuts" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -118,7 +111,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="serviceCategoriesBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnServiceCategories" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Service Categories" textFill="WHITE">
+                  <Button fx:id="suppliersBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnSuppliers" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Suppliers" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -126,7 +119,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="workersBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnWorkers" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Workers" textFill="WHITE">
+                  <Button fx:id="serviceCategoriesBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnServiceCategories" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Service Categories" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -134,7 +127,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="attendanceBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Attendance" textFill="WHITE">
+                  <Button fx:id="workersBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnWorkers" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Workers" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -142,7 +135,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="wageAdvancesBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnWageAdvances" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Wage Advances" textFill="WHITE">
+                  <Button fx:id="attendanceBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Attendance" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -150,7 +143,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="wagesBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Wages" textFill="WHITE">
+                  <Button fx:id="wageAdvancesBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navBtnWageAdvances" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Wage Advances" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -158,7 +151,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="paymentsBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Payments" textFill="WHITE">
+                  <Button fx:id="wagesBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Wages" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -166,7 +159,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="invoicesBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Invoices" textFill="WHITE">
+                  <Button fx:id="paymentsBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Payments" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -174,7 +167,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="reportsBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Reports" textFill="WHITE">
+                  <Button fx:id="invoicesBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Invoices" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -182,7 +175,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="usersBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Users" textFill="WHITE">
+                  <Button fx:id="reportsBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Reports" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -190,7 +183,15 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="backupRestoreBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" style="-fx-background-color: null;" text="Backup &amp; Restore" textFill="WHITE">
+                  <Button fx:id="usersBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Users" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="backupRestoreBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="184.0" styleClass="navBtn" text="Backup &amp; Restore" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -199,11 +200,49 @@
                      </font>
                   </Button>
                </children>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
             </VBox>
          </children>
+         <BorderPane.margin>
+            <Insets top="-60.0" />
+         </BorderPane.margin>
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin></AnchorPane>
    </center>
+   <top>
+      <VBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1080.0" style="-fx-background-color: #00274D;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text fx:id="headerTxt" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Client Management" wrappingWidth="303.68004608154297">
+                     <font>
+                        <Font name="Calibri" size="30.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="userButton" mnemonicParsing="false" onAction="#clickUserBtn" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 30 30 30 30;">
+                     <HBox.margin>
+                        <Insets left="680.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="200.0" />
+         </BorderPane.margin>
+      </VBox>
+   </top>
 </BorderPane>

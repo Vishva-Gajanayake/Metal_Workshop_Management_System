@@ -3,8 +3,8 @@ package lk.ijse.metalworkshopmanagementsystem.model;
 import java.time.LocalDate;
 
 public class Worker {
-    private int workerId;
-    private int userId;
+    private String workerId;
+    private String userId;
     private String fullName;
     private Role role;
     private String phone;
@@ -15,7 +15,7 @@ public class Worker {
     public Worker() {
     }
 
-    public Worker(int workerId, int userId, String fullName, Role role, String phone, double dailyWage, LocalDate joinDate, boolean isActive) {
+    public Worker(String workerId, String userId, String fullName, Role role, String phone, double dailyWage, LocalDate joinDate, boolean isActive) {
         this.workerId = workerId;
         this.userId = userId;
         this.fullName = fullName;
@@ -25,20 +25,31 @@ public class Worker {
         this.joinDate = joinDate;
         this.isActive = isActive;
     }
+    
+    public Worker(String userId, String fullName, Role role, String phone, double dailyWage, LocalDate joinDate, boolean isActive) {
+        
+        this.userId = userId;
+        this.fullName = fullName;
+        this.role = role;
+        this.phone = phone;
+        this.dailyWage = dailyWage;
+        this.joinDate = joinDate;
+        this.isActive = isActive;
+    }
 
-    public int getWorkerId() {
+    public String getWorkerId() {
         return workerId;
     }
 
-    public void setWorkerId(int workerId) {
+    public void setWorkerId(String workerId) {
         this.workerId = workerId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

@@ -24,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.metalworkshopmanagementsystem.db.DBConnection;
@@ -65,19 +66,25 @@ public class InquiriesControllers implements Initializable{
     private TableColumn<InquiryTbl, LocalDate> colVistDate;
 
     @FXML
-    private TextField descriptionTxtField;
-
-    @FXML
     private TableView<InquiryTbl> inquiryTbl;
-
-    @FXML
-    private TextField locationTxtField;
 
     @FXML
     private Button saveBtn;
 
     @FXML
     private Button searchBtn;
+    
+    @FXML
+    private Button updateBtn;
+    
+    @FXML
+    private Button deleteBtn;
+
+    @FXML
+    private TextField descriptionTxtField;
+    
+    @FXML
+    private TextField locationTxtField;
 
     @FXML
     private TextField searchTxtField;
@@ -263,7 +270,139 @@ public class InquiriesControllers implements Initializable{
         }
     }
     
-    //---------------------- LOAD SERVICE CATEGORY TABLE ----------------------
+    //---------------------- UPDATE INQUIRY ----------------------
+    
+    @FXML
+    void clickBtnUpdate(ActionEvent event) {
+        
+        String inquiryId = searchTxtField.getText().trim();
+        String clientId = clientCombo.getSelectionModel().getSelectedItem();
+        String categoryId = categoryCombo.getSelectionModel().getSelectedItem();
+        String siteLocation = locationTxtField.getText().trim();
+        String description = descriptionTxtField.getText().trim();
+        LocalDate visitDate = visitDatePicker.getValue();
+        InquiryStatus status = statusCombo.getSelectionModel().getSelectedItem();
+
+        if (!siteLocation.matches(ADDRESS_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Site Address").show();
+        } else if (clientId == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a Client ID").show();
+        } else if (categoryId == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a Category ID").show();
+        } else if (visitDate == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a Date").show();
+        } else if (status == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a Status").show();
+        } else if (!description.matches(TEXT_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid labour Rate").show();
+        } else {
+
+            Inquiry inquirytModel = new Inquiry();
+            
+            inquirytModel.setInquiryId(inquiryId.substring(2));
+            inquirytModel.setClientId(clientId.substring(1, 4));
+            inquirytModel.setCategoryId(categoryId.substring(2, 5));
+            inquirytModel.setSiteLocation(siteLocation);
+            inquirytModel.setDescription(description);
+            inquirytModel.setSiteVisitDate(visitDate);
+            inquirytModel.setInquiryStatus(status);
+
+            updateInquiry(inquirytModel);
+        }
+    }
+    
+    private void updateInquiry(Inquiry inquiryModel) {
+    
+        try {
+            conn = DBConnection.getInstance().getConnection();
+
+            String query = "UPDATE inquiries SET "
+                    + "client_id=?, "
+                    + "category_id=?, "
+                    + "site_location=?, "
+                    + "description=?, "
+                    + "site_vist_date=?, "
+                    + "status=? "
+                    + "WHERE inquiry_id=?";
+
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            
+            System.out.println(Integer.parseInt(inquiryModel.getClientId()));
+
+            pstmt.setInt(1, Integer.parseInt(inquiryModel.getClientId()));
+            pstmt.setInt(2, Integer.parseInt(inquiryModel.getCategoryId()));
+            pstmt.setString(3, inquiryModel.getSiteLocation());
+            pstmt.setString(4, inquiryModel.getDescription());
+            pstmt.setObject(5, inquiryModel.getSiteVisitDate());
+            pstmt.setString(6, inquiryModel.getInquiryStatus().name());
+            pstmt.setInt(7, Integer.parseInt(inquiryModel.getInquiryId()));
+
+            int result = pstmt.executeUpdate();
+
+            if (result > 0) {
+
+                new Alert(Alert.AlertType.INFORMATION,
+                        "Inquiry update successfully!").show();
+
+                loadInquiryTable();
+                cleanInquiryFields();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR,
+                        "Something went wrong!").show();
+            }
+
+            pstmt.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Something went wrong!");
+        }
+    
+    }
+    
+    //---------------------- DELETE INQUIRY ----------------------
+    
+    @FXML
+    void clickBtnDelete(ActionEvent event) {
+
+        String inquiryId = searchTxtField.getText().trim();
+        deleteInquiry(inquiryId.substring(2));
+    }
+    
+    public void deleteInquiry(String inquiryId) {
+        
+        System.out.println(inquiryId.substring(2));
+        
+        try {
+
+            conn = DBConnection.getInstance().getConnection();
+
+            String query = "DELETE FROM inquiries WHERE inquiry_id=?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+
+            pstmt.setInt(1, Integer.parseInt(inquiryId));
+
+            int result = pstmt.executeUpdate();
+
+            if (result > 0) {
+                new Alert(Alert.AlertType.INFORMATION, "Inquiry deleted successfully!").show();
+                loadInquiryTable();
+                cleanInquiryFields();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+            }
+
+            pstmt.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Something went wrong!");
+        }
+
+    }
+    
+    //---------------------- LOAD INQUIRY TABLE ----------------------
     
     private void loadInquiryTable() {
 
@@ -430,11 +569,16 @@ public class InquiriesControllers implements Initializable{
     @FXML
     void clickBtnSearch(ActionEvent event) {
 
+        fillFields(searchTxtField.getText().trim());
     }
 
     @FXML
     void pressSearchInquiry(KeyEvent event) {
+        
+        if (event.getCode() == KeyCode.ENTER) {
 
+            fillFields(searchTxtField.getText().trim());
+        }
     }
     
     private void fillFields(String id) {
@@ -442,10 +586,12 @@ public class InquiriesControllers implements Initializable{
         Inquiry inquiry = searchInquiry(id);
 
         if (inquiry != null) {
-            clientCombo.setValue(getCLintNameinquiry.getClientId());
-            unitCombo.setValue(serviceCategory.getUnitOfMeasure());
-            labourRateTxtField.setText(String.valueOf(serviceCategory.getLabourRate()));
-            wastageTxtField.setText(String.valueOf(serviceCategory.getDefaultWastagePct()));
+            clientCombo.setValue(getClientNameById(inquiry.getClientId()));
+            categoryCombo.setValue(getCategoryNameById(inquiry.getCategoryId()));
+            locationTxtField.setText(inquiry.getSiteLocation());
+            descriptionTxtField.setText(inquiry.getDescription());
+            visitDatePicker.setValue(inquiry.getSiteVisitDate());
+            statusCombo.setValue(inquiry.getInquiryStatus());
         }
     }
     
@@ -494,6 +640,6 @@ public class InquiriesControllers implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
 
-        return serviceCategory;
+        return inquiry;
     }
 }

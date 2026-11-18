@@ -9,7 +9,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import lk.ijse.metalworkshopmanagementsystem.MetalWorkshopManagementSystem;
+import lk.ijse.metalworkshopmanagementsystem.model.User;
+import lk.ijse.metalworkshopmanagementsystem.controller.LoginController;
+
 
 public class LayoutController implements Initializable{
     
@@ -80,10 +84,14 @@ public class LayoutController implements Initializable{
     private Button workersBtn;
     
     @FXML
+    private Text headerTxt;
+    
+    @FXML
     void navBtnDashboard(ActionEvent event) throws IOException{
         Parent dashboardFxml = MetalWorkshopManagementSystem.loadFxml("Dashboard");
         getAnchorAlignment(dashboardFxml);
         mainPane.getChildren().setAll(dashboardFxml);
+        headerTxt.setText("Dashboard");
     }
     
     @FXML
@@ -91,6 +99,7 @@ public class LayoutController implements Initializable{
         Parent clientsFxml = MetalWorkshopManagementSystem.loadFxml("Clients");
         getAnchorAlignment(clientsFxml);
         mainPane.getChildren().setAll(clientsFxml);
+        headerTxt.setText("Client Management");
     }
     
     @FXML
@@ -98,6 +107,7 @@ public class LayoutController implements Initializable{
         Parent inquiriesFxml = MetalWorkshopManagementSystem.loadFxml("Inquiries");
         getAnchorAlignment(inquiriesFxml);
         mainPane.getChildren().setAll(inquiriesFxml);
+        headerTxt.setText("Inquiry Management");
     }
     
     @FXML
@@ -105,6 +115,7 @@ public class LayoutController implements Initializable{
         Parent tasksFxml = MetalWorkshopManagementSystem.loadFxml("Tasks");
         getAnchorAlignment(tasksFxml);
         mainPane.getChildren().setAll(tasksFxml);
+        headerTxt.setText("Task Management");
     }
     
     @FXML
@@ -112,6 +123,7 @@ public class LayoutController implements Initializable{
         Parent workersFxml = MetalWorkshopManagementSystem.loadFxml("Workers");
         getAnchorAlignment(workersFxml);
         mainPane.getChildren().setAll(workersFxml);
+        headerTxt.setText("Worker Management");
     }
     
     @FXML
@@ -119,6 +131,7 @@ public class LayoutController implements Initializable{
         Parent serviceCategoriesFxml = MetalWorkshopManagementSystem.loadFxml("ServiceCategories");
         getAnchorAlignment(serviceCategoriesFxml);
         mainPane.getChildren().setAll(serviceCategoriesFxml);
+        headerTxt.setText("Service Category Management");
     }
     
     @FXML
@@ -126,6 +139,7 @@ public class LayoutController implements Initializable{
         Parent suppliersFxml = MetalWorkshopManagementSystem.loadFxml("Suppliers");
         getAnchorAlignment(suppliersFxml);
         mainPane.getChildren().setAll(suppliersFxml);
+        headerTxt.setText("Supplier Management");
     }
     
     @FXML
@@ -133,6 +147,7 @@ public class LayoutController implements Initializable{
         Parent wagesAdvancesFxml = MetalWorkshopManagementSystem.loadFxml("WagesAdvances");
         getAnchorAlignment(wagesAdvancesFxml);
         mainPane.getChildren().setAll(wagesAdvancesFxml);
+        headerTxt.setText("Wage Advance Management");
     }
     
     @FXML
@@ -140,6 +155,7 @@ public class LayoutController implements Initializable{
         Parent estimatorAdvancesFxml = MetalWorkshopManagementSystem.loadFxml("Estimator");
         getAnchorAlignment(estimatorAdvancesFxml);
         mainPane.getChildren().setAll(estimatorAdvancesFxml);
+        headerTxt.setText("Estimator Management");
     }
     
     @FXML
@@ -147,6 +163,7 @@ public class LayoutController implements Initializable{
         Parent quotationsFxml = MetalWorkshopManagementSystem.loadFxml("Quotations");
         getAnchorAlignment(quotationsFxml);
         mainPane.getChildren().setAll(quotationsFxml);
+        headerTxt.setText("Quotation Management");
     }
     
     @FXML
@@ -154,6 +171,7 @@ public class LayoutController implements Initializable{
         Parent materialStockFxml = MetalWorkshopManagementSystem.loadFxml("MaterialStock");
         getAnchorAlignment(materialStockFxml);
         mainPane.getChildren().setAll(materialStockFxml);
+        headerTxt.setText("Material Stock Management");
     }
     
     private void getAnchorAlignment(Parent fxml) {
@@ -162,10 +180,17 @@ public class LayoutController implements Initializable{
         AnchorPane.setLeftAnchor(fxml, 0.0);
         AnchorPane.setRightAnchor(fxml, 0.0);
     }
+    
+    @FXML
+    void clickUserBtn(ActionEvent event) {
+        
+//        LoginController.loggedUser
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
     }
+    
     
 }

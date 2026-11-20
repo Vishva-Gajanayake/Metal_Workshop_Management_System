@@ -144,7 +144,7 @@ public class LayoutController implements Initializable{
     
     @FXML
     void navBtnWageAdvances(ActionEvent event) throws IOException {
-        Parent wagesAdvancesFxml = MetalWorkshopManagementSystem.loadFxml("WagesAdvances");
+        Parent wagesAdvancesFxml = MetalWorkshopManagementSystem.loadFxml("WageAdvances");
         getAnchorAlignment(wagesAdvancesFxml);
         mainPane.getChildren().setAll(wagesAdvancesFxml);
         headerTxt.setText("Wage Advance Management");
@@ -172,6 +172,22 @@ public class LayoutController implements Initializable{
         getAnchorAlignment(materialStockFxml);
         mainPane.getChildren().setAll(materialStockFxml);
         headerTxt.setText("Material Stock Management");
+    }
+    
+    @FXML
+    void navBtnUsers(ActionEvent event) throws IOException {
+        Parent userFxml = MetalWorkshopManagementSystem.loadFxml("Users");
+        getAnchorAlignment(userFxml);
+        mainPane.getChildren().setAll(userFxml);
+        headerTxt.setText("User Management");
+    }
+    
+    @FXML
+    void navBtnGoodsReceived(ActionEvent event) throws IOException {
+        Parent goodsFxml = MetalWorkshopManagementSystem.loadFxml("GoodsReceived");
+        getAnchorAlignment(goodsFxml);
+        mainPane.getChildren().setAll(goodsFxml);
+        headerTxt.setText("Goods Received Management");
     }
     
     private void getAnchorAlignment(Parent fxml) {

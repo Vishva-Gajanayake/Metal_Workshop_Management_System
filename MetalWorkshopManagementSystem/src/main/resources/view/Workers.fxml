@@ -13,177 +13,201 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="workersPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.WorkersController">
+<AnchorPane fx:id="workersPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: black;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.WorkersController">
    <children>
       <VBox prefHeight="720.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="440.0" prefWidth="1080.0">
+            <VBox prefHeight="304.0" prefWidth="1050.0" styleClass="divide-box">
                <children>
-                  <VBox prefHeight="275.0" prefWidth="597.0" style="-fx-border-radius: 10;">
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
+                  <Label text="Worker Details " textFill="WHITE">
+                     <font>
+                        <Font name="Calibri Bold" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="198.0" prefWidth="1045.0">
                      <children>
-                        <HBox prefHeight="79.0" prefWidth="582.0">
+                        <VBox prefHeight="101.0" prefWidth="520.0">
                            <children>
-                              <TextField fx:id="searchTxtField" onKeyPressed="#pressSearchWorker" prefHeight="35.0" prefWidth="310.0" style="-fx-background-radius: 30 0 0 30;" />
-                              <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#clickBtnSearch" prefHeight="35.0" prefWidth="46.0" style="-fx-background-radius: 0 30 30 0;" text="search" />
-                              <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="154.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="+  NEW">
-                                 <HBox.margin>
-                                    <Insets left="60.0" top="15.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <TableView fx:id="workerTbl" prefHeight="251.0" prefWidth="582.0">
-                           <columns>
-                              <TableColumn fx:id="colWorkerId" prefWidth="81.60001569986343" text="ID" />
-                              <TableColumn fx:id="colName" prefWidth="119.99995422363281" text="Name" />
-                              <TableColumn fx:id="colRole" prefWidth="107.73330688476562" text="Role" />
-                              <TableColumn fx:id="colPhone" prefWidth="122.93331909179688" text="Phone" />
-                              <TableColumn fx:id="colDailyWage" prefWidth="136.0000061035156" text="Daily Wage" />
-                           </columns>
-                           <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </VBox.margin>
-                        </TableView>
-                        <Label text="Showing 4 of 12 records">
-                           <VBox.margin>
-                              <Insets left="15.0" top="5.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="835.0" prefWidth="450.0" style="-fx-border-color: gray; -fx-border-radius: 10;">
-                     <HBox.margin>
-                        <Insets left="15.0" right="15.0" />
-                     </HBox.margin>
-                     <children>
-                        <Label text="Worker Details ">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="10.0" top="15.0" />
-                           </VBox.margin>
-                        </Label>
-                        <VBox prefHeight="55.0" prefWidth="449.0">
-                           <children>
-                              <Label text="Full Name">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fullNameTxtField" prefHeight="77.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                           </children>
-                           <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </VBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="449.0">
-                           <children>
-                              <Label text="Role Title">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <ComboBox fx:id="roleComboBox" prefWidth="150.0" />
-                           </children>
-                           <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </VBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="449.0">
-                           <children>
-                              <Label text="Phone">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="phoneTxtField" prefHeight="77.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                           </children>
-                           <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </VBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="449.0">
-                           <children>
-                              <Label text="Daily Wage(Rs.)">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="dailyWageTxtField" prefHeight="77.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                           </children>
-                           <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </VBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="449.0">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                              <VBox prefHeight="63.0" prefWidth="499.0">
                                  <children>
-                                    <VBox prefHeight="50.0" prefWidth="200.0">
+                                    <Label text="Full Name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Calibri Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="fullNameTxtField" prefHeight="38.0" prefWidth="499.0" styleClass="custom-textfield" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                              <HBox prefHeight="63.0" prefWidth="200.0" spacing="10.0">
+                                 <children>
+                                    <VBox prefHeight="86.0" prefWidth="499.0">
                                        <children>
-                                          <Label text="Linked User Account">
+                                          <Label text="Role Title" textFill="WHITE">
                                              <font>
-                                                <Font size="14.0" />
+                                                <Font name="Calibri Bold" size="15.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox fx:id="userComboBox" prefWidth="150.0" />
+                                          <ComboBox fx:id="roleComboBox" prefHeight="40.0" prefWidth="324.0" styleClass="container-box" />
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="200.0">
+                                    <VBox prefHeight="70.0" prefWidth="499.0">
                                        <children>
-                                          <Label text="Join Date">
+                                          <Label text="Join Date" textFill="WHITE">
                                              <font>
-                                                <Font size="14.0" />
+                                                <Font name="Calibri Bold" size="15.0" />
                                              </font>
                                           </Label>
-                                          <DatePicker fx:id="joinDatePicker" />
+                                          <DatePicker fx:id="joinDatePicker" prefHeight="40.0" prefWidth="259.0" styleClass="date-picker" />
                                        </children>
                                     </VBox>
                                  </children>
                                  <padding>
-                                    <Insets top="5.0" />
+                                    <Insets left="15.0" right="15.0" />
                                  </padding>
                               </HBox>
                            </children>
-                           <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </VBox.margin>
                         </VBox>
-                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="449.0">
+                        <VBox prefHeight="101.0" prefWidth="520.0">
                            <children>
-                              <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="39.0" prefWidth="122.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Save">
-                                 <HBox.margin>
-                                    <Insets right="15.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="updateBtn" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="39.0" prefWidth="122.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Update">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#clickBtnDelete" prefHeight="39.0" prefWidth="122.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Delete">
-                                 <HBox.margin>
-                                    <Insets left="15.0" />
-                                 </HBox.margin>
-                              </Button>
+                              <VBox prefHeight="63.0" prefWidth="449.0">
+                                 <children>
+                                    <Label text="Linked User Account" textFill="WHITE">
+                                       <font>
+                                          <Font name="Calibri Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="userComboBox" prefHeight="40.0" prefWidth="220.0" styleClass="container-box" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                              <VBox prefHeight="63.0" prefWidth="449.0">
+                                 <children>
+                                    <Label text="Phone" textFill="WHITE">
+                                       <font>
+                                          <Font name="Calibri Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="phoneTxtField" prefHeight="40.0" prefWidth="499.0" styleClass="custom-textfield" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                              <VBox prefHeight="63.0" prefWidth="449.0">
+                                 <children>
+                                    <Label text="Daily Wage(Rs.)" textFill="WHITE">
+                                       <font>
+                                          <Font name="Calibri Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="dailyWageTxtField" prefHeight="40.0" prefWidth="449.0" styleClass="custom-textfield" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </VBox>
                            </children>
-                        </HBox>
-                        <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#clickClearBtn" prefHeight="39.0" prefWidth="449.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Clear Form">
-                           <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="1045.0" spacing="20.0">
+                     <children>
+                        <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="40.0" prefWidth="100.0" styleClass="highlight-button" text="Save">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Calibri Bold" size="20.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="updateBtn" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="40.0" prefWidth="100.0" styleClass="highlight-button" text="Update">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Calibri Bold" size="20.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#clickBtnDelete" prefHeight="40.0" prefWidth="100.0" styleClass="highlight-button" text="Delete">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Calibri Bold" size="20.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#clickClearBtn" prefHeight="40.0" prefWidth="150.0" styleClass="nonhighlight-button" text="Clear Form">
+                           <font>
+                              <Font name="Calibri Bold" size="20.0" />
+                           </font>
                         </Button>
                      </children>
-                  </VBox>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </HBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" top="15.0" />
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
-            </HBox>
+            </VBox>
+            <VBox prefHeight="371.0" prefWidth="1050.0" styleClass="divide-box">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="79.0" prefWidth="582.0" spacing="20.0">
+                     <children>
+                        <TextField fx:id="searchTxtField" onKeyPressed="#pressSearchWorker" prefHeight="40.0" prefWidth="310.0" styleClass="custom-textfield">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#clickBtnSearch" prefHeight="40.0" prefWidth="100.0" styleClass="highlight-button" text="Search">
+                           <font>
+                              <Font name="Calibri Bold" size="20.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="154.0" styleClass="highlight-button" text="+  NEW">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Calibri Bold" size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="workerTbl" prefHeight="251.0" prefWidth="582.0" styleClass="custom-table">
+                     <columns>
+                        <TableColumn fx:id="colWorkerId" prefWidth="111.20004253387451" text="ID" />
+                        <TableColumn fx:id="colName" prefWidth="286.3999938964844" text="Name" />
+                        <TableColumn fx:id="colRole" minWidth="0.0" prefWidth="185.33334350585938" text="Role" />
+                        <TableColumn fx:id="colPhone" prefWidth="231.4666748046875" text="Phone" />
+                        <TableColumn fx:id="colDailyWage" prefWidth="215.199951171875" text="Daily Wage" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </TableView>
+                  <Label text="Showing 4 of 12 records" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="15.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" />
+               </VBox.margin>
+            </VBox>
          </children>
       </VBox>
    </children>

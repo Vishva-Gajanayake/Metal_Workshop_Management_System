@@ -91,7 +91,7 @@ public class LoginController implements Initializable{
         
         for (User user : users) {
             
-            if (user.getUsername().equals(inputUserName) && user.getPasswordHash().equals(inputUserPassword)) {
+            if (user.getUsername().equals(inputUserName) && user.getPassword().equals(inputUserPassword)) {
                 
                 loggedUser = user;
                 

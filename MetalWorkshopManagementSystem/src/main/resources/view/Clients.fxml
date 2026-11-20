@@ -33,7 +33,7 @@
                                  <children>
                                     <Label text="Full Name" textFill="WHITE">
                                        <font>
-                                          <Font name="Calibri" size="15.0" />
+                                          <Font name="Calibri Bold" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="nameTxtField" prefHeight="40.0" prefWidth="449.0" styleClass="custom-textfield">
@@ -50,7 +50,7 @@
                                  <children>
                                     <Label text="Phone" textFill="WHITE">
                                        <font>
-                                          <Font name="Calibri" size="15.0" />
+                                          <Font name="Calibri Bold" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="phoneTxtField" prefHeight="40.0" prefWidth="449.0" styleClass="custom-textfield">
@@ -71,7 +71,7 @@
                                  <children>
                                     <Label text="Email" textFill="WHITE">
                                        <font>
-                                          <Font name="Calibri" size="15.0" />
+                                          <Font name="Calibri Bold" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="emailTxtField" prefHeight="40.0" prefWidth="449.0" styleClass="custom-textfield">
@@ -88,7 +88,7 @@
                                  <children>
                                     <Label text="Address" textFill="WHITE">
                                        <font>
-                                          <Font name="Calibri" size="15.0" />
+                                          <Font name="Calibri Bold" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="addressTxtField" prefHeight="40.0" prefWidth="449.0" styleClass="custom-textfield">
@@ -131,7 +131,7 @@
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
                         </Button>
-                        <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#clickClearBtn" prefHeight="40.0" prefWidth="200.0" styleClass="nonhighlight-button" text="Clear Form">
+                        <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#clickClearBtn" prefHeight="40.0" prefWidth="150.0" styleClass="nonhighlight-button" text="Clear Form">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
@@ -146,9 +146,9 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </VBox>
-            <VBox prefHeight="320.0" prefWidth="1080.0" styleClass="divide-box">
+            <VBox prefHeight="375.0" prefWidth="1080.0" styleClass="divide-box">
                <children>
-                  <HBox prefHeight="126.0" prefWidth="1045.0">
+                  <HBox prefHeight="74.0" prefWidth="1045.0">
                      <children>
                         <TextField fx:id="searchTxtField" onKeyPressed="#pressSearchClient" prefHeight="40.0" prefWidth="310.0" styleClass="custom-textfield">
                            <HBox.margin>

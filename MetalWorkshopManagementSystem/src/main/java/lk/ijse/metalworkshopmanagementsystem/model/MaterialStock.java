@@ -1,22 +1,23 @@
 package lk.ijse.metalworkshopmanagementsystem.model;
 
-public class Material {
+
+public class MaterialStock {
     private int materialId;
     private String materialCode;
     private int supplierId;
     private String materialName;
-    private String materialType;
+    private MaterialType materialType;
     private String sizeSpec;
-    private String unitOfMeasure;
+    private UnitOfMaterial unitOfMeasure;
     private double unitCost;
     private double quantityOnHand;
     private double reorderLevel;
     private boolean isActive;
 
-    public Material() {
+    public MaterialStock() {
     }
 
-    public Material(int materialId, String materialCode, int supplierId, String materialName, String materialType, String sizeSpec, String unitOfMeasure, double unitCost, double quantityOnHand, double reorderLevel, boolean isActive) {
+    public MaterialStock(int materialId, String materialCode, int supplierId, String materialName, MaterialType materialType, String sizeSpec, UnitOfMaterial unitOfMeasure, double unitCost, double quantityOnHand, double reorderLevel, boolean isActive) {
         this.materialId = materialId;
         this.materialCode = materialCode;
         this.supplierId = supplierId;
@@ -62,11 +63,11 @@ public class Material {
         this.materialName = materialName;
     }
 
-    public String getMaterialType() {
+    public MaterialType getMaterialType() {
         return materialType;
     }
 
-    public void setMaterialType(String materialType) {
+    public void setMaterialType(MaterialType materialType) {
         this.materialType = materialType;
     }
 
@@ -78,11 +79,11 @@ public class Material {
         this.sizeSpec = sizeSpec;
     }
 
-    public String getUnitOfMeasure() {
+    public UnitOfMaterial getUnitOfMeasure() {
         return unitOfMeasure;
     }
 
-    public void setUnitOfMeasure(String unitOfMeasure) {
+    public void setUnitOfMeasure(UnitOfMaterial unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
     }
 
@@ -120,7 +121,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return "Material{" + "materialId=" + materialId + ", materialCode=" + materialCode + ", supplierId=" + supplierId + ", materialName=" + materialName + ", materialType=" + materialType + ", sizeSpec=" + sizeSpec + ", unitOfMeasure=" + unitOfMeasure + ", unitCost=" + unitCost + ", quantityOnHand=" + quantityOnHand + ", reorderLevel=" + reorderLevel + ", isActive=" + isActive + '}';
+        return "Material{" + "materialId=" + materialId + ", materialCode=" + materialCode + ", supplierId=" + supplierId + ", materialName=" + materialName + ", materialType=" + materialType.name() + ", sizeSpec=" + sizeSpec + ", unitOfMeasure=" + unitOfMeasure.name() + ", unitCost=" + unitCost + ", quantityOnHand=" + quantityOnHand + ", reorderLevel=" + reorderLevel + ", isActive=" + isActive + '}';
     }
     
 }

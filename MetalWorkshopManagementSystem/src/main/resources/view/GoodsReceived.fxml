@@ -1,269 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="GoodsReceivedPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.GoodsReceivedController">
+<AnchorPane fx:id="goodsReceivedPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #F4F6FA;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.GoodsReceivedController">
    <children>
-      <VBox prefHeight="720.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label layoutX="25.0" layoutY="16.0" style="-fx-text-fill: #6B7280;" text="Record supplier deliveries; stock updates automatically" />
+
+      <!-- ===== Delivery details ===== -->
+      <AnchorPane layoutX="24.0" layoutY="40.0" prefHeight="110.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 8; -fx-border-radius: 8;">
          <children>
-            <VBox prefHeight="363.0" prefWidth="1080.0">
-               <children>
-                  <VBox prefHeight="355.0" prefWidth="1080.0" style="-fx-border-radius: 10;">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="85.0" prefWidth="1080.0">
-                           <children>
-                              <TextField prefHeight="46.0" prefWidth="346.0" style="-fx-border-radius: 30; -fx-background-radius: 30;">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="150.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Low Stock">
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="150.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Receive Stock">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="150.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="+ New">
-                                 <HBox.margin>
-                                    <Insets left="230.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <TableView prefHeight="258.0" prefWidth="1059.0">
-                           <columns>
-                              <TableColumn prefWidth="112.00000131130219" text="Quotation No" />
-                              <TableColumn prefWidth="141.5999984741211" text="Client" />
-                              <TableColumn prefWidth="105.5999755859375" text="Total" />
-                              <TableColumn prefWidth="99.20001220703125" text="Valid Until" />
-                              <TableColumn prefWidth="115.99996948242188" text="Status" />
-                           </columns>
-                           <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </VBox.margin>
-                        </TableView>
-                        <Label text="Showing 4 of 12 records">
-                           <VBox.margin>
-                              <Insets left="15.0" top="5.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="285.0" prefWidth="1080.0" style="-fx-border-color: gray; -fx-border-radius: 10;">
-               <children>
-                  <Label text="Material Details">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" top="15.0" />
-                     </VBox.margin>
-                  </Label>
-                  <VBox prefHeight="55.0" prefWidth="449.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <VBox prefHeight="55.0" prefWidth="211.0">
-                                 <children>
-                                    <Label text="Material Code">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField prefHeight="36.0" prefWidth="166.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </TextField>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox prefHeight="55.0" prefWidth="212.0">
-                                 <children>
-                                    <Label text="Material Name">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField prefHeight="36.0" prefWidth="166.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox prefHeight="55.0" prefWidth="212.0">
-                                 <children>
-                                    <Label text="Material Type">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField prefHeight="36.0" prefWidth="166.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox prefHeight="55.0" prefWidth="212.0">
-                                 <children>
-                                    <Label text="Unit">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField prefHeight="36.0" prefWidth="166.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </VBox>
-                           </children>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </HBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <VBox prefHeight="55.0" prefWidth="449.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <VBox prefHeight="55.0" prefWidth="211.0">
-                                 <children>
-                                    <Label text="Size Specification">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField prefHeight="36.0" prefWidth="166.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox prefHeight="55.0" prefWidth="212.0">
-                                 <children>
-                                    <Label text="Unit Cost">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField prefHeight="36.0" prefWidth="166.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox prefHeight="55.0" prefWidth="212.0">
-                                 <children>
-                                    <Label text="Quantity On Hand">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField prefHeight="36.0" prefWidth="166.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox prefHeight="55.0" prefWidth="212.0">
-                                 <children>
-                                    <Label text="Re-order Level">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField prefHeight="36.0" prefWidth="166.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <VBox prefHeight="55.0" prefWidth="449.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <VBox prefHeight="55.0" prefWidth="322.0">
-                                 <children>
-                                    <Label text="Default Supplier">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField prefHeight="36.0" prefWidth="270.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="449.0">
-                     <children>
-                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="150.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Save">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="150.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Update">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="150.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Delete">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="150.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Clear">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                     <padding>
-                        <Insets left="10.0" right="10.0" />
-                     </padding>
-                  </HBox>
-               </children>
-               <VBox.margin>
-                  <Insets left="10.0" right="10.0" />
-               </VBox.margin>
-            </VBox>
+            <Label layoutX="16.0" layoutY="10.0" style="-fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Delivery Details" />
+
+            <Label layoutX="16.0" layoutY="40.0" text="Supplier" />
+            <ComboBox fx:id="supplierCombo" layoutX="16.0" layoutY="60.0" prefHeight="32.0" prefWidth="260.0" promptText="Select supplier" />
+
+            <Label layoutX="296.0" layoutY="40.0" text="Received Date" />
+            <DatePicker fx:id="receivedDatePicker" layoutX="296.0" layoutY="60.0" prefHeight="32.0" prefWidth="190.0" />
+
+            <Label layoutX="506.0" layoutY="40.0" text="Supplier Invoice Ref" />
+            <TextField fx:id="invoiceRefTxtField" layoutX="506.0" layoutY="60.0" prefHeight="32.0" prefWidth="210.0" promptText="e.g. INV-88421" />
+
+            <Label layoutX="736.0" layoutY="40.0" text="Received By" />
+            <ComboBox fx:id="userCombo" layoutX="736.0" layoutY="61.0" prefHeight="32.0" prefWidth="243.0" promptText="Select user" />
          </children>
-      </VBox>
+      </AnchorPane>
+
+      <!-- ===== Delivery items ===== -->
+      <AnchorPane layoutX="24.0" layoutY="164.0" prefHeight="300.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 8; -fx-border-radius: 8;">
+         <children>
+            <Label layoutX="16.0" layoutY="10.0" style="-fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Delivery Items" />
+
+            <Label layoutX="16.0" layoutY="38.0" text="Material" />
+            <ComboBox fx:id="materialCombo" layoutX="16.0" layoutY="58.0" prefHeight="32.0" prefWidth="280.0" promptText="Select material" />
+
+            <Label layoutX="316.0" layoutY="38.0" text="Quantity" />
+            <TextField fx:id="quantityTxtField" layoutX="316.0" layoutY="58.0" prefHeight="32.0" prefWidth="120.0" promptText="0" />
+
+            <Label layoutX="456.0" layoutY="38.0" text="Unit Cost (Rs.)" />
+            <TextField fx:id="unitCostTxtField" layoutX="456.0" layoutY="58.0" prefHeight="32.0" prefWidth="140.0" promptText="0.00" />
+
+            <Button fx:id="addItemBtn" layoutX="660.0" layoutY="58.0" mnemonicParsing="false" onAction="#clickBtnAddItem" prefHeight="32.0" prefWidth="120.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold;" text="+ Add Item" />
+            <Button fx:id="removeItemBtn" layoutX="796.0" layoutY="58.0" mnemonicParsing="false" onAction="#clickBtnRemoveItem" prefHeight="32.0" prefWidth="140.0" style="-fx-background-color: #D64545; -fx-text-fill: white; -fx-font-weight: bold;" text="Remove Selected" />
+
+            <TableView fx:id="itemsTbl" layoutX="16.0" layoutY="104.0" prefHeight="140.0" prefWidth="1000.0">
+               <columns>
+                  <TableColumn fx:id="colItemMaterial" prefWidth="360.0" text="Material" />
+                  <TableColumn fx:id="colItemQty" prefWidth="194.13333129882812" text="Quantity" />
+                  <TableColumn fx:id="colItemUnitCost" prefWidth="256.2667236328125" text="Unit Cost" />
+                  <TableColumn fx:id="colItemLineTotal" prefWidth="189.59991455078125" text="Line Total" />
+               </columns>
+            </TableView>
+
+            <Label layoutX="16.0" layoutY="258.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Total:" />
+            <Label fx:id="totalLbl" layoutX="70.0" layoutY="258.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Rs. 0.00" />
+
+            <Button fx:id="saveBtn" layoutX="660.0" layoutY="254.0" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold;" text="Save Delivery" />
+            <Button fx:id="clearBtn" layoutX="824.0" layoutY="254.0" mnemonicParsing="false" onAction="#clickBtnClear" prefHeight="34.0" prefWidth="112.0" text="Clear" />
+         </children>
+      </AnchorPane>
+
+      <!-- ===== Recent deliveries ===== -->
+      <AnchorPane layoutX="24.0" layoutY="478.0" prefHeight="180.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 8; -fx-border-radius: 8;">
+         <children>
+            <Label layoutX="16.0" layoutY="10.0" style="-fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Recent Deliveries" />
+            <TableView fx:id="historyTbl" layoutX="16.0" layoutY="36.0" prefHeight="132.0" prefWidth="1000.0">
+               <columns>
+                  <TableColumn fx:id="colGrnId" prefWidth="130.0" text="GRN" />
+                  <TableColumn fx:id="colGrnDate" prefWidth="150.0" text="Date" />
+                  <TableColumn fx:id="colGrnSupplier" prefWidth="260.0" text="Supplier" />
+                  <TableColumn fx:id="colGrnInvoice" prefWidth="190.0" text="Invoice Ref" />
+                  <TableColumn fx:id="colGrnTotal" prefWidth="190.0" text="Total" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+
    </children>
 </AnchorPane>

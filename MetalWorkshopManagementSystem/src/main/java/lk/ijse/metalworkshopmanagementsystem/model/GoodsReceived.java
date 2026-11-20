@@ -1,25 +1,28 @@
 package lk.ijse.metalworkshopmanagementsystem.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 
-public class GoodReceived {
+public class GoodsReceived {
     private int grnId;
     private int supplierId;
     private int receivedBy;
-    private LocalDateTime receivedDateTime;
+    private LocalDate receivedDateTime;
     private String invoiceRef;
     private double totalAmount;
+    private List<GoodsItems> goodsItemsList;
 
-    public GoodReceived() {
+    public GoodsReceived() {
     }
 
-    public GoodReceived(int grnId, int supplierId, int receivedBy, LocalDateTime receivedDateTime, String invoiceRef, double totalAmount) {
+    public GoodsReceived(int grnId, int supplierId, int receivedBy, LocalDate receivedDateTime, String invoiceRef, double totalAmount, List<GoodsItems> goodsItemsList) {
         this.grnId = grnId;
         this.supplierId = supplierId;
         this.receivedBy = receivedBy;
         this.receivedDateTime = receivedDateTime;
         this.invoiceRef = invoiceRef;
         this.totalAmount = totalAmount;
+        this.goodsItemsList = goodsItemsList;
     }
 
     public int getGrnId() {
@@ -46,11 +49,11 @@ public class GoodReceived {
         this.receivedBy = receivedBy;
     }
 
-    public LocalDateTime getReceivedDateTime() {
+    public LocalDate getReceivedDateTime() {
         return receivedDateTime;
     }
 
-    public void setReceivedDateTime(LocalDateTime receivedDateTime) {
+    public void setReceivedDateTime(LocalDate receivedDateTime) {
         this.receivedDateTime = receivedDateTime;
     }
 
@@ -70,9 +73,16 @@ public class GoodReceived {
         this.totalAmount = totalAmount;
     }
 
+    public List<GoodsItems> getGoodsItemsList() {
+        return goodsItemsList;
+    }
+
+    public void setGoodsItemsList(List<GoodsItems> goodsItemsList) {
+        this.goodsItemsList = goodsItemsList;
+    }
+
     @Override
     public String toString() {
-        return "GoodReceived{" + "grnId=" + grnId + ", supplierId=" + supplierId + ", receivedBy=" + receivedBy + ", receivedDateTime=" + receivedDateTime + ", invoiceRef=" + invoiceRef + ", totalAmount=" + totalAmount + '}';
+        return "GoodsReceived{" + "grnId=" + grnId + ", supplierId=" + supplierId + ", receivedBy=" + receivedBy + ", receivedDateTime=" + receivedDateTime + ", invoiceRef=" + invoiceRef + ", totalAmount=" + totalAmount + ", goodsItemsList=" + goodsItemsList + '}';
     }
-    
 }

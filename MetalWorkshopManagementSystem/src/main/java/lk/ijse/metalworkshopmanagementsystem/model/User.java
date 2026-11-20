@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class User {
     private String userId;
     private String username;
-    private String passwordHash;
+    private String password;
     private String fullName;
     private Role role;
     private boolean isActive;
@@ -17,7 +17,7 @@ public class User {
     public User(String userId, String username, String passwordHash, String fullName, Role role, boolean isActive, LocalDateTime createdAt) {
         this.userId = userId;
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = passwordHash;
         this.fullName = fullName;
         this.role = role;
         this.isActive = isActive;
@@ -27,7 +27,7 @@ public class User {
     public User(String userId, String username, String passwordHash, String fullName, Role role) {
         this.userId = userId;
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = passwordHash;
         this.fullName = fullName;
         this.role = role;
     }
@@ -48,12 +48,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFullName() {
@@ -90,7 +90,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", username=" + username + ", passwordHash=" + passwordHash + ", fullName=" + fullName + ", role=" + role + ", isActive=" + isActive + ", createdAt=" + createdAt + '}';
+        return "User{" + "userId=" + userId + ", username=" + username + ", passwordHash=" + password + ", fullName=" + fullName + ", role=" + role + ", isActive=" + isActive + ", createdAt=" + createdAt + '}';
     }
     
 }

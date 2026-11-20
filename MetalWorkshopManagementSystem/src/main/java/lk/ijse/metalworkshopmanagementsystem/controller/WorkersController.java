@@ -194,8 +194,10 @@ public class WorkersController implements Initializable{
     }
     
     private void addWorker(Worker worker) {
+        
         try {
-
+            
+            
             conn = DBConnection.getInstance().getConnection();
 
             String query = "SELECT "
@@ -207,9 +209,9 @@ public class WorkersController implements Initializable{
 
             while (result.next()) {
 
-                String name = result.getString("user_id");
-
-                if (name.equals(worker.getUserId())) {
+                int userId = Integer.parseInt(result.getString("user_id"));
+                
+                if (userId == Integer.parseInt(worker.getUserId())) {
 
                     String updateQuery = "UPDATE workers SET "
                             + "is_active=true "
@@ -217,14 +219,14 @@ public class WorkersController implements Initializable{
 
                     PreparedStatement pstmt = conn.prepareStatement(updateQuery);
 
-                    pstmt.setString(1, worker.getUserId());
+                    pstmt.setInt(1, Integer.parseInt(worker.getUserId()));
 
                     int result1 = pstmt.executeUpdate();
 
                     if (result1 > 0) {
 
                         new Alert(Alert.AlertType.INFORMATION,
-                                "Worker saved successfully!").show();
+                                "Worker already existed!").show();
 
                         loadWorkerTable();
                         cleanWorkerFields();
@@ -236,9 +238,7 @@ public class WorkersController implements Initializable{
                     }
 
                     pstmt.close();
-
                 }
-
             }
 
             String queryInsert = "INSERT INTO workers("
@@ -270,7 +270,7 @@ public class WorkersController implements Initializable{
                         cleanWorkerFields();
             } else {
                 new Alert(Alert.AlertType.ERROR,
-                        "Something went wrong!").show();
+                        "Something went wrong").show();
             }
 
             pstmt.close();
@@ -280,7 +280,7 @@ public class WorkersController implements Initializable{
         } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR,
-                    "Something went wrong!").show();
+                    "Something went wrong here!").show();
         }
     }
     
@@ -289,7 +289,7 @@ public class WorkersController implements Initializable{
     @FXML
     void clickBtnUpdate(ActionEvent event) {
         
-        String workerId = searchTxtField.getText().trim();
+        int workerId = Integer.parseInt(searchTxtField.getText(1, 4));
         String fullName = fullNameTxtField.getText().trim();
         Role roleTtile = roleComboBox.getSelectionModel().getSelectedItem();
         String phone = phoneTxtField.getText().trim();
@@ -312,7 +312,7 @@ public class WorkersController implements Initializable{
         } else {
 
             Worker workerModel = new Worker(
-                    workerId.substring(1, 4),
+                    String.valueOf(workerId),
                     userId.substring(1, 4),
                     fullName,
                     roleTtile,
@@ -516,7 +516,7 @@ public class WorkersController implements Initializable{
         joinDatePicker.setValue(null);
     }
     
-    //---------------------- SEARCH SERVICE CATEGORY ----------------------
+    //---------------------- SEARCH WORKER ----------------------
 
     @FXML
     void clickBtnSearch(ActionEvent event) {
@@ -582,7 +582,7 @@ public class WorkersController implements Initializable{
                 workerModel.setJoinDate(LocalDate.parse(joinedDate));
 
             } else {
-                new Alert(Alert.AlertType.ERROR, "Service Category not found!").show();
+                new Alert(Alert.AlertType.ERROR, "Worker not found!").show();
             }
 
             pstmt.close();

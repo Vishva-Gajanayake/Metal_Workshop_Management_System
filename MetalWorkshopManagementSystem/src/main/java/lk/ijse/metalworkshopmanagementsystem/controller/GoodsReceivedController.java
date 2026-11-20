@@ -339,8 +339,6 @@ public class GoodsReceivedController implements Initializable{
                     if (rs.getInt(1) != 0) {
 
                         goodsReceived.setGrnId(rs.getInt(1));
-                        addGoodsReceivedItems(conn, goodsReceived);
-
                         loadGoodsReceivedTable();
 //                        cleanFullOrderForm();
 
@@ -361,6 +359,8 @@ public class GoodsReceivedController implements Initializable{
             try {
                 conn.commit();
 
+                addGoodsReceivedItems(conn, goodsReceived);
+                loadGoodsReceivedTable();
 //                printInvoice(order.getOrderId());
 
             } catch (Exception e) {
@@ -387,7 +387,14 @@ public class GoodsReceivedController implements Initializable{
 
         for (GoodsItems goodsItems : goodsReceived.getGoodsItemsList()) {
 
-            String query = "INSERT INTO goods_received_items(grn_id, material_id, quantity_received, unit_cost, line_total) VALUES (?, ?, ?, ?,?)";
+            String query = "INSERT INTO goods_received_items("
+                    + "grn_id, "
+                    + "material_id, "
+                    + "quantity_received, "
+                    + "unit_cost, "
+                    + "line_total) "
+                    + "VALUES (?,?,?,?,?)";
+            
             PreparedStatement pstmt = conn.prepareStatement(query);
 
             pstmt.setInt(1, goodsReceived.getGrnId());
@@ -401,6 +408,7 @@ public class GoodsReceivedController implements Initializable{
             if (result > 0) {
 
                 System.out.println("Goods Received Items saved successfully!");
+                loadGoodsReceivedTable();
 
             } else {
                 throw new SQLException("Something went wrong!");
@@ -426,7 +434,10 @@ public class GoodsReceivedController implements Initializable{
             );
 
             goodsReceivedTblList.add(goodsReceivedTbl);
+            
+            System.out.println("Supplier: " + goodsReceivedTbl.getSuppliler());
         }
+        
 
         ObservableList<GoodsReceivedTbl> obList
                 = FXCollections.observableArrayList(goodsReceivedTblList);
@@ -489,7 +500,7 @@ public class GoodsReceivedController implements Initializable{
             String query = "SELECT * FROM suppliers WHERE supplier_id=?";
             PreparedStatement pstmt = conn.prepareStatement(query);
 
-            pstmt.setString(1, String.valueOf(supId));
+            pstmt.setInt(1, supId);
 
             ResultSet result = pstmt.executeQuery();
 

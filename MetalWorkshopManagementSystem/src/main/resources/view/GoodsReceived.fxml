@@ -72,11 +72,11 @@
             <Label layoutX="16.0" layoutY="10.0" style="-fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Recent Deliveries" />
             <TableView fx:id="historyTbl" layoutX="16.0" layoutY="36.0" prefHeight="132.0" prefWidth="1000.0">
                <columns>
-                  <TableColumn fx:id="colGrnId" prefWidth="130.0" text="GRN" />
-                  <TableColumn fx:id="colGrnDate" prefWidth="150.0" text="Date" />
-                  <TableColumn fx:id="colGrnSupplier" prefWidth="260.0" text="Supplier" />
-                  <TableColumn fx:id="colGrnInvoice" prefWidth="190.0" text="Invoice Ref" />
-                  <TableColumn fx:id="colGrnTotal" prefWidth="190.0" text="Total" />
+                  <TableColumn fx:id="colGrnId" prefWidth="98.39999008178711" text="GRN" />
+                  <TableColumn fx:id="colGrnDate" prefWidth="150.1333465576172" text="Date" />
+                  <TableColumn fx:id="colGrnSupplier" prefWidth="437.8666687011719" text="Supplier" />
+                  <TableColumn fx:id="colGrnInvoice" prefWidth="152.53338623046875" text="Invoice Ref" />
+                  <TableColumn fx:id="colGrnTotal" prefWidth="163.46661376953125" text="Total" />
                </columns>
             </TableView>
          </children>

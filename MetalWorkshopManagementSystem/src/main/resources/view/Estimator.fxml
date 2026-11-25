@@ -1,316 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="EstimatorPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.EstimatorController">
+<AnchorPane fx:id="estimatorPane" prefHeight="720.0" prefWidth="1080.0"
+            style="-fx-background-color: #F4F6FA;"
+            stylesheets="@../styles.css"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.EstimatorController">
    <children>
-      <VBox prefHeight="720.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+      <!-- ===== Page subtitle ===== -->
+      <Label layoutX="24.0" layoutY="12.0"
+             text="Convert site measurements into material and labour cost"
+             style="-fx-text-fill: #6B7280;" />
+
+      <!-- ===== Estimate details card (left) ===== -->
+      <AnchorPane layoutX="24.0" layoutY="44.0" prefHeight="618.0" prefWidth="586.0"
+                  style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
          <children>
-            <VBox prefHeight="190.0" prefWidth="1050.0" style="-fx-border-color: gray; -fx-border-radius: 10;">
-               <VBox.margin>
-                  <Insets left="15.0" right="15.0" top="15.0" />
-               </VBox.margin>
-               <children>
-                  <Label text="Estimate Details">
-                     <VBox.margin>
-                        <Insets left="15.0" top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <HBox prefHeight="55.0" prefWidth="1048.0">
-                     <children>
-                        <VBox prefHeight="55.0" prefWidth="248.0">
-                           <children>
-                              <Label text="Inquiry/Client">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField prefHeight="69.0" prefWidth="248.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets left="15.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="246.0">
-                           <children>
-                              <Label text="Service Category">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField prefHeight="94.0" prefWidth="246.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="237.0">
-                           <children>
-                              <Label text="Gate Type">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField prefHeight="89.0" prefWidth="238.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="219.0">
-                           <children>
-                              <Label text="Quantity">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField prefHeight="125.0" prefWidth="219.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="55.0" prefWidth="1048.0">
-                     <children>
-                        <VBox prefHeight="55.0" prefWidth="180.0">
-                           <children>
-                              <Label text="Width (m)">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField prefHeight="77.0" prefWidth="178.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets left="15.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="180.0">
-                           <children>
-                              <Label text="Height (m)">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField prefHeight="55.0" prefWidth="178.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="186.0">
-                           <children>
-                              <Label text="Bar Spacing (in)">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField prefHeight="78.0" prefWidth="184.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="174.0">
-                           <children>
-                              <Label text="Wastage %">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField prefHeight="78.0" prefWidth="173.0" />
-                           </children>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="262.0">
-                           <children>
-                              <Button mnemonicParsing="false" prefHeight="220.0" prefWidth="220.0" text="CALCULATE">
-                                 <VBox.margin>
-                                    <Insets left="20.0" top="18.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="241.0" prefWidth="1050.0" style="-fx-border-color: gray; -fx-border-radius: 10;">
-               <children>
-                  <Label text="Calculated Material  Requirement">
-                     <VBox.margin>
-                        <Insets left="15.0" top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <TableView prefHeight="200.0" prefWidth="200.0" style="-fx-border-radius: 10; -fx-background-radius: 10;">
-                    <columns>
-                      <TableColumn prefWidth="291.46665382385254" text="Material" />
-                      <TableColumn minWidth="6.933349609375" prefWidth="185.33334350585938" text="Required Qty" />
-                        <TableColumn prefWidth="163.73333740234375" text="Unit Cost" />
-                        <TableColumn prefWidth="180.53338623046875" text="Line Cost" />
-                        <TableColumn prefWidth="198.13336181640625" text="Off-cut Suggestions" />
-                    </columns>
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="15.0" right="15.0" />
-                     </VBox.margin>
-                  </TableView>
-                  <Label text="Off-cuts are suggested first so reusable stock is used before new material is bought">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="15.0" />
-                     </VBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </VBox.margin>
-            </VBox>
-            <VBox prefHeight="161.0" prefWidth="1050.0" style="-fx-border-color: gray; -fx-border-radius: 10;">
-               <children>
-                  <Label text="Cost Summary">
-                     <VBox.margin>
-                        <Insets left="15.0" top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <HBox prefHeight="55.0" prefWidth="1048.0">
-                     <children>
-                        <VBox prefHeight="55.0" prefWidth="248.0">
-                           <children>
-                              <Label text="Material Cost">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Rs. 34,454.00">
-                                 <font>
-                                    <Font size="28.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="246.0">
-                           <children>
-                              <Label text="labour Cost">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Rs. 18,000.00">
-                                 <font>
-                                    <Font size="28.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="237.0">
-                           <children>
-                              <Label text="Overhead">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Rs.3000.00">
-                                 <font>
-                                    <Font size="28.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="55.0" prefWidth="219.0">
-                           <children>
-                              <Label text="TOTAL COST">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Rs. 55,500.00">
-                                 <font>
-                                    <Font size="28.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </VBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="214.0" text="Save Estimate">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="20.0" right="15.0" top="5.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="214.0" text="Genarate Quotation">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="20.0" right="15.0" top="5.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="214.0" text="Clear">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="20.0" right="15.0" top="5.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="15.0" right="15.0" />
-               </VBox.margin>
-            </VBox>
+            <Label layoutX="20.0" layoutY="14.0" text="Estimate Details"
+                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" />
+
+            <Label layoutX="20.0" layoutY="54.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Inquiry" />
+            <ComboBox fx:id="inquiryCombo" layoutX="20.0" layoutY="76.0" prefHeight="34.0" prefWidth="546.0" promptText="Select inquiry" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="130.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Width (m)" />
+            <TextField fx:id="widthTxtField" layoutX="20.0" layoutY="152.0" prefHeight="34.0" prefWidth="172.0" promptText="e.g. 3.5" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="207.0" layoutY="130.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Height (m)" />
+            <TextField fx:id="heightTxtField" layoutX="207.0" layoutY="152.0" prefHeight="34.0" prefWidth="172.0" promptText="e.g. 1.8" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="394.0" layoutY="130.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Length (m)" />
+            <TextField fx:id="lengthTxtField" layoutX="394.0" layoutY="152.0" prefHeight="34.0" prefWidth="172.0" promptText="0 if not used" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="206.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Quantity" />
+            <TextField fx:id="quantityTxtField" layoutX="20.0" layoutY="228.0" prefHeight="34.0" prefWidth="264.0" promptText="e.g. 1" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="302.0" layoutY="206.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Wastage %" />
+            <TextField fx:id="wastageTxtField" layoutX="302.0" layoutY="228.0" prefHeight="34.0" prefWidth="264.0" promptText="e.g. 8" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="282.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Material Cost (Rs.)" />
+            <TextField fx:id="materialCostTxtField" layoutX="20.0" layoutY="304.0" prefHeight="34.0" prefWidth="264.0" promptText="e.g. 27654.00" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="302.0" layoutY="282.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Overhead (Rs.)" />
+            <TextField fx:id="overheadTxtField" layoutX="302.0" layoutY="304.0" prefHeight="34.0" prefWidth="264.0" promptText="e.g. 3000.00" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Button fx:id="calculateBtn" layoutX="20.0" layoutY="372.0" mnemonicParsing="false"
+                    onAction="#clickBtnCalculate" prefHeight="40.0" prefWidth="546.0" text="CALCULATE"
+                    style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 6; -fx-cursor: hand;" />
+
+            <Label layoutX="20.0" layoutY="432.0" prefWidth="546.0" wrapText="true"
+                   text="Size = width x height x length x quantity (length defaults to 1 if 0). Labour = size x service category labour rate."
+                   style="-fx-text-fill: #6B7280; -fx-font-size: 12px;" />
          </children>
-      </VBox>
+      </AnchorPane>
+
+      <!-- ===== Cost summary card (right) ===== -->
+      <AnchorPane layoutX="626.0" layoutY="44.0" prefHeight="618.0" prefWidth="430.0"
+                  style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <Label layoutX="20.0" layoutY="14.0" text="Cost Summary"
+                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" />
+
+            <Label layoutX="20.0" layoutY="64.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Labour Cost (Rs.)" />
+            <TextField fx:id="labourTxtField" editable="false" layoutX="20.0" layoutY="86.0" prefHeight="40.0" prefWidth="390.0"
+                       style="-fx-background-color: #F4F6FA; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-font-size: 15px; -fx-font-weight: bold;" />
+
+            <Label layoutX="20.0" layoutY="152.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="TOTAL COST (Rs.)" />
+            <TextField fx:id="totalTxtField" editable="false" layoutX="20.0" layoutY="174.0" prefHeight="50.0" prefWidth="390.0"
+                       style="-fx-background-color: #E3F5EA; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2E9E5B;" />
+
+            <Label layoutX="20.0" layoutY="246.0" prefWidth="390.0" wrapText="true"
+                   text="Total = material cost (including wastage %) + labour cost + overhead."
+                   style="-fx-text-fill: #6B7280; -fx-font-size: 12px;" />
+
+            <Button fx:id="saveBtn" layoutX="20.0" layoutY="340.0" mnemonicParsing="false"
+                    onAction="#clickBtnSave" prefHeight="40.0" prefWidth="390.0" text="Save Estimate"
+                    style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 6; -fx-cursor: hand;" />
+            <Button fx:id="clearBtn" layoutX="20.0" layoutY="394.0" mnemonicParsing="false"
+                    onAction="#clickBtnClear" prefHeight="40.0" prefWidth="390.0" text="Clear Form"
+                    style="-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-cursor: hand;" />
+         </children>
+      </AnchorPane>
+
    </children>
 </AnchorPane>

@@ -11,146 +11,117 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="suppliersPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.SuppliersController">
+<AnchorPane fx:id="suppliersPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #F4F6FA;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.SuppliersController">
    <children>
       <VBox prefHeight="720.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="385.0" prefWidth="1080.0">
+            <Label style="-fx-text-fill: #6B7280;" text="Manage metal &amp; hardware suppliers and contact details">
+               <VBox.margin>
+                  <Insets left="24.0" top="12.0" />
+               </VBox.margin>
+            </Label>
+
+            <HBox prefHeight="668.0" prefWidth="1080.0" spacing="16.0">
                <children>
-                  <VBox prefHeight="275.0" prefWidth="597.0" style="-fx-border-radius: 10;">
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
+                  <VBox prefHeight="644.0" prefWidth="616.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="79.0" prefWidth="582.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="584.0" spacing="12.0">
                            <children>
-                              <TextField fx:id="searchTxtField" onKeyPressed="#pressSearchSupplier" prefHeight="35.0" prefWidth="310.0" style="-fx-background-radius: 30 0 0 30;">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#clickBtnSearch" prefHeight="35.0" prefWidth="46.0" style="-fx-background-radius: 0 30 30 0;" text="search" />
-                              <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="154.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="+  NEW">
-                                 <HBox.margin>
-                                    <Insets left="60.0" />
-                                 </HBox.margin>
-                              </Button>
+                              <TextField fx:id="searchTxtField" onKeyPressed="#pressSearchSupplier" prefHeight="34.0" prefWidth="320.0" promptText="Supplier ID, e.g. S001" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+                              <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#clickBtnSearch" prefHeight="34.0" prefWidth="100.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Search" />
                            </children>
+                           <padding>
+                              <Insets left="16.0" right="16.0" top="10.0" />
+                           </padding>
                         </HBox>
-                        <TableView fx:id="supplierTbl" prefHeight="251.0" prefWidth="582.0">
+                        <TableView fx:id="supplierTbl" prefHeight="562.0" prefWidth="584.0">
                            <columns>
-                              <TableColumn fx:id="supIdCol" prefWidth="81.60001569986343" text="ID" />
-                              <TableColumn fx:id="supNameCol" prefWidth="119.99995422363281" text="Supplier" />
-                              <TableColumn fx:id="contactPersonCol" prefWidth="107.73330688476562" text="Contact" />
-                              <TableColumn fx:id="supPhoneCol" prefWidth="122.93331909179688" text="Phone" />
-                              <TableColumn fx:id="supAddressCol" prefWidth="136.0000061035156" text="Address" />
+                              <TableColumn fx:id="supIdCol" prefWidth="85.0" text="ID" />
+                              <TableColumn fx:id="supNameCol" prefWidth="150.0" text="Supplier" />
+                              <TableColumn fx:id="contactPersonCol" prefWidth="125.0" text="Contact" />
+                              <TableColumn fx:id="supPhoneCol" prefWidth="112.0" text="Phone" />
+                              <TableColumn fx:id="supAddressCol" prefWidth="112.0" text="Address" />
                            </columns>
                            <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets bottom="16.0" left="16.0" right="16.0" top="4.0" />
                            </VBox.margin>
                         </TableView>
-                        <Label text="Showing 4 of 12 records">
-                           <VBox.margin>
-                              <Insets left="15.0" top="5.0" />
-                           </VBox.margin>
-                        </Label>
                      </children>
                   </VBox>
-                  <VBox prefHeight="835.0" prefWidth="450.0" style="-fx-border-color: gray; -fx-border-radius: 10;">
-                     <HBox.margin>
-                        <Insets left="15.0" right="15.0" />
-                     </HBox.margin>
+
+                  <VBox prefHeight="644.0" prefWidth="400.0" spacing="12.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
                      <children>
-                        <Label text="Suppliers Details">
+                        <Label style="-fx-text-fill: #1F3864;" text="Supplier Details">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="5.0" left="10.0" top="15.0" />
+                              <Insets left="16.0" top="14.0" />
                            </VBox.margin>
                         </Label>
-                        <VBox prefHeight="55.0" prefWidth="449.0">
+
+                        <VBox prefHeight="62.0" prefWidth="368.0" spacing="4.0">
                            <children>
-                              <Label text="Supplier Name">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="nameTxtField" prefHeight="35.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                              <Label style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Supplier Name" />
+                              <TextField fx:id="nameTxtField" prefHeight="34.0" prefWidth="368.0" promptText="Enter supplier name" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
                            </children>
                            <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets left="16.0" right="16.0" />
                            </VBox.margin>
                         </VBox>
-                        <VBox prefHeight="55.0" prefWidth="449.0">
+
+                        <VBox prefHeight="62.0" prefWidth="368.0" spacing="4.0">
                            <children>
-                              <Label text="Contact Person">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="contactPersonTxtField" prefHeight="35.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                              <Label style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Contact Person" />
+                              <TextField fx:id="contactPersonTxtField" prefHeight="34.0" prefWidth="368.0" promptText="Enter contact person" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
                            </children>
                            <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets left="16.0" right="16.0" />
                            </VBox.margin>
                         </VBox>
-                        <VBox prefHeight="55.0" prefWidth="449.0">
+
+                        <VBox prefHeight="62.0" prefWidth="368.0" spacing="4.0">
                            <children>
-                              <Label text="Phone">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="phoneTxtField" prefHeight="35.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                              <Label style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Phone" />
+                              <TextField fx:id="phoneTxtField" prefHeight="34.0" prefWidth="368.0" promptText="e.g. 0771234567" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
                            </children>
                            <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets left="16.0" right="16.0" />
                            </VBox.margin>
                         </VBox>
-                        <VBox prefHeight="55.0" prefWidth="449.0">
+
+                        <VBox prefHeight="62.0" prefWidth="368.0" spacing="4.0">
                            <children>
-                              <Label text="Address">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="addressTxtField" prefHeight="35.0" prefWidth="449.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                              <Label style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Address" />
+                              <TextField fx:id="addressTxtField" prefHeight="34.0" prefWidth="368.0" promptText="Enter address" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
                            </children>
                            <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets left="16.0" right="16.0" />
                            </VBox.margin>
                         </VBox>
-                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="449.0">
+
+                        <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="368.0" spacing="10.0">
                            <children>
-                              <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="39.0" prefWidth="122.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Save">
-                                 <HBox.margin>
-                                    <Insets right="15.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="updateBtn" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="39.0" prefWidth="122.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Update">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#clickBtnDelete" prefHeight="39.0" prefWidth="122.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Delete">
-                                 <HBox.margin>
-                                    <Insets left="15.0" />
-                                 </HBox.margin>
-                              </Button>
+                              <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="36.0" prefWidth="116.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Save" />
+                              <Button fx:id="updateBtn" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="36.0" prefWidth="116.0" style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Update" />
+                              <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#clickBtnDelete" prefHeight="36.0" prefWidth="116.0" style="-fx-background-color: #C0392B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Delete" />
                            </children>
+                           <VBox.margin>
+                              <Insets left="16.0" right="16.0" top="6.0" />
+                           </VBox.margin>
                         </HBox>
-                        <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#clickClearBtn" prefHeight="39.0" prefWidth="449.0" style="-fx-background-radius: 7; -fx-border-radius: 7;" text="Clear Form">
+
+                        <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#clickClearBtn" prefHeight="36.0" prefWidth="368.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-cursor: hand;" text="Clear Form">
                            <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets left="16.0" right="16.0" />
                            </VBox.margin>
                         </Button>
                      </children>
                   </VBox>
                </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" top="15.0" />
-               </VBox.margin>
+               <padding>
+                  <Insets bottom="16.0" left="24.0" right="24.0" top="8.0" />
+               </padding>
             </HBox>
          </children>
       </VBox>

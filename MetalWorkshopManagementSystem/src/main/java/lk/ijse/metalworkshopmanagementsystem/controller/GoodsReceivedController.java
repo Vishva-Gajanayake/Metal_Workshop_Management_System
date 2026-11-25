@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -31,13 +32,13 @@ import lk.ijse.metalworkshopmanagementsystem.model.GoodsReceived;
 import lk.ijse.metalworkshopmanagementsystem.model.tbl.GoodsReceivedItemTbl;
 import lk.ijse.metalworkshopmanagementsystem.model.tbl.GoodsReceivedTbl;
 
-public class GoodsReceivedController implements Initializable{
+public class GoodsReceivedController implements Initializable {
 
     @FXML
     private AnchorPane goodsReceivedPane;
 
     @FXML
-    private ComboBox<String> supplierCombo;        
+    private ComboBox<String> supplierCombo;
     @FXML
     private DatePicker receivedDatePicker;
     @FXML
@@ -46,8 +47,8 @@ public class GoodsReceivedController implements Initializable{
     private ComboBox<String> userCombo;
 
     @FXML
-    private ComboBox<String> materialCombo;  
-    
+    private ComboBox<String> materialCombo;
+
     @FXML
     private TextField quantityTxtField;
     @FXML
@@ -67,6 +68,8 @@ public class GoodsReceivedController implements Initializable{
     private TableColumn<GoodsReceivedItemTbl, Double> colItemUnitCost;
     @FXML
     private TableColumn<GoodsReceivedItemTbl, Double> colItemLineTotal;
+    @FXML
+    private TableColumn<GoodsReceivedItemTbl, Void> removeCol;
 
     @FXML
     private Label totalLbl;
@@ -87,55 +90,92 @@ public class GoodsReceivedController implements Initializable{
     private TableColumn<GoodsReceivedTbl, String> colGrnInvoice;
     @FXML
     private TableColumn<GoodsReceivedTbl, Double> colGrnTotal;
-    
+
     Connection conn;
-    
+
     private double totalBill = 0.0;
-    
+
     private List<GoodsReceivedItemTbl> cartTblList = new ArrayList<>();
-    
+
     //---------------------- REGEX ----------------------
-    
+
     private static final String QUANTITY_REGEX = "^\\d{1,6}(\\.\\d{1,3})?$";
     private static final String MONEY_REGEX = "^\\d{1,8}(\\.\\d{1,2})?$";
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         colItemMaterial.setCellValueFactory(new PropertyValueFactory<>("material"));
         colItemQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         colItemUnitCost.setCellValueFactory(new PropertyValueFactory<>("unitCost"));
         colItemLineTotal.setCellValueFactory(new PropertyValueFactory<>("lineCost"));
-        
+
         colGrnId.setCellValueFactory(new PropertyValueFactory<>("grnId"));
         colGrnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colGrnSupplier.setCellValueFactory(new PropertyValueFactory<>("supplier"));
         colGrnInvoice.setCellValueFactory(new PropertyValueFactory<>("inoviceRef"));
         colGrnTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
-     
+
+        removeCol.setCellFactory(col -> new TableCell<GoodsReceivedItemTbl, Void>() {
+
+            private final Button btn = new Button("DELETE");
+
+            {
+                btn.setStyle("-fx-background-color: #D64545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;");
+                btn.setOnAction(event -> {
+                    GoodsReceivedItemTbl cartTbl = getTableView().getItems().get(getIndex());
+                    cartTblList.remove(cartTbl);
+
+                    totalBill = Math.max(0.0, totalBill - cartTbl.getLineCost());
+                    totalLbl.setText(String.format("Rs. %.2f", totalBill));
+
+                    loadCartTbl();
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btn);
+            }
+        });
+
+        receivedDatePicker.setValue(LocalDate.now());
+
         loadSupplierComboBox();
         loadUserComboBox();
         loadMaterialComboBox();
-        
+
         loadGoodsReceivedTable();
         loadCartTbl();
     }
-    
-    //---------------------- LOAD COMBO BOXES ----------------------
-    
-    private void loadSupplierComboBox() {
 
+    private int parseNumericId(String raw) {
+        if (raw == null) {
+            return -1;
+        }
+        String firstToken = raw.trim().split("\\s+")[0];
+        String digits = firstToken.replaceAll("\\D+", "");
+        if (digits.isEmpty()) {
+            return -1;
+        }
+        try {
+            return Integer.parseInt(digits);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+    //---------------------- LOAD COMBO BOXES ----------------------
+
+    private void loadSupplierComboBox() {
         List<String> supplierList = new ArrayList<>();
         ObservableList<String> supplierObList = FXCollections.observableArrayList();
 
         try {
-
             conn = DBConnection.getInstance().getConnection();
 
             String query = "SELECT * FROM suppliers ORDER BY supplier_id ASC";
             Statement stmt = conn.createStatement();
-
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next()) {
@@ -147,6 +187,7 @@ public class GoodsReceivedController implements Initializable{
             supplierObList.addAll(supplierList);
             supplierCombo.setItems(supplierObList);
 
+            result.close();
             stmt.close();
 
         } catch (SQLException e) {
@@ -154,19 +195,16 @@ public class GoodsReceivedController implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
-    private void loadUserComboBox() {
 
+    private void loadUserComboBox() {
         List<String> userList = new ArrayList<>();
         ObservableList<String> userObList = FXCollections.observableArrayList();
 
         try {
-
             conn = DBConnection.getInstance().getConnection();
 
             String query = "SELECT * FROM users ORDER BY user_id ASC";
             Statement stmt = conn.createStatement();
-
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next()) {
@@ -178,6 +216,7 @@ public class GoodsReceivedController implements Initializable{
             userObList.addAll(userList);
             userCombo.setItems(userObList);
 
+            result.close();
             stmt.close();
 
         } catch (SQLException e) {
@@ -185,23 +224,19 @@ public class GoodsReceivedController implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
-    private void loadMaterialComboBox() {
 
+    private void loadMaterialComboBox() {
         List<String> materialList = new ArrayList<>();
         ObservableList<String> materialObList = FXCollections.observableArrayList();
 
         try {
-
             conn = DBConnection.getInstance().getConnection();
 
             String query = "SELECT * FROM materials ORDER BY material_id ASC";
             Statement stmt = conn.createStatement();
-
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next()) {
-//                String id = String.format("M%03d", result.getInt("material_id"));
                 String matCode = result.getString("material_code");
                 String matName = result.getString("material_name");
                 materialList.add(matCode + "  " + matName);
@@ -210,6 +245,7 @@ public class GoodsReceivedController implements Initializable{
             materialObList.addAll(materialList);
             materialCombo.setItems(materialObList);
 
+            result.close();
             stmt.close();
 
         } catch (SQLException e) {
@@ -217,100 +253,128 @@ public class GoodsReceivedController implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
+
     //---------------------- ADD ITEMS TO CART ----------------------
-    
+
     @FXML
     void clickBtnAddItem(ActionEvent event) {
-        
         String material = materialCombo.getSelectionModel().getSelectedItem();
-        String qty = quantityTxtField.getText().trim();
-        double unitCost = Double.parseDouble(unitCostTxtField.getText().trim());
+        String qtyText = quantityTxtField.getText().trim();
+        String costText = unitCostTxtField.getText().trim();
 
-        if (!String.valueOf(unitCost).matches(MONEY_REGEX)) {
+        if (material == null || material.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a material").show();
+            return;
+        }
+        if (costText.isEmpty() || !costText.matches(MONEY_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Cost").show();
-        } else if (!qty.matches(QUANTITY_REGEX)) {
+            return;
+        }
+        if (qtyText.isEmpty() || !qtyText.matches(QUANTITY_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Quantity").show();
+            return;
         }
-        else {
 
-            double ordQty = Double.parseDouble(qty);
+        double unitCost = Double.parseDouble(costText);
+        double ordQty = Double.parseDouble(qtyText);
 
-            if (!(ordQty < 1)) {
-                GoodsReceivedItemTbl goodsReceivedItemTbl = new GoodsReceivedItemTbl(
-                        material,
-                        ordQty,
-                        unitCost,
-                        ordQty * unitCost
-                );
-
-                cartTblList.add(goodsReceivedItemTbl);
-                loadCartTbl();
-//                cleanItemForm();
-
-                totalBill = totalBill + (unitCost * ordQty);
-                totalLbl.setText(String.format("Rs.%.2f", totalBill));
-
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Invalid order Qty!").show();
-            }
+        if (ordQty <= 0) {
+            new Alert(Alert.AlertType.ERROR, "Invalid order Qty!").show();
+            return;
         }
+
+        double lineCost = ordQty * unitCost;
+        GoodsReceivedItemTbl goodsReceivedItemTbl = new GoodsReceivedItemTbl(
+                material,
+                ordQty,
+                unitCost,
+                lineCost
+        );
+
+        cartTblList.add(goodsReceivedItemTbl);
+        loadCartTbl();
+        cleanItemForm();
+
+        totalBill += lineCost;
+        totalLbl.setText(String.format("Rs. %.2f", totalBill));
     }
-    
-    private void loadCartTbl() {
 
+    private void loadCartTbl() {
         ObservableList<GoodsReceivedItemTbl> obCartTblList = FXCollections.observableArrayList(cartTblList);
         itemsTbl.setItems(obCartTblList);
-
     }
 
     @FXML
     void clickBtnRemoveItem(ActionEvent event) {
-        
+        GoodsReceivedItemTbl selected = itemsTbl.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            cartTblList.remove(selected);
+            totalBill = Math.max(0.0, totalBill - selected.getLineCost());
+            totalLbl.setText(String.format("Rs. %.2f", totalBill));
+            loadCartTbl();
+        }
     }
-    
+
     //---------------------- SAVE GOODS RECEIVED ----------------------
 
     @FXML
     void clickBtnSave(ActionEvent event) {
-        
         String supplier = supplierCombo.getSelectionModel().getSelectedItem();
         String user = userCombo.getSelectionModel().getSelectedItem();
         LocalDate receiveDate = receivedDatePicker.getValue();
         String invoiceRef = invoiceRefTxtField.getText().trim();
-        List<GoodsItems> goodsItemsList = new ArrayList<>();
 
+        int supplierId = parseNumericId(supplier);
+        int userId = parseNumericId(user);
+
+        if (supplier == null || supplierId <= 0) {
+            new Alert(Alert.AlertType.ERROR, "Please select a supplier").show();
+            return;
+        }
+        if (receiveDate == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a received date").show();
+            return;
+        }
+        if (user == null || userId <= 0) {
+            new Alert(Alert.AlertType.ERROR, "Please select who received the goods").show();
+            return;
+        }
+        if (cartTblList.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please add at least one item to the delivery").show();
+            return;
+        }
+
+        List<GoodsItems> goodsItemsList = new ArrayList<>();
         for (GoodsReceivedItemTbl grit : cartTblList) {
-            
+            int materialId = getMaterialId(grit.getMaterial());
+            if (materialId <= 0) {
+                new Alert(Alert.AlertType.ERROR, "Material not found: " + grit.getMaterial()).show();
+                return;
+            }
             GoodsItems gi = new GoodsItems();
-            
-            gi.setMaterialId(getMaterialId(grit.getMaterial()));
+            gi.setMaterialId(materialId);
             gi.setQtyReceived(grit.getQty());
             gi.setUnitCost(grit.getUnitCost());
             gi.setLineCost(grit.getLineCost());
-
             goodsItemsList.add(gi);
         }
 
         GoodsReceived goodsReceived = new GoodsReceived();
-        goodsReceived.setSupplierId(Integer.parseInt(supplier.substring(1, 4)));
-        goodsReceived.setReceivedBy(Integer.parseInt(user.substring(1, 4)));
+        goodsReceived.setSupplierId(supplierId);
+        goodsReceived.setReceivedBy(userId);
         goodsReceived.setReceivedDateTime(receiveDate);
         goodsReceived.setInvoiceRef(invoiceRef);
         goodsReceived.setTotalAmount(totalBill);
         goodsReceived.setGoodsItemsList(goodsItemsList);
 
         placeOrder(goodsReceived);
-    
     }
-    
-    //---------------------- ADD DATA TO GODDS_RECEIVED ----------------------
-    
-    public void placeOrder(GoodsReceived goodsReceived) {
 
+    //---------------------- ADD DATA TO GOODS_RECEIVED ----------------------
+
+    public void placeOrder(GoodsReceived goodsReceived) {
         try {
             conn = DBConnection.getInstance().getConnection();
-
             conn.setAutoCommit(false);
 
             String query1 = "INSERT INTO goods_received("
@@ -329,74 +393,64 @@ public class GoodsReceivedController implements Initializable{
             pstmt1.setDouble(5, goodsReceived.getTotalAmount());
 
             int result1 = pstmt1.executeUpdate();
-
-            if (result1 > 0) {
-
-                ResultSet rs = pstmt1.getGeneratedKeys();
-
-                if (rs.next()) {
-
-                    if (rs.getInt(1) != 0) {
-
-                        goodsReceived.setGrnId(rs.getInt(1));
-                        loadGoodsReceivedTable();
-//                        cleanFullOrderForm();
-
-                        new Alert(Alert.AlertType.INFORMATION, "Delivery Saved successfully!").show();
-
-                    } else {
-                        throw new SQLException("Something went wrong!");
-                    }
-
-                } else {
-                    throw new SQLException("Something went wrong!");
-                }
-
-            } else {
-                throw new SQLException("Something went wrong!");
+            if (result1 <= 0) {
+                pstmt1.close();
+                throw new SQLException("Failed to insert goods_received record");
             }
 
-            try {
-                conn.commit();
-
-                addGoodsReceivedItems(conn, goodsReceived);
-                loadGoodsReceivedTable();
-//                printInvoice(order.getOrderId());
-
-            } catch (Exception e) {
-                e.getStackTrace();
-                System.out.println(e.getMessage());
+            ResultSet rs = pstmt1.getGeneratedKeys();
+            if (!rs.next() || rs.getInt(1) == 0) {
+                rs.close();
+                pstmt1.close();
+                throw new SQLException("Failed to retrieve generated GRN ID");
             }
+
+            goodsReceived.setGrnId(rs.getInt(1));
+            rs.close();
+            pstmt1.close();
+
+            addGoodsReceivedItems(conn, goodsReceived);
+
+            conn.commit();
+
+            loadGoodsReceivedTable();
+            cleanGoodsReceivedFields();
+            new Alert(Alert.AlertType.INFORMATION, "Delivery Saved successfully!").show();
 
         } catch (Exception e) {
-
+            e.printStackTrace();
             try {
-                conn.rollback();
+                if (conn != null) {
+                    conn.rollback();
+                }
             } catch (SQLException ex) {
-                e.getStackTrace();
-                System.out.println(e.getMessage());
+                ex.printStackTrace();
             }
-            e.getStackTrace();
-            System.out.println(e.getMessage());
+            new Alert(Alert.AlertType.ERROR, "Something went wrong while saving delivery!").show();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
-    
-    //---------------------- ADD DATA TO GODDS_RECEIVED_TEM ----------------------
-    
+
+    //---------------------- ADD DATA TO GOODS_RECEIVED_ITEMS ----------------------
+
     public void addGoodsReceivedItems(Connection conn, GoodsReceived goodsReceived) throws Exception {
+        String query = "INSERT INTO goods_received_items("
+                + "grn_id, "
+                + "material_id, "
+                + "quantity_received, "
+                + "unit_cost, "
+                + "line_total) "
+                + "VALUES (?,?,?,?,?)";
 
         for (GoodsItems goodsItems : goodsReceived.getGoodsItemsList()) {
-
-            String query = "INSERT INTO goods_received_items("
-                    + "grn_id, "
-                    + "material_id, "
-                    + "quantity_received, "
-                    + "unit_cost, "
-                    + "line_total) "
-                    + "VALUES (?,?,?,?,?)";
-            
             PreparedStatement pstmt = conn.prepareStatement(query);
-
             pstmt.setInt(1, goodsReceived.getGrnId());
             pstmt.setInt(2, goodsItems.getMaterialId());
             pstmt.setDouble(3, goodsItems.getQtyReceived());
@@ -404,27 +458,21 @@ public class GoodsReceivedController implements Initializable{
             pstmt.setDouble(5, goodsItems.getLineCost());
 
             int result = pstmt.executeUpdate();
+            pstmt.close();
 
-            if (result > 0) {
-
-                System.out.println("Goods Received Items saved successfully!");
-                loadGoodsReceivedTable();
-
-            } else {
-                throw new SQLException("Something went wrong!");
+            if (result <= 0) {
+                throw new SQLException("Failed to insert goods_received_items record");
             }
         }
     }
-    
-    //---------------------- LOAD GOODS RECEIVED TABLE ----------------------
-    
-    private void loadGoodsReceivedTable() {
 
-        List<GoodsReceived> goodsReceivedlList = getAllGoodsReceived();
+    //---------------------- LOAD GOODS RECEIVED TABLE ----------------------
+
+    private void loadGoodsReceivedTable() {
+        List<GoodsReceived> goodsReceivedList = getAllGoodsReceived();
         List<GoodsReceivedTbl> goodsReceivedTblList = new ArrayList<>();
 
-        for (GoodsReceived goodsReceived : goodsReceivedlList) {
-
+        for (GoodsReceived goodsReceived : goodsReceivedList) {
             GoodsReceivedTbl goodsReceivedTbl = new GoodsReceivedTbl(
                     goodsReceived.getGrnId(),
                     goodsReceived.getReceivedDateTime(),
@@ -432,53 +480,45 @@ public class GoodsReceivedController implements Initializable{
                     goodsReceived.getInvoiceRef(),
                     goodsReceived.getTotalAmount()
             );
-
             goodsReceivedTblList.add(goodsReceivedTbl);
-            
-            System.out.println("Supplier: " + goodsReceivedTbl.getSuppliler());
         }
-        
 
         ObservableList<GoodsReceivedTbl> obList
                 = FXCollections.observableArrayList(goodsReceivedTblList);
 
         historyTbl.setItems(obList);
     }
-    
-    private List<GoodsReceived> getAllGoodsReceived() {
 
-        List<GoodsReceived> goodsReceivedlist = new ArrayList<>();
+    private List<GoodsReceived> getAllGoodsReceived() {
+        List<GoodsReceived> goodsReceivedList = new ArrayList<>();
 
         try {
             conn = DBConnection.getInstance().getConnection();
 
-            String query = "SELECT "
-                    + "* "
-                    + "FROM goods_received "
-                    + "ORDER BY grn_id DESC ";
-
+            String query = "SELECT * FROM goods_received ORDER BY grn_id DESC";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next()) {
-
                 int grnId = result.getInt("grn_id");
                 String receivedDate = result.getString("received_date");
                 int supId = result.getInt("supplier_id");
                 String invoiceRef = result.getString("invoice_ref");
-                String totalCost = result.getString("total_amount");
+                double totalCost = result.getDouble("total_amount");
 
                 GoodsReceived goodsReceived = new GoodsReceived();
-
                 goodsReceived.setGrnId(grnId);
-                goodsReceived.setReceivedDateTime(LocalDate.parse(receivedDate));
+                if (receivedDate != null && !receivedDate.isEmpty()) {
+                    goodsReceived.setReceivedDateTime(LocalDate.parse(receivedDate));
+                }
                 goodsReceived.setSupplierId(supId);
                 goodsReceived.setInvoiceRef(invoiceRef);
-                goodsReceived.setTotalAmount(Double.parseDouble(totalCost));
+                goodsReceived.setTotalAmount(totalCost);
 
-                goodsReceivedlist.add(goodsReceived);
+                goodsReceivedList.add(goodsReceived);
             }
 
+            result.close();
             stmt.close();
 
         } catch (SQLException e) {
@@ -486,29 +526,28 @@ public class GoodsReceivedController implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
 
-        return goodsReceivedlist;
+        return goodsReceivedList;
     }
-    
-    //---------------------- GET SUPPLIER NAME BY ID ----------------------
-    
-    private String getSupplierById(int supId) {
 
+    //---------------------- GET SUPPLIER NAME BY ID ----------------------
+
+    private String getSupplierById(int supId) {
         String supplier = null;
 
         try {
-
+            conn = DBConnection.getInstance().getConnection();
             String query = "SELECT * FROM suppliers WHERE supplier_id=?";
             PreparedStatement pstmt = conn.prepareStatement(query);
-
             pstmt.setInt(1, supId);
 
             ResultSet result = pstmt.executeQuery();
-
-            while (result.next()) {
+            if (result.next()) {
                 String id = String.format("S%03d", result.getInt("supplier_id"));
                 String supName = result.getString("supplier_name");
                 supplier = id + "  " + supName;
             }
+            result.close();
+            pstmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -517,25 +556,28 @@ public class GoodsReceivedController implements Initializable{
 
         return supplier;
     }
-    
-    //---------------------- GET MATERIAL ID BY MATERIAL CODE ----------------------
-    
-    private int getMaterialId(String materialCode) {
 
+    //---------------------- GET MATERIAL ID BY MATERIAL CODE ----------------------
+
+    private int getMaterialId(String materialLabel) {
         int materialId = 0;
+        if (materialLabel == null || materialLabel.trim().isEmpty()) {
+            return materialId;
+        }
+        String matCode = materialLabel.trim().split("\\s+")[0];
 
         try {
-
+            conn = DBConnection.getInstance().getConnection();
             String query = "SELECT material_id FROM materials WHERE material_code=?";
             PreparedStatement pstmt = conn.prepareStatement(query);
-
-            pstmt.setString(1, materialCode);
+            pstmt.setString(1, matCode);
 
             ResultSet result = pstmt.executeQuery();
-
-            while (result.next()) {
+            if (result.next()) {
                 materialId = result.getInt("material_id");
             }
+            result.close();
+            pstmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -547,7 +589,24 @@ public class GoodsReceivedController implements Initializable{
 
     @FXML
     void clickBtnClear(ActionEvent event) {
-    
+        cleanGoodsReceivedFields();
     }
-    
+
+    private void cleanGoodsReceivedFields() {
+        supplierCombo.setValue(null);
+        receivedDatePicker.setValue(LocalDate.now());
+        invoiceRefTxtField.setText("");
+        userCombo.setValue(null);
+        cartTblList.clear();
+        totalBill = 0.0;
+        totalLbl.setText("Rs. 0.00");
+        loadCartTbl();
+        cleanItemForm();
+    }
+
+    private void cleanItemForm() {
+        materialCombo.setValue(null);
+        quantityTxtField.setText("");
+        unitCostTxtField.setText("");
+    }
 }

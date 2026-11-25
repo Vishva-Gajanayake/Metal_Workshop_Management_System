@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="jobOrdersPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #F4F6FA;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.JobOrdersController">
+   <children>
+      <Label layoutX="24.0" layoutY="12.0" style="-fx-text-fill: #6B7280;" text="Create jobs from quotations and update their status" />
+
+      <!-- search -->
+      <TextField fx:id="searchTxtField" layoutX="24.0" layoutY="44.0" onKeyPressed="#pressSearchJob" prefHeight="34.0" prefWidth="300.0" promptText="Job no, e.g. JOB-0001" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+      <Button fx:id="searchBtn" layoutX="334.0" layoutY="44.0" mnemonicParsing="false" onAction="#clickBtnSearch" prefHeight="34.0" prefWidth="100.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Search" />
+
+      <!-- table -->
+      <TableView fx:id="jobTbl" layoutX="24.0" layoutY="92.0" prefHeight="570.0" prefWidth="600.0">
+         <columns>
+            <TableColumn fx:id="colJobNo" prefWidth="120.0" text="Job No" />
+            <TableColumn fx:id="colClient" prefWidth="190.0" text="Client" />
+            <TableColumn fx:id="colDue" prefWidth="120.0" text="Due Date" />
+            <TableColumn fx:id="colStatus" prefWidth="150.0" text="Status" />
+         </columns>
+      </TableView>
+
+      <!-- form -->
+      <AnchorPane layoutX="648.0" layoutY="44.0" prefHeight="618.0" prefWidth="408.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <Label layoutX="20.0" layoutY="14.0" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Job Details" />
+
+            <Label layoutX="20.0" layoutY="52.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Quotation (new jobs only)" />
+            <ComboBox fx:id="quotationCombo" layoutX="20.0" layoutY="72.0" prefHeight="34.0" prefWidth="368.0" promptText="Select quotation" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="118.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Client" />
+            <TextField fx:id="clientNameTxtField" editable="false" layoutX="20.0" layoutY="138.0" prefHeight="34.0" prefWidth="368.0" style="-fx-background-color: #F4F6FA; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="184.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Site Address" />
+            <TextField fx:id="siteAddressTxtField" layoutX="20.0" layoutY="204.0" prefHeight="34.0" prefWidth="368.0" promptText="Enter site address" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="250.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Start Date" />
+            <DatePicker fx:id="startDatePicker" layoutX="20.0" layoutY="270.0" prefHeight="34.0" prefWidth="175.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="213.0" layoutY="250.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Due Date" />
+            <DatePicker fx:id="dueDatePicker" layoutX="213.0" layoutY="270.0" prefHeight="34.0" prefWidth="175.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="316.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Status" />
+            <ComboBox fx:id="statusCombo" layoutX="20.0" layoutY="336.0" prefHeight="34.0" prefWidth="368.0" promptText="Select status" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Button fx:id="saveBtn" layoutX="20.0" layoutY="396.0" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Save New Job" />
+            <Button fx:id="updateBtn" layoutX="213.0" layoutY="396.0" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Update Job" />
+            <Button fx:id="clearBtn" layoutX="20.0" layoutY="448.0" mnemonicParsing="false" onAction="#clickBtnClear" prefHeight="40.0" prefWidth="368.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-cursor: hand;" text="Clear Form" />
+
+            <Label layoutX="20.0" layoutY="508.0" prefWidth="368.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px;" text="To cancel a job, set its status to Cancelled and click Update." wrapText="true" />
+         </children>
+      </AnchorPane>
+
+   </children>
+</AnchorPane>

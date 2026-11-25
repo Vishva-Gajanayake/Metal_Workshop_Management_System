@@ -37,12 +37,12 @@ public class GoodsReceivedTbl {
         this.date = date;
     }
 
-    public String getSuppliler() {
+    public String getSupplier() {
         return supplier;
     }
 
-    public void setSuppliler(String suppliler) {
-        this.supplier = suppliler;
+    public void setSuppliler(String supplier) {
+        this.supplier = supplier;
     }
 
     public String getInoviceRef() {
@@ -63,6 +63,6 @@ public class GoodsReceivedTbl {
 
     @Override
     public String toString() {
-        return "GoodsReceivedTbl{" + "grnId=" + grnId + ", date=" + date + ", suppliler=" + supplier + ", inoviceRef=" + inoviceRef + ", total=" + total + '}';
+        return "GoodsReceivedTbl{" + "grnId=" + grnId + ", date=" + date + ", supplier=" + supplier + ", inoviceRef=" + inoviceRef + ", total=" + total + '}';
     }
 }

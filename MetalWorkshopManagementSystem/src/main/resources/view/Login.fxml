@@ -13,119 +13,125 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.LoginController">
-   <top>
+   <center>
       <HBox prefHeight="720.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="577.0" prefWidth="640.0" style="-fx-background-color: #000035;">
+            <!-- Left Brand Panel -->
+            <AnchorPane prefHeight="720.0" prefWidth="580.0" style="-fx-background-color: #1F3864;">
                <children>
-                  <VBox alignment="CENTER" layoutX="40.0" layoutY="236.0" prefHeight="140.0" prefWidth="440.0" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="290.0">
+                  <VBox alignment="CENTER_LEFT" layoutX="72.0" layoutY="205.0" prefHeight="310.0" prefWidth="436.0" spacing="12.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="WORKSHOP MANAGEMENT SYSTEM" wrappingWidth="430.66998291015625">
+                        <Text fill="#60A5FA" strokeType="OUTSIDE" strokeWidth="0.0" text="WORKSHOP MANAGEMENT SYSTEM" wrappingWidth="436.0">
                            <font>
-                              <Font name="System Bold" size="24.0" />
+                              <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Gajanayake Engineering Works" wrappingWidth="430.66998291015625">
+
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Gajanayake Engineering Works" wrappingWidth="436.0">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="26.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimates | Stocks | Jobs | Reporting" textAlignment="CENTER" wrappingWidth="429.60347682237625">
+
+                        <Text fill="#CBD5E1" strokeType="OUTSIDE" strokeWidth="0.0" text="Streamlined fabrication operations, inventory control, job tracking, and client billing." wrappingWidth="436.0">
+                           <font>
+                              <Font size="14.5" />
+                           </font>
                            <VBox.margin>
-                              <Insets top="50.0" />
+                              <Insets top="4.0" />
+                           </VBox.margin>
+                        </Text>
+
+                        <Text fill="#94A3B8" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimates  •  Materials &amp; Stock  •  Job Orders  •  Payments" wrappingWidth="436.0">
+                           <font>
+                              <Font size="12.5" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="24.0" />
                            </VBox.margin>
                         </Text>
                      </children>
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="720.0" prefWidth="640.0" style="-fx-background-color: white;">
+
+            <!-- Right Sign-In Panel -->
+            <AnchorPane prefHeight="720.0" prefWidth="700.0" style="-fx-background-color: #F4F6FA;">
                <children>
-                  <VBox alignment="TOP_CENTER" layoutX="57.0" layoutY="106.0" prefHeight="400.0" prefWidth="390.0" style="-fx-background-radius: 20; -fx-background-color: #000000;" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="160.0">
+                  <VBox layoutX="135.0" layoutY="130.0" prefHeight="460.0" prefWidth="430.0" spacing="6.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #D9DEE7; -fx-border-radius: 12; -fx-padding: 32 36 28 36;">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back" wrappingWidth="352.80340576171875">
+                        <Text fill="#1F3864" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back">
                            <font>
-                              <Font name="Calibri" size="27.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="35.0" top="30.0" />
-                           </VBox.margin>
-                        </Text>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Please sign in to continue" wrappingWidth="352.80340576171875">
-                           <VBox.margin>
-                              <Insets left="35.0" top="2.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="Calibri" size="14.0" />
+                              <Font name="System Bold" size="24.0" />
                            </font>
                         </Text>
-                        <VBox prefHeight="61.0" prefWidth="389.0">
+
+                        <Text fill="#6B7280" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign in to access your workspace">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="14.0" />
+                           </VBox.margin>
+                        </Text>
+
+                        <!-- Username -->
+                        <Text fill="#1F3864" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                           <font>
+                              <Font name="System Bold" size="12.5" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="usernameTxt" prefHeight="38.0" promptText="Enter username" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-padding: 0 12 0 12;">
+                           <font>
+                              <Font size="13.5" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </TextField>
+
+                        <!-- Password -->
+                        <HBox alignment="CENTER_LEFT">
                            <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
-                                 <VBox.margin>
-                                    <Insets left="35.0" />
-                                 </VBox.margin>
+                              <Text fill="#1F3864" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                                  <font>
-                                    <Font name="Calibri" size="14.0" />
+                                    <Font name="System Bold" size="12.5" />
                                  </font>
                               </Text>
-                              <TextField fx:id="usernameTxt" prefHeight="26.0" prefWidth="234.0" styleClass="custom-textfield">
-                                 <VBox.margin>
-                                    <Insets left="35.0" right="35.0" />
-                                 </VBox.margin>
+                              <HBox HBox.hgrow="ALWAYS" />
+                              <Button fx:id="showPasswordBtn" mnemonicParsing="false" onAction="#clickShowBtn" style="-fx-background-color: transparent; -fx-text-fill: #2E75B6; -fx-font-weight: bold; -fx-font-size: 11.5px; -fx-cursor: hand; -fx-padding: 0;" text="SHOW" />
+                           </children>
+                        </HBox>
+
+                        <StackPane prefHeight="38.0">
+                           <children>
+                              <TextField fx:id="showPassTxtField" prefHeight="38.0" promptText="Enter password" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-padding: 0 12 0 12;">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font size="13.5" />
                                  </font>
                               </TextField>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="25.0" />
-                           </VBox.margin>
-                        </VBox>
-                        <VBox prefHeight="67.0" prefWidth="389.0">
-                           <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                              <PasswordField fx:id="passwordTxt" prefHeight="38.0" promptText="Enter password" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-padding: 0 12 0 12;">
                                  <font>
-                                    <Font name="Calibri" size="14.0" />
+                                    <Font size="13.5" />
                                  </font>
-                                 <VBox.margin>
-                                    <Insets left="35.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <TextField fx:id="showPassTxtField" styleClass="custom-textfield" />
-                                    <PasswordField fx:id="passwordTxt" styleClass="custom-textfield">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </PasswordField>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets left="35.0" right="35.0" />
-                                 </VBox.margin>
-                              </StackPane>
-                              <Button fx:id="showPasswordBtn" mnemonicParsing="false" onAction="#clickShowBtn" styleClass="highlight-button">
-                                 <VBox.margin>
-                                    <Insets left="35.0" top="15.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="Calibri Bold" size="12.0" />
-                                 </font>
-                              </Button>
+                              </PasswordField>
                            </children>
-                        </VBox>
-                        <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#clickLogingBtn" prefHeight="42.0" prefWidth="353.0" style="-fx-background-color: #000025;" text="LOGIN" textFill="WHITE">
+                        </StackPane>
+
+                        <!-- Sign In Button -->
+                        <Button fx:id="loginBtn" maxWidth="Infinity" mnemonicParsing="false" onAction="#clickLogingBtn" prefHeight="40.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13.5px; -fx-background-radius: 6; -fx-cursor: hand;" text="Sign In">
                            <VBox.margin>
-                              <Insets left="35.0" right="35.0" top="20.0" />
+                              <Insets top="18.0" />
                            </VBox.margin>
-                           <font>
-                              <Font name="Calibri Bold" size="14.0" />
-                           </font>
                         </Button>
-                        <Text fx:id="loginStatusLabel" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" VBox.vgrow="ALWAYS">
+
+                        <!-- Status Message -->
+                        <Text fx:id="loginStatusLabel" fill="#D64545" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="358.0">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
                            <VBox.margin>
-                              <Insets top="15.0" />
+                              <Insets top="8.0" />
                            </VBox.margin>
                         </Text>
                      </children>
@@ -134,5 +140,5 @@
             </AnchorPane>
          </children>
       </HBox>
-   </top>
+   </center>
 </BorderPane>

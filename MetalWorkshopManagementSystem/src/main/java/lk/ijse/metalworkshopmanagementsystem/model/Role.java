@@ -3,8 +3,11 @@ package lk.ijse.metalworkshopmanagementsystem.model;
 public enum Role {
     
     OWNER("Owner"),
-    MANAGER("Manager"),
-    WORKER("Helper");
+    ASSISTANT("Assistant"),
+    MASTER_FABRICATOR("Master Fabricator"),
+    WELDER("Welder"),
+    PAINTER("Painter"),
+    WORKSHOP_HELPER("Workshop Helper");
 
     private final String label;
 

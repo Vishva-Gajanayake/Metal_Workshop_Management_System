@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="offCutsPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #F4F6FA;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.OffCutsController">
+   <children>
+      <Label layoutX="24.0" layoutY="15.0" style="-fx-text-fill: #6B7280;" text="Reusable scrap pieces by rack location" />
+
+      <!-- ===== Search bar ===== -->
+      <TextField fx:id="searchTxtField" layoutX="24.0" layoutY="47.0" onKeyPressed="#pressSearchOffCut" prefHeight="34.0" prefWidth="300.0" promptText="Search by ID, e.g. OC001" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+      <Button fx:id="searchBtn" layoutX="334.0" layoutY="47.0" mnemonicParsing="false" onAction="#clickBtnSearch" prefHeight="34.0" prefWidth="100.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Search" />
+      <Button fx:id="showAvailableBtn" layoutX="444.0" layoutY="47.0" mnemonicParsing="false" onAction="#clickBtnShowAvailable" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Available Only" />
+
+      <!-- ===== Off-cuts table ===== -->
+      <TableView fx:id="offCutTbl" layoutX="24.0" layoutY="95.0" prefHeight="540.0" prefWidth="640.0">
+         <columns>
+            <TableColumn fx:id="colId" prefWidth="80.0" text="ID" />
+            <TableColumn fx:id="colMaterial" prefWidth="190.0" text="Material" />
+            <TableColumn fx:id="colLength" prefWidth="90.0" text="Length (m)" />
+            <TableColumn fx:id="colRack" prefWidth="100.0" text="Rack" />
+            <TableColumn fx:id="colSourceJob" prefWidth="100.0" text="Source Job" />
+            <TableColumn fx:id="colStatus" prefWidth="78.0" text="Status" />
+         </columns>
+      </TableView>
+      <Label fx:id="countLbl" layoutX="24.0" layoutY="645.0" style="-fx-text-fill: #6B7280;" text="Showing 0 records" />
+
+      <!-- ===== Form card ===== -->
+      <AnchorPane layoutX="688.0" layoutY="47.0" prefHeight="588.0" prefWidth="368.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <Label layoutX="20.0" layoutY="14.0" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Off-Cut Details" />
+
+            <Label layoutX="20.0" layoutY="52.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Material" />
+            <ComboBox fx:id="materialCombo" layoutX="20.0" layoutY="72.0" prefHeight="34.0" prefWidth="328.0" promptText="Select material" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="114.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Length (m)" />
+            <TextField fx:id="lengthTxtField" layoutX="20.0" layoutY="134.0" prefHeight="34.0" prefWidth="328.0" promptText="e.g. 1.8" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="176.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Rack Location" />
+            <TextField fx:id="rackTxtField" layoutX="20.0" layoutY="196.0" prefHeight="34.0" prefWidth="328.0" promptText="e.g. Rack B2" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="238.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Source Job" />
+            <ComboBox fx:id="sourceJobCombo" layoutX="20.0" layoutY="258.0" prefHeight="34.0" prefWidth="328.0" promptText="Select job" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Label layoutX="20.0" layoutY="300.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Status" />
+            <ComboBox fx:id="statusCombo" layoutX="20.0" layoutY="320.0" prefHeight="34.0" prefWidth="328.0" promptText="Select status" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+
+            <Button fx:id="saveBtn" layoutX="20.0" layoutY="372.0" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="36.0" prefWidth="158.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Save" />
+            <Button fx:id="updateBtn" layoutX="190.0" layoutY="372.0" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="36.0" prefWidth="158.0" style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Update" />
+
+            <Button fx:id="markUsedBtn" layoutX="20.0" layoutY="416.0" mnemonicParsing="false" onAction="#clickBtnMarkUsed" prefHeight="34.0" prefWidth="158.0" style="-fx-background-color: #D9A441; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Mark Used" />
+            <Button fx:id="discardBtn" layoutX="190.0" layoutY="416.0" mnemonicParsing="false" onAction="#clickBtnDiscard" prefHeight="34.0" prefWidth="158.0" style="-fx-background-color: #D64545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Discard" />
+
+            <Button fx:id="clearBtn" layoutX="20.0" layoutY="460.0" mnemonicParsing="false" onAction="#clickBtnClear" prefHeight="36.0" prefWidth="328.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-cursor: hand;" text="Clear Form" />
+
+            <Label layoutX="20.0" layoutY="508.0" prefWidth="328.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px;" text="Mark Used and Discard change the status only; the record is kept." wrapText="true" />
+         </children>
+      </AnchorPane>
+
+   </children>
+</AnchorPane>

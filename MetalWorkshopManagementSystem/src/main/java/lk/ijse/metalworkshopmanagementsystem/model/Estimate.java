@@ -10,7 +10,7 @@ public class Estimate {
     private double width;
     private double height;
     private double length;
-    private int quantity;
+    private double quantity;
     private double wastagePct;
     private double materialCost;
     private double labourCost;
@@ -20,7 +20,7 @@ public class Estimate {
     public Estimate() {
     }
 
-    public Estimate(int estimateId, int inquiryId, int createdBy, LocalDateTime estimateDate, double width, double height, double length, int quantity, double wastagePct, double materialCost, double labourCost, double oveheadCost, double totalCost) {
+    public Estimate(int estimateId, int inquiryId, int createdBy, LocalDateTime estimateDate, double width, double height, double length, double quantity, double wastagePct, double materialCost, double labourCost, double oveheadCost, double totalCost) {
         this.estimateId = estimateId;
         this.inquiryId = inquiryId;
         this.createdBy = createdBy;
@@ -92,11 +92,11 @@ public class Estimate {
         this.length = length;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 

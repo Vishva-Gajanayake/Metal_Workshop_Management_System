@@ -28,11 +28,10 @@ import lk.ijse.metalworkshopmanagementsystem.db.DBConnection;
 import lk.ijse.metalworkshopmanagementsystem.model.Client;
 import lk.ijse.metalworkshopmanagementsystem.model.tbl.ClientsTbl;
 
-
 public class ClientsController implements Initializable {
-    
+
     Connection conn;
-    
+
     @FXML
     private AnchorPane ClientPane;
 
@@ -83,39 +82,63 @@ public class ClientsController implements Initializable {
 
     @FXML
     private Button updateBtn;
-    
+
     @FXML
     private Button searchBtn;
-    
+
     //---------------------- REGEX ----------------------
-    
+
     private final String CLIENT_NAME_REGEX = "^[A-Za-z]+(?:\\s+[A-Za-z]+)*$";
     private final String CLIENT_PHONE_REGEX = "^(?:(?:\\+94|0094|94)[\\s.-]?(?:0)?[1-9]\\d{8}|0(?:[1-9]\\d{8}))$";
     private final String CLIENT_EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-    private final String CLIENT_ADDRESS_REGEX = "^[A-Za-z0-9,\\/\\\\]+$";
+    private final String CLIENT_ADDRESS_REGEX = "^[A-Za-z0-9\\s,./#\\\\-]+$";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         colId.setCellValueFactory(new PropertyValueFactory<>("clientId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        
+
+        clientsTbl.setOnMouseClicked(event -> {
+            ClientsTbl selected = clientsTbl.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                searchTxtField.setText(selected.getClientId());
+                nameTxtField.setText(selected.getFullName());
+                phoneTxtField.setText(selected.getPhone());
+                emailTxtField.setText(selected.getEmail());
+                addressTxtField.setText(selected.getAddress());
+            }
+        });
+
         loadClientTable();
     }
-    
+
+    private int parseClientId(String rawId) {
+        if (rawId == null) {
+            return -1;
+        }
+        String digits = rawId.trim().replaceAll("\\D+", "");
+        if (digits.isEmpty()) {
+            return -1;
+        }
+        try {
+            return Integer.parseInt(digits);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
     //---------------------- SAVE CLIENT ----------------------
-    
+
     @FXML
     void clickSaveBtn(ActionEvent event) {
-        
         String clientName = nameTxtField.getText().trim();
         String clientPhone = phoneTxtField.getText().trim();
         String clientEmail = emailTxtField.getText().trim();
         String clientAddress = addressTxtField.getText().trim();
-        
+
         if (!clientName.matches(CLIENT_NAME_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Client Name").show();
         } else if (!clientPhone.matches(CLIENT_PHONE_REGEX)) {
@@ -125,25 +148,23 @@ public class ClientsController implements Initializable {
         } else if (!clientAddress.matches(CLIENT_ADDRESS_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Client Address").show();
         } else {
-            
             Client clientModel = new Client(
-                    clientName, 
-                    clientPhone, 
-                    clientEmail, 
-                    clientAddress, 
-                    LocalDateTime.now(), 
+                    clientName,
+                    clientPhone,
+                    clientEmail,
+                    clientAddress,
+                    LocalDateTime.now(),
                     true
             );
-            
+
             addCustomer(clientModel);
         }
     }
 
     private void addCustomer(Client clientModel) {
         try {
-            
             conn = DBConnection.getInstance().getConnection();
-            
+
             String queryInsert = "INSERT INTO clients("
                     + "full_name, "
                     + "phone, "
@@ -152,7 +173,7 @@ public class ClientsController implements Initializable {
                     + "created_at, "
                     + "is_active) "
                     + "VALUES(?,?,?,?,?,?)";
-            
+
             PreparedStatement pstmt = conn.prepareStatement(queryInsert);
 
             pstmt.setString(1, clientModel.getFullName());
@@ -163,32 +184,34 @@ public class ClientsController implements Initializable {
             pstmt.setObject(6, clientModel.isIsActive());
 
             int result1 = pstmt.executeUpdate();
+            pstmt.close();
 
             if (result1 > 0) {
-                new Alert(Alert.AlertType.INFORMATION, 
-                        "Client saved successfully!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Client saved successfully!").show();
                 loadClientTable();
                 cleanClientFields();
             } else {
-                new Alert(Alert.AlertType.ERROR, 
-                        "Something went wrong!").show();
+                new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
             }
-            
-            pstmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, 
-                    "Something went wrong!").show();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
+
     //---------------------- UPDATE CLIENT ----------------------
-    
+
     @FXML
     void clickUpdateBtn(ActionEvent event) {
-        
-        String clientId = searchTxtField.getText().trim();
+        String rawId = searchTxtField.getText().trim();
+        int numericId = parseClientId(rawId);
+
+        if (numericId <= 0) {
+            new Alert(Alert.AlertType.WARNING, "Please search or select a valid Client ID first!").show();
+            return;
+        }
+
         String clientName = nameTxtField.getText().trim();
         String clientPhone = phoneTxtField.getText().trim();
         String clientEmail = emailTxtField.getText().trim();
@@ -203,22 +226,19 @@ public class ClientsController implements Initializable {
         } else if (!clientAddress.matches(CLIENT_ADDRESS_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Client Address").show();
         } else {
-            
             Client clientModel = new Client(
-                    clientId, 
-                    clientName, 
-                    clientPhone, 
-                    clientEmail, 
+                    String.format("C%03d", numericId),
+                    clientName,
+                    clientPhone,
+                    clientEmail,
                     clientAddress
             );
-            
-            updateClient(clientModel);
 
+            updateClient(clientModel, numericId);
         }
     }
-    
-    private void updateClient(Client client) {
-        
+
+    private void updateClient(Client client, int numericId) {
         try {
             conn = DBConnection.getInstance().getConnection();
 
@@ -228,112 +248,101 @@ public class ClientsController implements Initializable {
                     + "email=?, "
                     + "address=? "
                     + "WHERE client_id=?";
-            
+
             PreparedStatement pstmt = conn.prepareStatement(query);
 
             pstmt.setString(1, client.getFullName());
             pstmt.setString(2, client.getPhone());
             pstmt.setString(3, client.getEmail());
             pstmt.setString(4, client.getAddress());
-            pstmt.setString(5, client.getClientId().substring(1));
+            pstmt.setInt(5, numericId);
 
             int result = pstmt.executeUpdate();
+            pstmt.close();
 
             if (result > 0) {
-                
-                new Alert(Alert.AlertType.INFORMATION, 
-                        "Client update successfully!").show();
-                
+                new Alert(Alert.AlertType.INFORMATION, "Client updated successfully!").show();
                 loadClientTable();
                 cleanClientFields();
-                
             } else {
-                new Alert(Alert.AlertType.ERROR, 
-                        "Something went wrong!").show();
+                new Alert(Alert.AlertType.ERROR, "Client not found or not updated!").show();
             }
-
-            pstmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Something went wrong!");
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
+
     //---------------------- DELETE CLIENTS ----------------------
-    
+
     @FXML
     void clickBtnDelete(ActionEvent event) {
+        String rawId = searchTxtField.getText().trim();
+        int numericId = parseClientId(rawId);
 
-        String clientId = searchTxtField.getText().trim();
-        
+        if (numericId <= 0) {
+            new Alert(Alert.AlertType.WARNING, "Please search or select a valid Client ID first!").show();
+            return;
+        }
+
         try {
             conn = DBConnection.getInstance().getConnection();
-            
+
             String query = "UPDATE clients SET "
                     + "is_active=false "
                     + "WHERE client_id=?";
 
             PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, numericId);
 
-            pstmt.setString(1, clientId.substring(1));
-            
             int result = pstmt.executeUpdate();
-            
+            pstmt.close();
+
             if (result > 0) {
-
-                new Alert(Alert.AlertType.INFORMATION,
-                        "Client delete successfully!").show();
-
+                new Alert(Alert.AlertType.INFORMATION, "Client deleted successfully!").show();
                 loadClientTable();
                 cleanClientFields();
-
             } else {
-                new Alert(Alert.AlertType.ERROR,
-                        "Something went wrong!").show();
+                new Alert(Alert.AlertType.ERROR, "Client not found!").show();
             }
 
-            pstmt.close();
-            
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Something went wrong!");
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
-    //---------------------- LOAD CLIENTS TABLE ----------------------
-    
-    private void loadClientTable() {
 
+    //---------------------- LOAD CLIENTS TABLE ----------------------
+
+    private void loadClientTable() {
         List<Client> clientList = getAllClients();
         List<ClientsTbl> clientTblList = new ArrayList<>();
 
         for (Client client : clientList) {
-            
             ClientsTbl clientTbl = new ClientsTbl(
-                    client.getClientId(), 
-                    client.getFullName(), 
-                    client.getPhone(), 
-                    client.getEmail(), 
+                    client.getClientId(),
+                    client.getFullName(),
+                    client.getPhone(),
+                    client.getEmail(),
                     client.getAddress()
             );
-            
+
             clientTblList.add(clientTbl);
         }
 
-        ObservableList<ClientsTbl> obList = 
-                FXCollections.observableArrayList(clientTblList);
-        
+        ObservableList<ClientsTbl> obList
+                = FXCollections.observableArrayList(clientTblList);
+
         clientsTbl.setItems(obList);
     }
-    
-    private List<Client> getAllClients() {
 
+    private List<Client> getAllClients() {
         List<Client> clientsList = new ArrayList<>();
 
         try {
             conn = DBConnection.getInstance().getConnection();
-                
+
             String query = "SELECT "
                     + "client_id, "
                     + "full_name, "
@@ -342,13 +351,12 @@ public class ClientsController implements Initializable {
                     + "address "
                     + "FROM clients "
                     + "WHERE is_active = '1' "
-                    + "ORDER BY client_id DESC ";
-            
+                    + "ORDER BY client_id DESC";
+
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next()) {
-                
                 String id = String.format("C%03d", result.getInt("client_id"));
                 String name = result.getString("full_name");
                 String phone = result.getString("phone");
@@ -367,89 +375,81 @@ public class ClientsController implements Initializable {
         }
 
         return clientsList;
-
     }
-    
+
     //---------------------- CLEAN CLIENT FORM ----------------------
-    
+
     @FXML
     void clickClearBtn(ActionEvent event) {
-        
         cleanClientFields();
-
     }
-    
+
     private void cleanClientFields() {
-        
         searchTxtField.setText("");
         nameTxtField.setText("");
         addressTxtField.setText("");
         phoneTxtField.setText("");
         emailTxtField.setText("");
+        clientsTbl.getSelectionModel().clearSelection();
     }
-    
+
     //---------------------- SEARCH CLIENT ----------------------
-    
+
     @FXML
     void clickBtnSearch(ActionEvent event) {
-        
-        String id = searchTxtField.getText();
-        Client client = searchCustomer(id);
+        performSearch();
+    }
+
+    @FXML
+    void pressSearchClient(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            performSearch();
+        }
+    }
+
+    private void performSearch() {
+        String id = searchTxtField.getText().trim();
+        int numericId = parseClientId(id);
+
+        if (numericId <= 0) {
+            new Alert(Alert.AlertType.WARNING, "Please enter a valid Client ID (e.g., C001 or 1)").show();
+            return;
+        }
+
+        Client client = searchCustomer(numericId);
 
         if (client != null) {
+            searchTxtField.setText(String.format("C%03d", numericId));
             nameTxtField.setText(client.getFullName());
             phoneTxtField.setText(client.getPhone());
             emailTxtField.setText(client.getEmail());
             addressTxtField.setText(client.getAddress());
         }
     }
-    
-    @FXML
-    void pressSearchClient(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
 
-            String id = searchTxtField.getText();
-            Client client = searchCustomer(id);
-
-            if (client != null) {
-                nameTxtField.setText(client.getFullName());
-                phoneTxtField.setText(client.getPhone());
-                emailTxtField.setText(client.getEmail());
-                addressTxtField.setText(client.getAddress());
-            }
-        }
-    }
-    
-    private Client searchCustomer(String id) {
-
+    private Client searchCustomer(int numericId) {
         Client client = null;
 
         try {
-
             conn = DBConnection.getInstance().getConnection();
 
-            String query = "SELECT * FROM clients WHERE client_id=?";
+            String query = "SELECT * FROM clients WHERE client_id=? AND is_active = '1'";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            
-            String numId = id.substring(1);
-            pstmt.setString(1, numId);
-            
-            ResultSet result = pstmt.executeQuery();
-            
-            if (result.next()) {
+            pstmt.setInt(1, numericId);
 
+            ResultSet result = pstmt.executeQuery();
+
+            if (result.next()) {
                 String name = result.getString("full_name");
                 String phone = result.getString("phone");
                 String email = result.getString("email");
                 String address = result.getString("address");
 
                 client = new Client();
-                
                 client.setFullName(name);
                 client.setPhone(phone);
                 client.setEmail(email);
                 client.setAddress(address);
-
             } else {
                 new Alert(Alert.AlertType.ERROR, "Client not found!").show();
             }
@@ -463,5 +463,4 @@ public class ClientsController implements Initializable {
 
         return client;
     }
-    
 }

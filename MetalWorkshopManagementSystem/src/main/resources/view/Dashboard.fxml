@@ -1,252 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="dashboardPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.DashboardController">
+<AnchorPane fx:id="dashboardPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #F4F6FA;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.DashboardController">
    <children>
-      <VBox prefHeight="720.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <!-- Top Subtitle -->
+      <Label fx:id="overviewSubtitleLbl" layoutX="24.0" layoutY="12.0" style="-fx-text-fill: #6B7280; -fx-font-size: 13px;" text="Business overview for November 2026" />
+
+      <!-- ===== Row 1: Primary KPI Cards ===== -->
+      <!-- Active Jobs -->
+      <AnchorPane layoutX="24.0" layoutY="42.0" prefHeight="116.0" prefWidth="244.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
          <children>
-            <HBox prefHeight="100.0" prefWidth="1080.0">
-               <children>
-                  <VBox prefHeight="100.0" prefWidth="270.0" style="-fx-border-color: #000035; -fx-border-radius: 10;">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ACTIVE JOBS">
-                           <VBox.margin>
-                              <Insets left="15.0" top="15.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="activeJobsLbl" strokeType="OUTSIDE" strokeWidth="0.0" text="12">
-                           <VBox.margin>
-                              <Insets left="15.0" top="5.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="System Bold" size="25.0" />
-                           </font>
-                        </Text>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="30.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="100.0" prefWidth="270.0" style="-fx-border-color: #000035; -fx-border-radius: 10;">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ENDING QUOTATIONS">
-                           <VBox.margin>
-                              <Insets left="15.0" top="15.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="endingQuotationsLbl" strokeType="OUTSIDE" strokeWidth="0.0" text="12">
-                           <font>
-                              <Font name="System Bold" size="25.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="15.0" top="5.0" />
-                           </VBox.margin>
-                        </Text>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="30.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="100.0" prefWidth="270.0" style="-fx-border-color: #000035; -fx-border-radius: 10;">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="LOW-STOCK ITEMS">
-                           <VBox.margin>
-                              <Insets left="15.0" top="15.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="lowStockItemsLbl" strokeType="OUTSIDE" strokeWidth="0.0" text="12">
-                           <font>
-                              <Font name="System Bold" size="25.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="15.0" top="5.0" />
-                           </VBox.margin>
-                        </Text>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="30.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="100.0" prefWidth="270.0" style="-fx-border-color: #000035; -fx-border-radius: 10;">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="OUTSTANDING BALANCE">
-                           <VBox.margin>
-                              <Insets left="15.0" top="15.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="outstandingBalanceLbl" strokeType="OUTSIDE" strokeWidth="0.0" text="RS. 385,000">
-                           <font>
-                              <Font name="System Bold" size="25.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="15.0" top="5.0" />
-                           </VBox.margin>
-                        </Text>
-                     </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="275.0" prefWidth="1080.0">
-               <children>
-                  <VBox prefHeight="218.0" prefWidth="540.0" style="-fx-border-color: #000035; -fx-border-radius: 10;">
-                     <children>
-                        <StackedBarChart fx:id="revenueVsCostChart" prefHeight="258.0" prefWidth="515.0" title="Monthly Revenue vs Cost (Rs.000)">
-                           <xAxis>
-                              <CategoryAxis side="BOTTOM" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis side="LEFT" />
-                           </yAxis>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </StackedBarChart>
-                     </children>
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="218.0" prefWidth="540.0" style="-fx-border-color: #000035; -fx-border-radius: 10;">
-                     <children>
-                        <PieChart fx:id="jobsByCategoryChart" prefHeight="234.0" prefWidth="516.0" title="Jobs by Service Category" />
-                     </children>
-                     <HBox.margin>
-                        <Insets left="15.0" right="15.0" />
-                     </HBox.margin>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="275.0" prefWidth="1080.0">
-               <children>
-                  <VBox prefHeight="191.0" prefWidth="540.0" style="-fx-border-color: #000035; -fx-border-radius: 10;">
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
-                     <children>
-                        <HBox prefHeight="22.0" prefWidth="388.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Jobs  Due This Week">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" top="5.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="View All">
-                                 <HBox.margin>
-                                    <Insets left="300.0" top="6.0" />
-                                 </HBox.margin>
-                              </Text>
-                           </children>
-                        </HBox>
-                        <TableView fx:id="dueJobsTbl" prefHeight="223.0" prefWidth="494.0" style="-fx-border-color: #000035; -fx-border-radius: 10; -fx-background-radius: 10;">
-                           <columns>
-                              <TableColumn prefWidth="56.800039529800415" text="Job No" />
-                              <TableColumn prefWidth="126.39996719360352" text="Client" />
-                              <TableColumn prefWidth="79.19990539550781" text="Due" />
-                              <TableColumn prefWidth="103.19999694824219" text="Status" />
-                           </columns>
-                           <VBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" />
-                           </VBox.margin>
-                        </TableView>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="540.0" style="-fx-border-color: #000035; -fx-border-radius: 10;">
-                     <HBox.margin>
-                        <Insets left="15.0" right="15.0" />
-                     </HBox.margin>
-                     <children>
-                        <HBox prefHeight="22.0" prefWidth="388.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Low-Stock Alerts">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" top="5.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="View Stock">
-                                 <HBox.margin>
-                                    <Insets left="310.0" top="6.0" />
-                                 </HBox.margin>
-                              </Text>
-                           </children>
-                        </HBox>
-                        <TableView fx:id="lowStockAlertsTbl" prefHeight="240.0" prefWidth="496.0" style="-fx-border-color: #000035; -fx-border-radius: 10; -fx-background-radius: 10;">
-                           <columns>
-                              <TableColumn prefWidth="153.60003352165222" text="Material" />
-                              <TableColumn prefWidth="119.99995422363281" text="On hand" />
-                              <TableColumn prefWidth="115.2000732421875" text="Re-Order" />
-                           </columns>
-                           <VBox.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </VBox.margin>
-                        </TableView>
-                        <HBox prefHeight="100.0" prefWidth="389.0">
-                           <children>
-                              <Button fx:id="newEstimateBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" style="-fx-background-color: #000035; -fx-background-radius: 7;" text="New Estimate" textFill="WHITE">
-                                 <HBox.margin>
-                                    <Insets left="10.0" top="10.0" />
-                                 </HBox.margin>
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="openReportBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" style="-fx-border-color: #000035; -fx-background-color: white; -fx-background-radius: 7; -fx-border-radius: 7;" text="Open Reports">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </HBox>
+            <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="116.0" prefWidth="6.0" style="-fx-background-color: #2E75B6; -fx-background-radius: 10 0 0 10;" />
+            <Label layoutX="20.0" layoutY="18.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px; -fx-font-weight: bold;" text="ACTIVE JOBS" />
+            <Label fx:id="activeJobsLbl" layoutX="20.0" layoutY="48.0" style="-fx-text-fill: #1F3864; -fx-font-size: 28px; -fx-font-weight: bold;" text="0" />
+            <Label fx:id="activeJobsHintLbl" layoutX="20.0" layoutY="86.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px;" text="In cutting, fabrication &amp; painting" />
          </children>
-      </VBox>
+      </AnchorPane>
+
+      <!-- Pending Quotations -->
+      <AnchorPane layoutX="286.0" layoutY="42.0" prefHeight="116.0" prefWidth="244.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="116.0" prefWidth="6.0" style="-fx-background-color: #D9A441; -fx-background-radius: 10 0 0 10;" />
+            <Label layoutX="20.0" layoutY="18.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px; -fx-font-weight: bold;" text="PENDING QUOTATIONS" />
+            <Label fx:id="pendingQuotationsLbl" layoutX="20.0" layoutY="48.0" style="-fx-text-fill: #1F3864; -fx-font-size: 28px; -fx-font-weight: bold;" text="0" />
+            <Label fx:id="pendingQuotationsHintLbl" layoutX="20.0" layoutY="86.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px;" text="Awaiting client approval" />
+         </children>
+      </AnchorPane>
+
+      <!-- Low-Stock Items -->
+      <AnchorPane layoutX="548.0" layoutY="42.0" prefHeight="116.0" prefWidth="244.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="116.0" prefWidth="6.0" style="-fx-background-color: #D64545; -fx-background-radius: 10 0 0 10;" />
+            <Label layoutX="20.0" layoutY="18.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px; -fx-font-weight: bold;" text="LOW-STOCK ITEMS" />
+            <Label fx:id="lowStockLbl" layoutX="20.0" layoutY="48.0" style="-fx-text-fill: #1F3864; -fx-font-size: 28px; -fx-font-weight: bold;" text="0" />
+            <Label fx:id="lowStockHintLbl" layoutX="20.0" layoutY="86.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px;" text="At or below reorder level" />
+         </children>
+      </AnchorPane>
+
+      <!-- Outstanding Balance -->
+      <AnchorPane layoutX="810.0" layoutY="42.0" prefHeight="116.0" prefWidth="246.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="116.0" prefWidth="6.0" style="-fx-background-color: #2E9E5B; -fx-background-radius: 10 0 0 10;" />
+            <Label layoutX="20.0" layoutY="18.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px; -fx-font-weight: bold;" text="OUTSTANDING BALANCE" />
+            <Label fx:id="outstandingBalanceLbl" layoutX="20.0" layoutY="48.0" style="-fx-text-fill: #1F3864; -fx-font-size: 24px; -fx-font-weight: bold;" text="Rs. 0.00" />
+            <Label fx:id="outstandingBalanceHintLbl" layoutX="20.0" layoutY="86.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px;" text="Receivable across active jobs" />
+         </children>
+      </AnchorPane>
+
+      <!-- ===== Row 2: Workshop & Financial Snapshot Cards ===== -->
+      <!-- Workshop Snapshot -->
+      <AnchorPane layoutX="24.0" layoutY="178.0" prefHeight="256.0" prefWidth="506.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <Label layoutX="20.0" layoutY="16.0" style="-fx-text-fill: #1F3864; -fx-font-size: 15px; -fx-font-weight: bold;" text="Workshop Snapshot" />
+            <Label layoutX="20.0" layoutY="38.0" style="-fx-text-fill: #6B7280; -fx-font-size: 12px;" text="Current floor and client pipeline status" />
+
+            <!-- Metric Pill 1 -->
+            <AnchorPane layoutX="20.0" layoutY="68.0" prefHeight="76.0" prefWidth="224.0" style="-fx-background-color: #F9FAFC; -fx-border-color: #E5E7EB; -fx-background-radius: 8; -fx-border-radius: 8;">
+               <children>
+                  <Label layoutX="14.0" layoutY="12.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px; -fx-font-weight: bold;" text="OPEN INQUIRIES" />
+                  <Label fx:id="openInquiriesLbl" layoutX="14.0" layoutY="34.0" style="-fx-text-fill: #1F3864; -fx-font-size: 20px; -fx-font-weight: bold;" text="0" />
+               </children>
+            </AnchorPane>
+
+            <!-- Metric Pill 2 -->
+            <AnchorPane layoutX="262.0" layoutY="68.0" prefHeight="76.0" prefWidth="224.0" style="-fx-background-color: #F9FAFC; -fx-border-color: #E5E7EB; -fx-background-radius: 8; -fx-border-radius: 8;">
+               <children>
+                  <Label layoutX="14.0" layoutY="12.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px; -fx-font-weight: bold;" text="COMPLETED JOBS" />
+                  <Label fx:id="completedJobsLbl" layoutX="14.0" layoutY="34.0" style="-fx-text-fill: #2E9E5B; -fx-font-size: 20px; -fx-font-weight: bold;" text="0" />
+               </children>
+            </AnchorPane>
+
+            <!-- Metric Pill 3 -->
+            <AnchorPane layoutX="20.0" layoutY="158.0" prefHeight="76.0" prefWidth="224.0" style="-fx-background-color: #F9FAFC; -fx-border-color: #E5E7EB; -fx-background-radius: 8; -fx-border-radius: 8;">
+               <children>
+                  <Label layoutX="14.0" layoutY="12.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px; -fx-font-weight: bold;" text="AVAILABLE OFF-CUTS" />
+                  <Label fx:id="availableOffcutsLbl" layoutX="14.0" layoutY="34.0" style="-fx-text-fill: #1F3864; -fx-font-size: 20px; -fx-font-weight: bold;" text="0" />
+               </children>
+            </AnchorPane>
+
+            <!-- Metric Pill 4 -->
+            <AnchorPane layoutX="262.0" layoutY="158.0" prefHeight="76.0" prefWidth="224.0" style="-fx-background-color: #F9FAFC; -fx-border-color: #E5E7EB; -fx-background-radius: 8; -fx-border-radius: 8;">
+               <children>
+                  <Label layoutX="14.0" layoutY="12.0" style="-fx-text-fill: #6B7280; -fx-font-size: 11px; -fx-font-weight: bold;" text="ACTIVE WORKERS" />
+                  <Label fx:id="activeWorkersLbl" layoutX="14.0" layoutY="34.0" style="-fx-text-fill: #1F3864; -fx-font-size: 20px; -fx-font-weight: bold;" text="0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+
+      <!-- Financial & Inventory Summary -->
+      <AnchorPane layoutX="548.0" layoutY="178.0" prefHeight="256.0" prefWidth="508.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <Label layoutX="20.0" layoutY="16.0" style="-fx-text-fill: #1F3864; -fx-font-size: 15px; -fx-font-weight: bold;" text="Financial &amp; Stock Overview" />
+            <Label layoutX="20.0" layoutY="38.0" style="-fx-text-fill: #6B7280; -fx-font-size: 12px;" text="Collected payments, quoted value, and stock valuation" />
+
+            <Label layoutX="20.0" layoutY="74.0" style="-fx-text-fill: #6B7280; -fx-font-size: 13px;" text="Total Quoted Value" />
+            <Label fx:id="totalQuotedLbl" layoutX="260.0" layoutY="74.0" prefWidth="226.0" style="-fx-text-fill: #1F3864; -fx-font-size: 14px; -fx-font-weight: bold; -fx-alignment: CENTER_RIGHT;" text="Rs. 0.00" />
+
+            <Label layoutX="20.0" layoutY="114.0" style="-fx-text-fill: #6B7280; -fx-font-size: 13px;" text="Total Payments Collected" />
+            <Label fx:id="totalCollectedLbl" layoutX="260.0" layoutY="114.0" prefWidth="226.0" style="-fx-text-fill: #2E9E5B; -fx-font-size: 14px; -fx-font-weight: bold; -fx-alignment: CENTER_RIGHT;" text="Rs. 0.00" />
+
+            <Label layoutX="20.0" layoutY="154.0" style="-fx-text-fill: #6B7280; -fx-font-size: 13px;" text="Total Pending Balance" />
+            <Label fx:id="totalPendingLbl" layoutX="260.0" layoutY="154.0" prefWidth="226.0" style="-fx-text-fill: #D64545; -fx-font-size: 14px; -fx-font-weight: bold; -fx-alignment: CENTER_RIGHT;" text="Rs. 0.00" />
+
+            <Label layoutX="20.0" layoutY="194.0" style="-fx-text-fill: #6B7280; -fx-font-size: 13px;" text="Raw Material Stock Value" />
+            <Label fx:id="stockValueLbl" layoutX="260.0" layoutY="194.0" prefWidth="226.0" style="-fx-text-fill: #2E75B6; -fx-font-size: 14px; -fx-font-weight: bold; -fx-alignment: CENTER_RIGHT;" text="Rs. 0.00" />
+         </children>
+      </AnchorPane>
+
+      <!-- ===== Row 3: Quick Actions Card ===== -->
+      <AnchorPane layoutX="24.0" layoutY="454.0" prefHeight="118.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <Label layoutX="20.0" layoutY="16.0" style="-fx-text-fill: #1F3864; -fx-font-size: 15px; -fx-font-weight: bold;" text="Quick Actions" />
+            <Label layoutX="20.0" layoutY="38.0" style="-fx-text-fill: #6B7280; -fx-font-size: 12px;" text="Jump straight into frequent workshop tasks" />
+
+            <Button fx:id="newEstimateBtn" layoutX="20.0" layoutY="64.0" mnemonicParsing="false" onAction="#clickNewEstimate" prefHeight="36.0" prefWidth="156.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="New Estimate" />
+            <Button fx:id="newJobOrderBtn" layoutX="188.0" layoutY="64.0" mnemonicParsing="false" onAction="#clickNewJobOrder" prefHeight="36.0" prefWidth="156.0" style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Job Orders" />
+            <Button fx:id="recordPaymentBtn" layoutX="356.0" layoutY="64.0" mnemonicParsing="false" onAction="#clickRecordPayment" prefHeight="36.0" prefWidth="156.0" style="-fx-background-color: #1F3864; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Record Payment" />
+            <Button fx:id="viewStockBtn" layoutX="524.0" layoutY="64.0" mnemonicParsing="false" onAction="#clickViewStock" prefHeight="36.0" prefWidth="156.0" style="-fx-background-color: white; -fx-text-fill: #1F3864; -fx-font-weight: bold; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-cursor: hand;" text="Material Stock" />
+            <Button fx:id="refreshBtn" layoutX="882.0" layoutY="64.0" mnemonicParsing="false" onAction="#clickRefresh" prefHeight="36.0" prefWidth="130.0" style="-fx-background-color: white; -fx-text-fill: #374151; -fx-font-weight: bold; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-cursor: hand;" text="Refresh" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

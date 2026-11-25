@@ -13,193 +13,126 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="usersPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: black;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.UserController">
+<AnchorPane fx:id="usersPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #F4F6FA;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.UserController">
    <children>
       <VBox prefHeight="720.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="304.0" prefWidth="1050.0" styleClass="divide-box">
+            <Label style="-fx-text-fill: #6B7280;" text="Manage system user accounts and role assignments">
+               <VBox.margin>
+                  <Insets left="24.0" top="12.0" />
+               </VBox.margin>
+            </Label>
+
+            <VBox prefHeight="314.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
                <children>
-                  <Label text="User Details " textFill="WHITE">
+                  <Label style="-fx-text-fill: #1F3864;" text="User Details">
                      <font>
-                        <Font name="Calibri Bold" size="20.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" top="15.0" />
+                        <Insets bottom="8.0" left="16.0" top="12.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox prefHeight="198.0" prefWidth="1045.0">
+                  <HBox prefHeight="194.0" prefWidth="1000.0">
                      <children>
-                        <VBox prefHeight="101.0" prefWidth="520.0">
+                        <VBox prefHeight="194.0" prefWidth="500.0" spacing="10.0">
                            <children>
-                              <VBox prefHeight="63.0" prefWidth="499.0">
+                              <VBox prefHeight="62.0" prefWidth="480.0" spacing="4.0">
                                  <children>
-                                    <Label text="Full Name" textFill="WHITE">
-                                       <font>
-                                          <Font name="Calibri Bold" size="15.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fullNameTxtField" prefHeight="38.0" prefWidth="499.0" styleClass="custom-textfield" />
+                                    <Label style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Full Name" />
+                                    <TextField fx:id="fullNameTxtField" prefHeight="34.0" prefWidth="470.0" promptText="Enter full name" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
                                  </children>
                                  <VBox.margin>
-                                    <Insets left="10.0" right="10.0" />
+                                    <Insets left="16.0" right="10.0" />
                                  </VBox.margin>
                               </VBox>
-                              <HBox prefHeight="63.0" prefWidth="200.0" spacing="10.0">
+                              <VBox prefHeight="62.0" prefWidth="480.0" spacing="4.0">
                                  <children>
-                                    <VBox prefHeight="86.0" prefWidth="499.0">
-                                       <children>
-                                          <Label text="Role Title" textFill="WHITE">
-                                             <font>
-                                                <Font name="Calibri Bold" size="15.0" />
-                                             </font>
-                                          </Label>
-                                          <ComboBox fx:id="roleComboBox" prefHeight="40.0" prefWidth="300.0" styleClass="container-box" />
-                                       </children>
-                                    </VBox>
+                                    <Label style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Role Title" />
+                                    <ComboBox fx:id="roleComboBox" prefHeight="34.0" prefWidth="320.0" promptText="Select role" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
                                  </children>
-                                 <padding>
-                                    <Insets left="10.0" right="10.0" />
-                                 </padding>
-                              </HBox>
+                                 <VBox.margin>
+                                    <Insets left="16.0" right="10.0" />
+                                 </VBox.margin>
+                              </VBox>
                            </children>
                         </VBox>
-                        <VBox prefHeight="101.0" prefWidth="520.0">
+                        <VBox prefHeight="194.0" prefWidth="500.0" spacing="8.0">
                            <children>
-                              <VBox prefHeight="63.0" prefWidth="449.0">
+                              <VBox prefHeight="58.0" prefWidth="480.0" spacing="3.0">
                                  <children>
-                                    <Label text="Username" textFill="WHITE">
-                                       <font>
-                                          <Font name="Calibri Bold" size="15.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="usernameTxtField" prefHeight="40.0" prefWidth="499.0" styleClass="custom-textfield" />
+                                    <Label style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Username" />
+                                    <TextField fx:id="usernameTxtField" prefHeight="32.0" prefWidth="470.0" promptText="Enter username" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
                                  </children>
                                  <VBox.margin>
-                                    <Insets left="10.0" right="10.0" />
+                                    <Insets left="10.0" right="16.0" />
                                  </VBox.margin>
                               </VBox>
-                              <VBox prefHeight="63.0" prefWidth="449.0">
+                              <VBox prefHeight="58.0" prefWidth="480.0" spacing="3.0">
                                  <children>
-                                    <Label text="Password" textFill="WHITE">
-                                       <font>
-                                          <Font name="Calibri Bold" size="15.0" />
-                                       </font>
-                                    </Label>
-                                    <PasswordField fx:id="passwordTxtField" prefHeight="40.0" styleClass="custom-textfield">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </PasswordField>
+                                    <Label style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Password" />
+                                    <PasswordField fx:id="passwordTxtField" prefHeight="32.0" promptText="Minimum 8 characters" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
                                  </children>
                                  <VBox.margin>
-                                    <Insets left="10.0" right="10.0" />
+                                    <Insets left="10.0" right="16.0" />
                                  </VBox.margin>
                               </VBox>
-                              <VBox prefHeight="63.0" prefWidth="449.0">
+                              <VBox prefHeight="58.0" prefWidth="480.0" spacing="3.0">
                                  <children>
-                                    <Label text="Confirm Password" textFill="WHITE">
-                                       <font>
-                                          <Font name="Calibri Bold" size="15.0" />
-                                       </font>
-                                    </Label>
-                                    <PasswordField fx:id="confirmPassTxtField" prefHeight="40.0" styleClass="custom-textfield" />
+                                    <Label style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Confirm Password" />
+                                    <PasswordField fx:id="confirmPassTxtField" prefHeight="32.0" promptText="Re-enter password" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
                                  </children>
                                  <VBox.margin>
-                                    <Insets left="10.0" right="10.0" top="5.0" />
+                                    <Insets left="10.0" right="16.0" />
                                  </VBox.margin>
                               </VBox>
                            </children>
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="1045.0" spacing="20.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="1000.0" spacing="14.0">
                      <children>
-                        <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="40.0" prefWidth="100.0" styleClass="highlight-button" text="Save">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <font>
-                              <Font name="Calibri Bold" size="20.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="updateBtn" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="40.0" prefWidth="100.0" styleClass="highlight-button" text="Update">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <font>
-                              <Font name="Calibri Bold" size="20.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#clickBtnDelete" prefHeight="40.0" prefWidth="100.0" styleClass="highlight-button" text="Delete">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <font>
-                              <Font name="Calibri Bold" size="20.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#clickClearBtn" prefHeight="40.0" prefWidth="150.0" styleClass="nonhighlight-button" text="Clear Form">
-                           <font>
-                              <Font name="Calibri Bold" size="20.0" />
-                           </font>
-                        </Button>
+                        <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="36.0" prefWidth="120.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Save User" />
+                        <Button fx:id="updateBtn" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="36.0" prefWidth="120.0" style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Update User" />
+                        <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#clickBtnDelete" prefHeight="36.0" prefWidth="110.0" style="-fx-background-color: #C0392B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Delete" />
+                        <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#clickClearBtn" prefHeight="36.0" prefWidth="120.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-cursor: hand;" text="Clear Form" />
                      </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
                      <padding>
-                        <Insets left="10.0" />
+                        <Insets left="16.0" />
                      </padding>
                   </HBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  <Insets bottom="12.0" left="24.0" right="24.0" top="8.0" />
                </VBox.margin>
             </VBox>
-            <VBox prefHeight="371.0" prefWidth="1050.0" styleClass="divide-box">
+
+            <VBox prefHeight="342.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="79.0" prefWidth="582.0" spacing="20.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="1000.0" spacing="12.0">
                      <children>
-                        <TextField fx:id="searchTxtField" onKeyPressed="#pressSearchUser" prefHeight="40.0" prefWidth="310.0" styleClass="custom-textfield">
-                           <HBox.margin>
-                              <Insets left="15.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#clickBtnSearch" prefHeight="40.0" prefWidth="100.0" styleClass="highlight-button" text="Search">
-                           <font>
-                              <Font name="Calibri Bold" size="20.0" />
-                           </font>
-                        </Button>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="154.0" styleClass="highlight-button" text="+  NEW">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <font>
-                              <Font name="Calibri Bold" size="20.0" />
-                           </font>
-                        </Button>
+                        <TextField fx:id="searchTxtField" onKeyPressed="#pressSearchUser" prefHeight="34.0" prefWidth="300.0" promptText="User ID, e.g. U001" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
+                        <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#clickBtnSearch" prefHeight="34.0" prefWidth="100.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Search" />
                      </children>
+                     <padding>
+                        <Insets left="16.0" right="16.0" top="10.0" />
+                     </padding>
                   </HBox>
-                  <TableView fx:id="userTbl" prefHeight="251.0" prefWidth="582.0" styleClass="custom-table">
+                  <TableView fx:id="userTbl" prefHeight="264.0" prefWidth="1000.0">
                      <columns>
-                        <TableColumn fx:id="colUserId" prefWidth="135.46662883758546" text="ID" />
-                        <TableColumn fx:id="colUserName" prefWidth="199.20004272460938" text="Username" />
-                        <TableColumn fx:id="colFullName" minWidth="0.0" prefWidth="325.5999450683594" text="Full Name" />
-                        <TableColumn fx:id="colRole" prefWidth="170.6666259765625" text="Role" />
-                        <TableColumn fx:id="colStatus" prefWidth="201.06671142578125" text="Status" />
+                        <TableColumn fx:id="colUserId" prefWidth="120.0" text="ID" />
+                        <TableColumn fx:id="colUserName" prefWidth="190.0" text="Username" />
+                        <TableColumn fx:id="colFullName" prefWidth="310.0" text="Full Name" />
+                        <TableColumn fx:id="colRole" prefWidth="190.0" text="Role" />
+                        <TableColumn fx:id="colStatus" prefWidth="190.0" text="Status" />
                      </columns>
                      <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
+                        <Insets bottom="14.0" left="16.0" right="16.0" top="4.0" />
                      </VBox.margin>
                   </TableView>
-                  <Label text="Showing 4 of 12 records" textFill="WHITE">
-                     <VBox.margin>
-                        <Insets left="15.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
                </children>
                <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" />
+                  <Insets bottom="16.0" left="24.0" right="24.0" />
                </VBox.margin>
             </VBox>
          </children>

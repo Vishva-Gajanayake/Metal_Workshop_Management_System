@@ -9,74 +9,74 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="goodsReceivedPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #F4F6FA;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.GoodsReceivedController">
+<AnchorPane fx:id="goodsReceivedPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #F4F6FA;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.GoodsReceivedController">
    <children>
-      <Label layoutX="25.0" layoutY="16.0" style="-fx-text-fill: #6B7280;" text="Record supplier deliveries; stock updates automatically" />
+      <Label layoutX="24.0" layoutY="12.0" style="-fx-text-fill: #6B7280;" text="Record supplier deliveries; stock updates automatically" />
 
       <!-- ===== Delivery details ===== -->
-      <AnchorPane layoutX="24.0" layoutY="40.0" prefHeight="110.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 8; -fx-border-radius: 8;">
+      <AnchorPane layoutX="24.0" layoutY="38.0" prefHeight="106.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
          <children>
-            <Label layoutX="16.0" layoutY="10.0" style="-fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Delivery Details" />
+            <Label layoutX="16.0" layoutY="10.0" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Delivery Details" />
 
-            <Label layoutX="16.0" layoutY="40.0" text="Supplier" />
-            <ComboBox fx:id="supplierCombo" layoutX="16.0" layoutY="60.0" prefHeight="32.0" prefWidth="260.0" promptText="Select supplier" />
+            <Label layoutX="16.0" layoutY="38.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Supplier" />
+            <ComboBox fx:id="supplierCombo" layoutX="16.0" layoutY="58.0" prefHeight="34.0" prefWidth="260.0" promptText="Select supplier" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
 
-            <Label layoutX="296.0" layoutY="40.0" text="Received Date" />
-            <DatePicker fx:id="receivedDatePicker" layoutX="296.0" layoutY="60.0" prefHeight="32.0" prefWidth="190.0" />
+            <Label layoutX="294.0" layoutY="38.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Received Date" />
+            <DatePicker fx:id="receivedDatePicker" layoutX="294.0" layoutY="58.0" prefHeight="34.0" prefWidth="190.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
 
-            <Label layoutX="506.0" layoutY="40.0" text="Supplier Invoice Ref" />
-            <TextField fx:id="invoiceRefTxtField" layoutX="506.0" layoutY="60.0" prefHeight="32.0" prefWidth="210.0" promptText="e.g. INV-88421" />
+            <Label layoutX="502.0" layoutY="38.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Supplier Invoice Ref" />
+            <TextField fx:id="invoiceRefTxtField" layoutX="502.0" layoutY="58.0" prefHeight="34.0" prefWidth="215.0" promptText="e.g. INV-88421" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
 
-            <Label layoutX="736.0" layoutY="40.0" text="Received By" />
-            <ComboBox fx:id="userCombo" layoutX="736.0" layoutY="61.0" prefHeight="32.0" prefWidth="243.0" promptText="Select user" />
+            <Label layoutX="735.0" layoutY="38.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Received By" />
+            <ComboBox fx:id="userCombo" layoutX="735.0" layoutY="58.0" prefHeight="34.0" prefWidth="281.0" promptText="Select user" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
          </children>
       </AnchorPane>
 
       <!-- ===== Delivery items ===== -->
-      <AnchorPane layoutX="24.0" layoutY="164.0" prefHeight="300.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 8; -fx-border-radius: 8;">
+      <AnchorPane layoutX="24.0" layoutY="156.0" prefHeight="316.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
          <children>
-            <Label layoutX="16.0" layoutY="10.0" style="-fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Delivery Items" />
+            <Label layoutX="16.0" layoutY="10.0" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Delivery Items" />
 
-            <Label layoutX="16.0" layoutY="38.0" text="Material" />
-            <ComboBox fx:id="materialCombo" layoutX="16.0" layoutY="58.0" prefHeight="32.0" prefWidth="280.0" promptText="Select material" />
+            <Label layoutX="16.0" layoutY="38.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Material" />
+            <ComboBox fx:id="materialCombo" layoutX="16.0" layoutY="58.0" prefHeight="34.0" prefWidth="290.0" promptText="Select material" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
 
-            <Label layoutX="316.0" layoutY="38.0" text="Quantity" />
-            <TextField fx:id="quantityTxtField" layoutX="316.0" layoutY="58.0" prefHeight="32.0" prefWidth="120.0" promptText="0" />
+            <Label layoutX="324.0" layoutY="38.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Quantity" />
+            <TextField fx:id="quantityTxtField" layoutX="324.0" layoutY="58.0" prefHeight="34.0" prefWidth="130.0" promptText="0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
 
-            <Label layoutX="456.0" layoutY="38.0" text="Unit Cost (Rs.)" />
-            <TextField fx:id="unitCostTxtField" layoutX="456.0" layoutY="58.0" prefHeight="32.0" prefWidth="140.0" promptText="0.00" />
+            <Label layoutX="472.0" layoutY="38.0" style="-fx-text-fill: #1F3864; -fx-font-weight: bold;" text="Unit Cost (Rs.)" />
+            <TextField fx:id="unitCostTxtField" layoutX="472.0" layoutY="58.0" prefHeight="34.0" prefWidth="150.0" promptText="0.00" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6;" />
 
-            <Button fx:id="addItemBtn" layoutX="660.0" layoutY="58.0" mnemonicParsing="false" onAction="#clickBtnAddItem" prefHeight="32.0" prefWidth="120.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold;" text="+ Add Item" />
-            <Button fx:id="removeItemBtn" layoutX="796.0" layoutY="58.0" mnemonicParsing="false" onAction="#clickBtnRemoveItem" prefHeight="32.0" prefWidth="140.0" style="-fx-background-color: #D64545; -fx-text-fill: white; -fx-font-weight: bold;" text="Remove Selected" />
+            <Button fx:id="addItemBtn" layoutX="640.0" layoutY="58.0" mnemonicParsing="false" onAction="#clickBtnAddItem" prefHeight="34.0" prefWidth="130.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="+ Add Item" />
 
-            <TableView fx:id="itemsTbl" layoutX="16.0" layoutY="104.0" prefHeight="140.0" prefWidth="1000.0">
+            <TableView fx:id="itemsTbl" layoutX="16.0" layoutY="104.0" prefHeight="152.0" prefWidth="1000.0">
                <columns>
-                  <TableColumn fx:id="colItemMaterial" prefWidth="360.0" text="Material" />
-                  <TableColumn fx:id="colItemQty" prefWidth="194.13333129882812" text="Quantity" />
-                  <TableColumn fx:id="colItemUnitCost" prefWidth="256.2667236328125" text="Unit Cost" />
-                  <TableColumn fx:id="colItemLineTotal" prefWidth="189.59991455078125" text="Line Total" />
+                  <TableColumn fx:id="colItemMaterial" prefWidth="295.0" text="Material" />
+                  <TableColumn fx:id="colItemQty" prefWidth="200.0" text="Quantity" />
+                  <TableColumn fx:id="colItemUnitCost" prefWidth="200.0" text="Unit Cost" />
+                  <TableColumn fx:id="colItemLineTotal" prefWidth="210.0" text="Line Total" />
+                  <TableColumn fx:id="removeCol" prefWidth="92.0" text="Remove" />
                </columns>
             </TableView>
 
-            <Label layoutX="16.0" layoutY="258.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Total:" />
-            <Label fx:id="totalLbl" layoutX="70.0" layoutY="258.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Rs. 0.00" />
+            <Label layoutX="16.0" layoutY="270.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Total:" />
+            <Label fx:id="totalLbl" layoutX="72.0" layoutY="270.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2E9E5B;" text="Rs. 0.00" />
 
-            <Button fx:id="saveBtn" layoutX="660.0" layoutY="254.0" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold;" text="Save Delivery" />
-            <Button fx:id="clearBtn" layoutX="824.0" layoutY="254.0" mnemonicParsing="false" onAction="#clickBtnClear" prefHeight="34.0" prefWidth="112.0" text="Clear" />
+            <Button fx:id="saveBtn" layoutX="714.0" layoutY="266.0" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="36.0" prefWidth="176.0" style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;" text="Save Delivery" />
+            <Button fx:id="clearBtn" layoutX="900.0" layoutY="266.0" mnemonicParsing="false" onAction="#clickBtnClear" prefHeight="36.0" prefWidth="116.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold; -fx-border-color: #D9DEE7; -fx-background-radius: 6; -fx-border-radius: 6; -fx-cursor: hand;" text="Clear" />
          </children>
       </AnchorPane>
 
       <!-- ===== Recent deliveries ===== -->
-      <AnchorPane layoutX="24.0" layoutY="478.0" prefHeight="180.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 8; -fx-border-radius: 8;">
+      <AnchorPane layoutX="24.0" layoutY="484.0" prefHeight="182.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 10; -fx-border-radius: 10;">
          <children>
-            <Label layoutX="16.0" layoutY="10.0" style="-fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Recent Deliveries" />
-            <TableView fx:id="historyTbl" layoutX="16.0" layoutY="36.0" prefHeight="132.0" prefWidth="1000.0">
+            <Label layoutX="16.0" layoutY="10.0" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Recent Deliveries" />
+            <TableView fx:id="historyTbl" layoutX="16.0" layoutY="36.0" prefHeight="134.0" prefWidth="1000.0">
                <columns>
-                  <TableColumn fx:id="colGrnId" prefWidth="98.39999008178711" text="GRN" />
-                  <TableColumn fx:id="colGrnDate" prefWidth="150.1333465576172" text="Date" />
-                  <TableColumn fx:id="colGrnSupplier" prefWidth="437.8666687011719" text="Supplier" />
-                  <TableColumn fx:id="colGrnInvoice" prefWidth="152.53338623046875" text="Invoice Ref" />
-                  <TableColumn fx:id="colGrnTotal" prefWidth="163.46661376953125" text="Total" />
+                  <TableColumn fx:id="colGrnId" prefWidth="98.0" text="GRN" />
+                  <TableColumn fx:id="colGrnDate" prefWidth="150.0" text="Date" />
+                  <TableColumn fx:id="colGrnSupplier" prefWidth="438.0" text="Supplier" />
+                  <TableColumn fx:id="colGrnInvoice" prefWidth="150.0" text="Invoice Ref" />
+                  <TableColumn fx:id="colGrnTotal" prefWidth="162.0" text="Total" />
                </columns>
             </TableView>
          </children>

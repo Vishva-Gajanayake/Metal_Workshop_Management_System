@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -28,18 +29,17 @@ import lk.ijse.metalworkshopmanagementsystem.db.DBConnection;
 import lk.ijse.metalworkshopmanagementsystem.model.MaterialStatus;
 import lk.ijse.metalworkshopmanagementsystem.model.MaterialStock;
 import lk.ijse.metalworkshopmanagementsystem.model.MaterialType;
-import lk.ijse.metalworkshopmanagementsystem.model.Role;
 import lk.ijse.metalworkshopmanagementsystem.model.UnitOfMaterial;
 import lk.ijse.metalworkshopmanagementsystem.model.tbl.MaterialStockTbl;
 
-public class MaterialStockController implements Initializable{
+public class MaterialStockController implements Initializable {
 
     @FXML
     private AnchorPane MaterialStockPane;
 
     @FXML
     private TextField codeTxtField;
-    
+
     @FXML
     private TextField nameTxtField;
 
@@ -83,14 +83,17 @@ public class MaterialStockController implements Initializable{
     private TableView<MaterialStockTbl> materialTbl;
 
     @FXML
+    private Label recordCount;
+
+    @FXML
     private Button saveBtn;
-    
+
     @FXML
     private Button updateBtn;
 
     @FXML
     private Button deleteBtn;
-    
+
     @FXML
     private Button clearBtn;
 
@@ -102,22 +105,20 @@ public class MaterialStockController implements Initializable{
 
     @FXML
     private ComboBox<UnitOfMaterial> unitCombo;
-    
-    
-    
+
     Connection conn;
-    
+    private boolean lowStockOnly = false;
+
     //---------------------- REGEX ----------------------
-    
+
     private static final String MATERIAL_CODE_REGEX = "^[A-Z]{2}-\\d{3}$";
     private static final String MATERIAL_NAME_REGEX = "^[A-Za-z0-9 .x\"\\-]{2,100}$";
     private static final String SIZE_SPEC_REGEX = "^[A-Za-z0-9 .x\"\\-]{1,50}$";
     private static final String MONEY_REGEX = "^\\d{1,8}(\\.\\d{1,2})?$";
     private static final String QUANTITY_REGEX = "^\\d{1,6}(\\.\\d{1,3})?$";
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         colCode.setCellValueFactory(new PropertyValueFactory<>("materialCode"));
         colName.setCellValueFactory(new PropertyValueFactory<>("materialName"));
         colType.setCellValueFactory(new PropertyValueFactory<>("materialType"));
@@ -125,39 +126,57 @@ public class MaterialStockController implements Initializable{
         colUnitCost.setCellValueFactory(new PropertyValueFactory<>("unitCost"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("quantityOnHand"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        
+
+        materialTbl.setOnMouseClicked(e -> {
+            MaterialStockTbl row = materialTbl.getSelectionModel().getSelectedItem();
+            if (row != null) {
+                searchTxtField.setText(row.getMaterialCode());
+                fillFields(row.getMaterialCode());
+            }
+        });
+
         loadMaterialTypeCombo();
         loadUnitCombo();
         loadSupplierComboBox();
-        
+
         loadMaterialTable();
     }
-    
+
+    private int parseNumericId(String raw) {
+        if (raw == null || raw.trim().isEmpty()) {
+            return -1;
+        }
+        String firstToken = raw.trim().split("\\s+")[0];
+        String digits = firstToken.replaceAll("\\D+", "");
+        if (digits.isEmpty()) {
+            return -1;
+        }
+        try {
+            return Integer.parseInt(digits);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
     //---------------------- LOAD COMBO BOXES ----------------------
+
     private void loadMaterialTypeCombo() {
-
         typeCombo.setItems(FXCollections.observableArrayList(MaterialType.values()));
-
     }
-    
+
     private void loadUnitCombo() {
-
         unitCombo.setItems(FXCollections.observableArrayList(UnitOfMaterial.values()));
-
     }
-    
-    private void loadSupplierComboBox() {
 
+    private void loadSupplierComboBox() {
         List<String> supplierList = new ArrayList<>();
         ObservableList<String> supplierObList = FXCollections.observableArrayList();
 
         try {
-
             conn = DBConnection.getInstance().getConnection();
 
             String query = "SELECT * FROM suppliers ORDER BY supplier_id ASC";
             Statement stmt = conn.createStatement();
-
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next()) {
@@ -169,6 +188,7 @@ public class MaterialStockController implements Initializable{
             supplierObList.addAll(supplierList);
             supplierCombo.setItems(supplierObList);
 
+            result.close();
             stmt.close();
 
         } catch (SQLException e) {
@@ -176,83 +196,73 @@ public class MaterialStockController implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
+
     @FXML
     void clickBtnSave(ActionEvent event) {
-
         String materialCode = codeTxtField.getText().trim();
         String materialName = nameTxtField.getText().trim();
         MaterialType materialType = typeCombo.getSelectionModel().getSelectedItem();
         UnitOfMaterial unit = unitCombo.getSelectionModel().getSelectedItem();
         String sizeSpec = sizeSpecTxtField.getText().trim();
-        double cost = Double.parseDouble(unitCostTxtField.getText().trim());
-        double qty = Double.parseDouble(qtyTxtfield.getText().trim());
-        double reorderLevel = Double.parseDouble(reorderLevelTxtField.getText().trim());
+        String costText = unitCostTxtField.getText().trim();
+        String qtyText = qtyTxtfield.getText().trim();
+        String reorderText = reorderLevelTxtField.getText().trim();
         String supplier = supplierCombo.getSelectionModel().getSelectedItem();
-        int supId = Integer.parseInt(supplier.substring(1, 4));
-        
-        
-        if (!materialCode.matches(MATERIAL_CODE_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Invalid Material Code").show();
-        } else if(!materialName.matches(MATERIAL_NAME_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Invalid Material Name").show();
-        }else if (materialType == null) {
-            new Alert(Alert.AlertType.ERROR, "Please select a Material Type").show();
-        } else if(unit == null) {
-            new Alert(Alert.AlertType.ERROR, "Please select a Unit").show();
-        }else if (!sizeSpec.matches(SIZE_SPEC_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Invalid Size Specification").show();
-        } else if (!String.valueOf(cost).matches(MONEY_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Invalid Cost").show();
-        } else if (!String.valueOf(qty).matches(QUANTITY_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Passwords not matched").show();
-        } else if (!String.valueOf(reorderLevel).matches(QUANTITY_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Passwords not matched").show();
-        } else {
+        int supId = parseNumericId(supplier);
 
+        if (!materialCode.matches(MATERIAL_CODE_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Material Code (e.g., ST-001)").show();
+        } else if (!materialName.matches(MATERIAL_NAME_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Material Name").show();
+        } else if (materialType == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a Material Type").show();
+        } else if (unit == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a Unit").show();
+        } else if (!sizeSpec.matches(SIZE_SPEC_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Size Specification").show();
+        } else if (costText.isEmpty() || !costText.matches(MONEY_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Cost").show();
+        } else if (qtyText.isEmpty() || !qtyText.matches(QUANTITY_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Quantity").show();
+        } else if (reorderText.isEmpty() || !reorderText.matches(QUANTITY_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Re-Order Level").show();
+        } else if (supplier == null || supId <= 0) {
+            new Alert(Alert.AlertType.ERROR, "Please select a Supplier").show();
+        } else {
             MaterialStock materialModel = new MaterialStock();
-            
             materialModel.setMaterialCode(materialCode);
             materialModel.setMaterialName(materialName);
             materialModel.setMaterialType(materialType);
             materialModel.setSupplierId(supId);
-            materialModel.setQuantityOnHand(qty);
-            materialModel.setReorderLevel(reorderLevel);
+            materialModel.setQuantityOnHand(Double.parseDouble(qtyText));
+            materialModel.setReorderLevel(Double.parseDouble(reorderText));
             materialModel.setSizeSpec(sizeSpec);
-            materialModel.setUnitCost(cost);
+            materialModel.setUnitCost(Double.parseDouble(costText));
             materialModel.setUnitOfMeasure(unit);
             materialModel.setIsActive(true);
 
             addMaterialStock(materialModel);
         }
     }
-    
+
     private void addMaterialStock(MaterialStock materialModel) {
-
         try {
-
             conn = DBConnection.getInstance().getConnection();
 
-            String query = "SELECT "
-                    + "material_code "
-                    + "FROM materials";
+            String checkQuery = "SELECT material_code FROM materials WHERE material_code=?";
+            PreparedStatement checkPstmt = conn.prepareStatement(checkQuery);
+            checkPstmt.setString(1, materialModel.getMaterialCode());
+            ResultSet checkRs = checkPstmt.executeQuery();
 
-            Statement stmt = conn.createStatement();
-            ResultSet result = stmt.executeQuery(query);
-
-            while (result.next()) {
-
-                String userName = result.getString("material_code");
-
-                if (userName.equals(materialModel.getMaterialCode())) {
-
-                    new Alert(Alert.AlertType.INFORMATION,
-                            "Material already existed!").show();
-
-                    cleanMaterialFields();
-                    return;
-                }
+            if (checkRs.next()) {
+                checkRs.close();
+                checkPstmt.close();
+                new Alert(Alert.AlertType.INFORMATION, "Material already exists!").show();
+                cleanMaterialFields();
+                return;
             }
+            checkRs.close();
+            checkPstmt.close();
 
             String queryInsert = "INSERT INTO materials("
                     + "material_code, "
@@ -268,7 +278,6 @@ public class MaterialStockController implements Initializable{
                     + "VALUES(?,?,?,?,?,?,?,?,?,?)";
 
             PreparedStatement pstmt = conn.prepareStatement(queryInsert);
-
             pstmt.setString(1, materialModel.getMaterialCode());
             pstmt.setInt(2, materialModel.getSupplierId());
             pstmt.setString(3, materialModel.getMaterialName());
@@ -278,48 +287,39 @@ public class MaterialStockController implements Initializable{
             pstmt.setDouble(7, materialModel.getUnitCost());
             pstmt.setDouble(8, materialModel.getQuantityOnHand());
             pstmt.setDouble(9, materialModel.getReorderLevel());
-            pstmt.setObject(10, materialModel.isIsActive());
-            
+            pstmt.setBoolean(10, materialModel.isIsActive());
+
             int result1 = pstmt.executeUpdate();
-
-            if (result1 > 0) {
-                new Alert(Alert.AlertType.INFORMATION,
-                        "Material saved successfully!").show();
-                
-                loadMaterialTable();
-                cleanMaterialFields();
-                
-            } else {
-                new Alert(Alert.AlertType.ERROR,
-                        "Something went wrong").show();
-            }
-
             pstmt.close();
 
-            stmt.close();
+            if (result1 > 0) {
+                new Alert(Alert.AlertType.INFORMATION, "Material saved successfully!").show();
+                loadMaterialTable();
+                cleanMaterialFields();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR,
-                    "Something went wrong!").show();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
+
     //---------------------- UPDATE MATERIAL TABLE ----------------------
-    
+
     @FXML
     void clickBtnUpdate(ActionEvent event) {
-
         String materialCode = codeTxtField.getText().trim();
         String materialName = nameTxtField.getText().trim();
         MaterialType materialType = typeCombo.getSelectionModel().getSelectedItem();
         UnitOfMaterial unit = unitCombo.getSelectionModel().getSelectedItem();
         String sizeSpec = sizeSpecTxtField.getText().trim();
-        double cost = Double.parseDouble(unitCostTxtField.getText().trim());
-        double qty = Double.parseDouble(qtyTxtfield.getText().trim());
-        double reorderLevel = Double.parseDouble(reorderLevelTxtField.getText().trim());
+        String costText = unitCostTxtField.getText().trim();
+        String qtyText = qtyTxtfield.getText().trim();
+        String reorderText = reorderLevelTxtField.getText().trim();
         String supplier = supplierCombo.getSelectionModel().getSelectedItem();
-        int supId = Integer.parseInt(supplier.substring(1, 4));
+        int supId = parseNumericId(supplier);
 
         if (!materialCode.matches(MATERIAL_CODE_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Material Code").show();
@@ -331,37 +331,35 @@ public class MaterialStockController implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Please select a Unit").show();
         } else if (!sizeSpec.matches(SIZE_SPEC_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Size Specification").show();
-        } else if (!String.valueOf(cost).matches(MONEY_REGEX)) {
+        } else if (costText.isEmpty() || !costText.matches(MONEY_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Cost").show();
-        } else if (!String.valueOf(qty).matches(QUANTITY_REGEX)) {
+        } else if (qtyText.isEmpty() || !qtyText.matches(QUANTITY_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Quantity").show();
-        } else if (!String.valueOf(reorderLevel).matches(QUANTITY_REGEX)) {
+        } else if (reorderText.isEmpty() || !reorderText.matches(QUANTITY_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Re-Order Level").show();
+        } else if (supplier == null || supId <= 0) {
+            new Alert(Alert.AlertType.ERROR, "Please select a Supplier").show();
         } else {
-
             MaterialStock materialModel = new MaterialStock();
-
             materialModel.setMaterialCode(materialCode);
             materialModel.setMaterialName(materialName);
             materialModel.setMaterialType(materialType);
             materialModel.setSupplierId(supId);
-            materialModel.setQuantityOnHand(qty);
-            materialModel.setReorderLevel(reorderLevel);
+            materialModel.setQuantityOnHand(Double.parseDouble(qtyText));
+            materialModel.setReorderLevel(Double.parseDouble(reorderText));
             materialModel.setSizeSpec(sizeSpec);
-            materialModel.setUnitCost(cost);
+            materialModel.setUnitCost(Double.parseDouble(costText));
             materialModel.setUnitOfMeasure(unit);
 
             updateMaterial(materialModel);
         }
     }
-    
-    private void updateMaterial(MaterialStock materialModel) {
 
+    private void updateMaterial(MaterialStock materialModel) {
         try {
             conn = DBConnection.getInstance().getConnection();
 
             String query = "UPDATE materials SET "
-                    + "material_code=?, "
                     + "supplier_id=?, "
                     + "material_name=?, "
                     + "material_type=?, "
@@ -373,95 +371,82 @@ public class MaterialStockController implements Initializable{
                     + "WHERE material_code=?";
 
             PreparedStatement pstmt = conn.prepareStatement(query);
-
-            pstmt.setString(1, materialModel.getMaterialCode());
-            pstmt.setInt(2, materialModel.getSupplierId());
-            pstmt.setString(3, materialModel.getMaterialName());
-            pstmt.setString(4, materialModel.getMaterialType().name());
-            pstmt.setString(5, materialModel.getSizeSpec());
-            pstmt.setString(6, materialModel.getUnitOfMeasure().name());
-            pstmt.setDouble(7, materialModel.getUnitCost());
-            pstmt.setDouble(8, materialModel.getQuantityOnHand());
-            pstmt.setDouble(9, materialModel.getReorderLevel());
-            pstmt.setString(10, materialModel.getMaterialCode());
+            pstmt.setInt(1, materialModel.getSupplierId());
+            pstmt.setString(2, materialModel.getMaterialName());
+            pstmt.setString(3, materialModel.getMaterialType().name());
+            pstmt.setString(4, materialModel.getSizeSpec());
+            pstmt.setString(5, materialModel.getUnitOfMeasure().name());
+            pstmt.setDouble(6, materialModel.getUnitCost());
+            pstmt.setDouble(7, materialModel.getQuantityOnHand());
+            pstmt.setDouble(8, materialModel.getReorderLevel());
+            pstmt.setString(9, materialModel.getMaterialCode());
 
             int result = pstmt.executeUpdate();
+            pstmt.close();
 
             if (result > 0) {
-
-                new Alert(Alert.AlertType.INFORMATION,
-                        "Material update successfully!").show();
-
+                new Alert(Alert.AlertType.INFORMATION, "Material updated successfully!").show();
                 loadMaterialTable();
                 cleanMaterialFields();
-
             } else {
-                new Alert(Alert.AlertType.ERROR,
-                        "Something went wrong!").show();
+                new Alert(Alert.AlertType.ERROR, "Material not found!").show();
             }
-
-            pstmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Something went wrong!");
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
-    //---------------------- DELETE WORKER ----------------------
-    
+
+    //---------------------- DELETE MATERIAL ----------------------
+
     @FXML
     void clickBtnDelete(ActionEvent event) {
-        
-        deleteMaterial(searchTxtField.getText().trim());
+        String code = searchTxtField.getText().trim();
+        if (code.isEmpty()) {
+            code = codeTxtField.getText().trim();
+        }
+        deleteMaterial(code);
     }
-    
+
     private void deleteMaterial(String materialCode) {
+        if (materialCode == null || materialCode.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please search or select a Material Code").show();
+            return;
+        }
 
         try {
             conn = DBConnection.getInstance().getConnection();
 
-            String query = "UPDATE materials SET "
-                    + "is_active=false "
-                    + "WHERE material_code=?";
-
+            String query = "UPDATE materials SET is_active=false WHERE material_code=?";
             PreparedStatement pstmt = conn.prepareStatement(query);
-
             pstmt.setString(1, materialCode);
 
             int result = pstmt.executeUpdate();
-
-            if (result > 0) {
-
-                new Alert(Alert.AlertType.INFORMATION,
-                        "Material delete successfully!").show();
-
-                loadMaterialTable();
-                cleanMaterialFields();
-
-            } else {
-                new Alert(Alert.AlertType.ERROR,
-                        "Something went wrong!").show();
-            }
-
             pstmt.close();
 
-        } catch (Exception e) {
+            if (result > 0) {
+                new Alert(Alert.AlertType.INFORMATION, "Material deleted successfully!").show();
+                loadMaterialTable();
+                cleanMaterialFields();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Material not found!").show();
+            }
+
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Something went wrong!");
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
+
     //---------------------- CLEAN MATERIAL FORM ----------------------
-    
+
     @FXML
     void clickBtnClear(ActionEvent event) {
-        
         cleanMaterialFields();
     }
-    
-    private void cleanMaterialFields() {
 
+    private void cleanMaterialFields() {
         searchTxtField.setText("");
         codeTxtField.setText("");
         nameTxtField.setText("");
@@ -472,27 +457,36 @@ public class MaterialStockController implements Initializable{
         supplierCombo.setValue(null);
         unitCombo.setValue(null);
         typeCombo.setValue(null);
+        materialTbl.getSelectionModel().clearSelection();
     }
-    
-    //---------------------- LOAD MATERIAL TABLE ----------------------
-    
-    private void loadMaterialTable() {
 
+    @FXML
+    void clickBtnLowStock(ActionEvent event) {
+        lowStockOnly = !lowStockOnly;
+        loadMaterialTable();
+    }
+
+    @FXML
+    void clickBtnSearch(ActionEvent event) {
+        fillFields(searchTxtField.getText().trim());
+    }
+
+    //---------------------- LOAD MATERIAL TABLE ----------------------
+
+    private void loadMaterialTable() {
         List<MaterialStock> materialList = getAllMaterials();
         List<MaterialStockTbl> materialTblList = new ArrayList<>();
 
         for (MaterialStock material : materialList) {
-            
-            MaterialStatus status = null;
-            
-            if (material.getQuantityOnHand() <= material.getReorderLevel()) {
-                status = MaterialStatus.LOW;
-            }else {
-                status = MaterialStatus.OKAY;
+            MaterialStatus status = (material.getQuantityOnHand() <= material.getReorderLevel())
+                    ? MaterialStatus.LOW
+                    : MaterialStatus.OKAY;
+
+            if (lowStockOnly && status != MaterialStatus.LOW) {
+                continue;
             }
 
             MaterialStockTbl materialTbl = new MaterialStockTbl(
-                    
                     material.getMaterialCode(),
                     material.getMaterialName(),
                     material.getMaterialType(),
@@ -501,7 +495,6 @@ public class MaterialStockController implements Initializable{
                     material.getQuantityOnHand(),
                     status
             );
-
             materialTblList.add(materialTbl);
         }
 
@@ -509,47 +502,35 @@ public class MaterialStockController implements Initializable{
                 = FXCollections.observableArrayList(materialTblList);
 
         materialTbl.setItems(obList);
+        if (recordCount != null) {
+            recordCount.setText("Showing " + materialTblList.size() + " of " + materialList.size() + " records");
+        }
     }
-    
-    private List<MaterialStock> getAllMaterials() {
 
-        List<MaterialStock> matereialist = new ArrayList<>();
+    private List<MaterialStock> getAllMaterials() {
+        List<MaterialStock> materialList = new ArrayList<>();
 
         try {
             conn = DBConnection.getInstance().getConnection();
 
-            String query = "SELECT "
-                    + "* "
-                    + "FROM materials "
-                    + "WHERE is_active = '1' "
-                    + "ORDER BY material_id DESC ";
-
+            String query = "SELECT * FROM materials WHERE is_active = 1 ORDER BY material_id DESC";
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next()) {
-
-                String code = result.getString("material_code");
-                String name = result.getString("material_name");
-                String type = result.getString("material_type");
-                String unit = result.getString("unit_of_measure");
-                String cost = result.getString("unit_cost");
-                String qty = result.getString("quantity_on_hand");
-                String reorderLevel = result.getString("reorder_level");
-
                 MaterialStock material = new MaterialStock();
+                material.setMaterialCode(result.getString("material_code"));
+                material.setMaterialName(result.getString("material_name"));
+                material.setMaterialType(toType(result.getString("material_type")));
+                material.setUnitOfMeasure(toUnit(result.getString("unit_of_measure")));
+                material.setUnitCost(result.getDouble("unit_cost"));
+                material.setQuantityOnHand(result.getDouble("quantity_on_hand"));
+                material.setReorderLevel(result.getDouble("reorder_level"));
 
-                material.setMaterialCode(code);
-                material.setMaterialName(name);
-                material.setMaterialType(toType(type));
-                material.setUnitOfMeasure(toUnit(unit));
-                material.setUnitCost(Double.parseDouble(cost));
-                material.setQuantityOnHand(Double.parseDouble(qty));
-                material.setReorderLevel(Double.parseDouble(reorderLevel));
-
-                matereialist.add(material);
+                materialList.add(material);
             }
 
+            result.close();
             stmt.close();
 
         } catch (SQLException e) {
@@ -557,9 +538,9 @@ public class MaterialStockController implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
 
-        return matereialist;
+        return materialList;
     }
-    
+
     private MaterialType toType(String text) {
         try {
             return MaterialType.valueOf(text);
@@ -567,7 +548,7 @@ public class MaterialStockController implements Initializable{
             return null;
         }
     }
-    
+
     private UnitOfMaterial toUnit(String text) {
         try {
             return UnitOfMaterial.valueOf(text);
@@ -575,20 +556,17 @@ public class MaterialStockController implements Initializable{
             return null;
         }
     }
-    
+
     //---------------------- SEARCH MATERIAL ----------------------
 
     @FXML
     void pressSearchMaterial(KeyEvent event) {
-
         if (event.getCode() == KeyCode.ENTER) {
-
             fillFields(searchTxtField.getText().trim());
         }
     }
-    
-    private void fillFields(String code) {
 
+    private void fillFields(String code) {
         MaterialStock materialModel = searchMaterial(code);
 
         if (materialModel != null) {
@@ -603,50 +581,38 @@ public class MaterialStockController implements Initializable{
             supplierCombo.setValue(getSupplierById(materialModel.getSupplierId()));
         }
     }
-    
-    private MaterialStock searchMaterial(String materialCode) {
 
+    private MaterialStock searchMaterial(String materialCode) {
         MaterialStock materialModel = null;
+        if (materialCode == null || materialCode.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please enter a Material Code (e.g., ST-001)").show();
+            return null;
+        }
 
         try {
-
             conn = DBConnection.getInstance().getConnection();
 
             String query = "SELECT * FROM materials WHERE material_code=?";
             PreparedStatement pstmt = conn.prepareStatement(query);
-
             pstmt.setString(1, materialCode);
 
             ResultSet result = pstmt.executeQuery();
-
             if (result.next()) {
-
-                String code = result.getString("material_code");
-                String name = result.getString("material_name");
-                String type = result.getString("material_type");
-                String unit = result.getString("unit_of_measure");
-                String sizeSpec = result.getString("size_spec");
-                double cost = result.getDouble("unit_cost");
-                double qty = result.getDouble("quantity_on_hand");
-                double reorderLevel = result.getDouble("reorder_level");
-                int supId = result.getInt("supplier_id");
-
                 materialModel = new MaterialStock();
-
-                materialModel.setMaterialCode(code);
-                materialModel.setMaterialName(name);
-                materialModel.setMaterialType(toType(type));
-                materialModel.setUnitOfMeasure(toUnit(unit));
-                materialModel.setSizeSpec(sizeSpec);
-                materialModel.setUnitCost(cost);
-                materialModel.setQuantityOnHand(qty);
-                materialModel.setReorderLevel(reorderLevel);
-                materialModel.setSupplierId(supId);
-
+                materialModel.setMaterialCode(result.getString("material_code"));
+                materialModel.setMaterialName(result.getString("material_name"));
+                materialModel.setMaterialType(toType(result.getString("material_type")));
+                materialModel.setUnitOfMeasure(toUnit(result.getString("unit_of_measure")));
+                materialModel.setSizeSpec(result.getString("size_spec"));
+                materialModel.setUnitCost(result.getDouble("unit_cost"));
+                materialModel.setQuantityOnHand(result.getDouble("quantity_on_hand"));
+                materialModel.setReorderLevel(result.getDouble("reorder_level"));
+                materialModel.setSupplierId(result.getInt("supplier_id"));
             } else {
                 new Alert(Alert.AlertType.ERROR, "Material not found!").show();
             }
 
+            result.close();
             pstmt.close();
 
         } catch (SQLException e) {
@@ -656,25 +622,24 @@ public class MaterialStockController implements Initializable{
 
         return materialModel;
     }
-    
-    private String getSupplierById(int supId) {
 
+    private String getSupplierById(int supId) {
         String supplier = null;
 
         try {
-
+            conn = DBConnection.getInstance().getConnection();
             String query = "SELECT * FROM suppliers WHERE supplier_id=?";
             PreparedStatement pstmt = conn.prepareStatement(query);
-
-            pstmt.setString(1, String.valueOf(supId));
+            pstmt.setInt(1, supId);
 
             ResultSet result = pstmt.executeQuery();
-
-            while (result.next()) {
+            if (result.next()) {
                 String id = String.format("S%03d", result.getInt("supplier_id"));
-                String userName = result.getString("supplier_name");
-                supplier = id + "  " + userName;
+                String supName = result.getString("supplier_name");
+                supplier = id + "  " + supName;
             }
+            result.close();
+            pstmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -683,5 +648,4 @@ public class MaterialStockController implements Initializable{
 
         return supplier;
     }
-    
 }

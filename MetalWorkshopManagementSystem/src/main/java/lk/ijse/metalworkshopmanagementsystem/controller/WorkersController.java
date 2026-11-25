@@ -28,17 +28,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.metalworkshopmanagementsystem.db.DBConnection;
 import lk.ijse.metalworkshopmanagementsystem.model.Role;
-import lk.ijse.metalworkshopmanagementsystem.model.User;
 import lk.ijse.metalworkshopmanagementsystem.model.Worker;
 import lk.ijse.metalworkshopmanagementsystem.model.tbl.WorkerTbl;
 
-public class WorkersController implements Initializable{
-    
+public class WorkersController implements Initializable {
+
     Connection conn;
-    
+
     @FXML
     private AnchorPane workersPane;
-    
+
     @FXML
     private TextField dailyWageTxtField;
 
@@ -62,19 +61,19 @@ public class WorkersController implements Initializable{
 
     @FXML
     private Button searchBtn;
-    
+
     @FXML
     private Button updateBtn;
-    
+
     @FXML
     private Button clearBtn;
-    
+
     @FXML
     private Button deleteBtn;
-    
+
     @FXML
     private DatePicker joinDatePicker;
-    
+
     @FXML
     private TableColumn<WorkerTbl, Double> colDailyWage;
 
@@ -89,53 +88,70 @@ public class WorkersController implements Initializable{
 
     @FXML
     private TableColumn<WorkerTbl, String> colWorkerId;
-    
+
     @FXML
     private TableView<WorkerTbl> workerTbl;
-    
+
     //---------------------- REGEX ----------------------
-    
+
     private static final String NAME_REGEX = "^[A-Za-z]+(?:\\s+[A-Za-z]+)*$";
     private static final String PHONE_REGEX = "^0\\d{9}$";
     private static final String MONEY_REGEX = "^\\d{1,8}(\\.\\d{1,2})?$";
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         colWorkerId.setCellValueFactory(new PropertyValueFactory<>("workerId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colDailyWage.setCellValueFactory(new PropertyValueFactory<>("dailyWage"));
 
+        workerTbl.setOnMouseClicked(event -> {
+            WorkerTbl selected = workerTbl.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                searchTxtField.setText(selected.getWorkerId());
+                fillFields(selected.getWorkerId());
+            }
+        });
+
         loadRoleCombo();
         loadUserComboBox();
-        
         loadWorkerTable();
     }
-    
-    //---------------------- LOAD COMBO BOXES ----------------------
-    
-    private void loadRoleCombo() {
 
-        roleComboBox.setItems(FXCollections.observableArrayList(Role.values()));
-
+    private int parseNumericId(String raw) {
+        if (raw == null) {
+            return -1;
+        }
+        String firstToken = raw.trim().split("\\s+")[0];
+        String digits = firstToken.replaceAll("\\D+", "");
+        if (digits.isEmpty()) {
+            return -1;
+        }
+        try {
+            return Integer.parseInt(digits);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
-    
-    private void loadUserComboBox() {
 
+    //---------------------- LOAD COMBO BOXES ----------------------
+
+    private void loadRoleCombo() {
+        roleComboBox.setItems(FXCollections.observableArrayList(Role.values()));
+    }
+
+    private void loadUserComboBox() {
         List<String> userList = new ArrayList<>();
         ObservableList<String> userObList = FXCollections.observableArrayList();
 
         try {
-
             conn = DBConnection.getInstance().getConnection();
 
             String query = "SELECT * FROM users ORDER BY user_id ASC";
             Statement stmt = conn.createStatement();
-
             ResultSet result = stmt.executeQuery(query);
-            
+
             while (result.next()) {
                 String id = String.format("U%03d", result.getInt("user_id"));
                 String userName = result.getString("username");
@@ -145,6 +161,7 @@ public class WorkersController implements Initializable{
             userObList.addAll(userList);
             userComboBox.setItems(userObList);
 
+            result.close();
             stmt.close();
 
         } catch (SQLException e) {
@@ -152,18 +169,19 @@ public class WorkersController implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
+
     //---------------------- SAVE WORKER ----------------------
 
     @FXML
     void clickBtnSave(ActionEvent event) {
-
         String fullName = fullNameTxtField.getText().trim();
         Role roleTtile = roleComboBox.getSelectionModel().getSelectedItem();
         String phone = phoneTxtField.getText().trim();
         String dailyWage = dailyWageTxtField.getText().trim();
-        String userId = userComboBox.getSelectionModel().getSelectedItem();
+        String selectedUser = userComboBox.getSelectionModel().getSelectedItem();
         LocalDate joinedDate = joinDatePicker.getValue();
+
+        int numericUserId = parseNumericId(selectedUser);
 
         if (!fullName.matches(NAME_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Worker Name").show();
@@ -173,14 +191,13 @@ public class WorkersController implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Invalid Phone Number").show();
         } else if (!dailyWage.matches(MONEY_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid labour Rate").show();
-        } else if (userId == null) {
+        } else if (selectedUser == null || numericUserId <= 0) {
             new Alert(Alert.AlertType.ERROR, "Please select a User").show();
-        } else if(joinedDate == null) {
-            new Alert(Alert.AlertType.ERROR, "Please select the Joid Date").show();
-        }else {
-
+        } else if (joinedDate == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select the Join Date").show();
+        } else {
             Worker workerModel = new Worker(
-                    userId.substring(1, 4),
+                    String.valueOf(numericUserId),
                     fullName,
                     roleTtile,
                     phone,
@@ -189,57 +206,40 @@ public class WorkersController implements Initializable{
                     true
             );
 
-            addWorker(workerModel);
+            addWorker(workerModel, numericUserId);
         }
     }
-    
-    private void addWorker(Worker worker) {
-        
+
+    private void addWorker(Worker worker, int numericUserId) {
         try {
-            
-            
             conn = DBConnection.getInstance().getConnection();
 
-            String query = "SELECT "
-                    + "user_id "
-                    + "FROM workers";
+            String query = "SELECT user_id FROM workers WHERE user_id=?";
+            PreparedStatement checkStmt = conn.prepareStatement(query);
+            checkStmt.setInt(1, numericUserId);
+            ResultSet result = checkStmt.executeQuery();
 
-            Statement stmt = conn.createStatement();
-            ResultSet result = stmt.executeQuery(query);
+            if (result.next()) {
+                result.close();
+                checkStmt.close();
 
-            while (result.next()) {
+                String updateQuery = "UPDATE workers SET is_active=true WHERE user_id=?";
+                PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+                updateStmt.setInt(1, numericUserId);
+                int result1 = updateStmt.executeUpdate();
+                updateStmt.close();
 
-                int userId = Integer.parseInt(result.getString("user_id"));
-                
-                if (userId == Integer.parseInt(worker.getUserId())) {
-
-                    String updateQuery = "UPDATE workers SET "
-                            + "is_active=true "
-                            + "WHERE user_id=?";
-
-                    PreparedStatement pstmt = conn.prepareStatement(updateQuery);
-
-                    pstmt.setInt(1, Integer.parseInt(worker.getUserId()));
-
-                    int result1 = pstmt.executeUpdate();
-
-                    if (result1 > 0) {
-
-                        new Alert(Alert.AlertType.INFORMATION,
-                                "Worker already existed!").show();
-
-                        loadWorkerTable();
-                        cleanWorkerFields();
-                        return;
-
-                    } else {
-                        new Alert(Alert.AlertType.ERROR,
-                                "Something went wrong!").show();
-                    }
-
-                    pstmt.close();
+                if (result1 > 0) {
+                    new Alert(Alert.AlertType.INFORMATION, "Worker already existed and was reactivated!").show();
+                    loadWorkerTable();
+                    cleanWorkerFields();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
                 }
+                return;
             }
+            result.close();
+            checkStmt.close();
 
             String queryInsert = "INSERT INTO workers("
                     + "user_id, "
@@ -253,7 +253,7 @@ public class WorkersController implements Initializable{
 
             PreparedStatement pstmt = conn.prepareStatement(queryInsert);
 
-            pstmt.setString(1, worker.getUserId());
+            pstmt.setInt(1, numericUserId);
             pstmt.setString(2, worker.getFullName());
             pstmt.setString(3, worker.getRoleTitle().name());
             pstmt.setString(4, worker.getPhone());
@@ -262,40 +262,40 @@ public class WorkersController implements Initializable{
             pstmt.setObject(7, worker.isIsActive());
 
             int result1 = pstmt.executeUpdate();
-
-            if (result1 > 0) {
-                new Alert(Alert.AlertType.INFORMATION,
-                        "Worker saved successfully!").show();
-                        loadWorkerTable();
-                        cleanWorkerFields();
-            } else {
-                new Alert(Alert.AlertType.ERROR,
-                        "Something went wrong").show();
-            }
-
             pstmt.close();
 
-            stmt.close();
+            if (result1 > 0) {
+                new Alert(Alert.AlertType.INFORMATION, "Worker saved successfully!").show();
+                loadWorkerTable();
+                cleanWorkerFields();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong").show();
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR,
-                    "Something went wrong here!").show();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong here!").show();
         }
     }
-    
+
     //---------------------- UPDATE WORKER TABLE ----------------------
-    
+
     @FXML
     void clickBtnUpdate(ActionEvent event) {
-        
-        int workerId = Integer.parseInt(searchTxtField.getText(1, 4));
+        int workerId = parseNumericId(searchTxtField.getText());
+        if (workerId <= 0) {
+            new Alert(Alert.AlertType.WARNING, "Please search or select a valid Worker ID first!").show();
+            return;
+        }
+
         String fullName = fullNameTxtField.getText().trim();
         Role roleTtile = roleComboBox.getSelectionModel().getSelectedItem();
         String phone = phoneTxtField.getText().trim();
         String dailyWage = dailyWageTxtField.getText().trim();
-        String userId = userComboBox.getSelectionModel().getSelectedItem();
+        String selectedUser = userComboBox.getSelectionModel().getSelectedItem();
         LocalDate joinedDate = joinDatePicker.getValue();
+
+        int numericUserId = parseNumericId(selectedUser);
 
         if (!fullName.matches(NAME_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Worker Name").show();
@@ -305,15 +305,14 @@ public class WorkersController implements Initializable{
             new Alert(Alert.AlertType.ERROR, "Invalid Phone Number").show();
         } else if (!dailyWage.matches(MONEY_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid labour Rate").show();
-        } else if (userId == null) {
+        } else if (selectedUser == null || numericUserId <= 0) {
             new Alert(Alert.AlertType.ERROR, "Please select a User").show();
         } else if (joinedDate == null) {
-            new Alert(Alert.AlertType.ERROR, "Please select the Joid Date").show();
+            new Alert(Alert.AlertType.ERROR, "Please select the Join Date").show();
         } else {
-
             Worker workerModel = new Worker(
                     String.valueOf(workerId),
-                    userId.substring(1, 4),
+                    String.valueOf(numericUserId),
                     fullName,
                     roleTtile,
                     phone,
@@ -322,12 +321,11 @@ public class WorkersController implements Initializable{
                     true
             );
 
-            updateWorker(workerModel);
+            updateWorker(workerModel, workerId, numericUserId);
         }
     }
-    
-    private void updateWorker(Worker workerModel) {
 
+    private void updateWorker(Worker workerModel, int workerId, int numericUserId) {
         try {
             conn = DBConnection.getInstance().getConnection();
 
@@ -342,94 +340,81 @@ public class WorkersController implements Initializable{
 
             PreparedStatement pstmt = conn.prepareStatement(query);
 
-            pstmt.setString(1, workerModel.getUserId());
+            pstmt.setInt(1, numericUserId);
             pstmt.setString(2, workerModel.getFullName());
             pstmt.setString(3, workerModel.getRoleTitle().name());
             pstmt.setString(4, workerModel.getPhone());
             pstmt.setDouble(5, workerModel.getDailyWage());
             pstmt.setObject(6, workerModel.getJoinDate());
-            pstmt.setString(7, workerModel.getWorkerId());
+            pstmt.setInt(7, workerId);
 
             int result = pstmt.executeUpdate();
+            pstmt.close();
 
             if (result > 0) {
-
-                new Alert(Alert.AlertType.INFORMATION,
-                        "Worker update successfully!").show();
-
+                new Alert(Alert.AlertType.INFORMATION, "Worker updated successfully!").show();
                 loadWorkerTable();
                 cleanWorkerFields();
-
             } else {
-                new Alert(Alert.AlertType.ERROR,
-                        "Something went wrong!").show();
+                new Alert(Alert.AlertType.ERROR, "Worker not found or not updated!").show();
             }
-
-            pstmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Something went wrong!");
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
+
     //---------------------- DELETE WORKER ----------------------
-    
+
     @FXML
     void clickBtnDelete(ActionEvent event) {
-
-        deleteWorker(searchTxtField.getText().trim());
+        int workerId = parseNumericId(searchTxtField.getText());
+        if (workerId <= 0) {
+            new Alert(Alert.AlertType.WARNING, "Please search or select a valid Worker ID first!").show();
+            return;
+        }
+        deleteWorker(workerId);
     }
-    
-    private void deleteWorker(String workerId) {
 
+    private void deleteWorker(int workerId) {
         try {
             conn = DBConnection.getInstance().getConnection();
 
-            String query = "UPDATE workers SET "
-                    + "is_active=false "
-                    + "WHERE worker_id=?";
+            String query = "UPDATE workers SET is_active=false WHERE worker_id=?";
 
             PreparedStatement pstmt = conn.prepareStatement(query);
-
-            pstmt.setString(1, workerId.substring(2));
+            pstmt.setInt(1, workerId);
 
             int result = pstmt.executeUpdate();
-
-            if (result > 0) {
-
-                new Alert(Alert.AlertType.INFORMATION,
-                        "Worker delete successfully!").show();
-
-                loadWorkerTable();
-                cleanWorkerFields();
-
-            } else {
-                new Alert(Alert.AlertType.ERROR,
-                        "Something went wrong!").show();
-            }
-
             pstmt.close();
 
-        } catch (Exception e) {
+            if (result > 0) {
+                new Alert(Alert.AlertType.INFORMATION, "Worker deleted successfully!").show();
+                loadWorkerTable();
+                cleanWorkerFields();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Worker not found!").show();
+            }
+
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Something went wrong!");
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
         }
     }
-    
-    //---------------------- LOAD WORKER TABLE ----------------------
-    
-    private void loadWorkerTable() {
 
+    //---------------------- LOAD WORKER TABLE ----------------------
+
+    private void loadWorkerTable() {
         List<Worker> workerList = getAllWorkers();
         List<WorkerTbl> workerTblList = new ArrayList<>();
 
         for (Worker worker : workerList) {
-
+            String roleText = (worker.getRoleTitle() != null) ? worker.getRoleTitle().name() : "";
             WorkerTbl workerTbl = new WorkerTbl(
                     worker.getWorkerId(),
                     worker.getFullName(),
-                    worker.getRoleTitle().toString(),
+                    roleText,
                     worker.getPhone(),
                     worker.getDailyWage()
             );
@@ -442,42 +427,39 @@ public class WorkersController implements Initializable{
 
         workerTbl.setItems(obList);
     }
-    
-    private List<Worker> getAllWorkers() {
 
+    private List<Worker> getAllWorkers() {
         List<Worker> workerList = new ArrayList<>();
 
         try {
             conn = DBConnection.getInstance().getConnection();
 
-            String query = "SELECT "
-                    + "* "
+            String query = "SELECT * "
                     + "FROM workers "
                     + "WHERE is_active = '1' "
-                    + "ORDER BY worker_id DESC ";
+                    + "ORDER BY worker_id DESC";
 
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(query);
 
             while (result.next()) {
-
                 String id = String.format("W%03d", result.getInt("worker_id"));
                 String name = result.getString("full_name");
                 String role = result.getString("role_title");
                 String phone = result.getString("phone");
-                String dailyWage = result.getString("daily_wage");
+                double dailyWage = result.getDouble("daily_wage");
 
                 Worker worker = new Worker();
-
                 worker.setWorkerId(id);
                 worker.setFullName(name);
                 worker.setRoleTitle(toRole(role));
                 worker.setPhone(phone);
-                worker.setDailyWage(Double.parseDouble(dailyWage));
+                worker.setDailyWage(dailyWage);
 
                 workerList.add(worker);
             }
 
+            result.close();
             stmt.close();
 
         } catch (SQLException e) {
@@ -486,9 +468,8 @@ public class WorkersController implements Initializable{
         }
 
         return workerList;
-
     }
-    
+
     private Role toRole(String text) {
         try {
             return Role.valueOf(text);
@@ -496,17 +477,15 @@ public class WorkersController implements Initializable{
             return null;
         }
     }
-    
+
     //---------------------- CLEAN WORKER FORM ----------------------
-    
+
     @FXML
     void clickClearBtn(ActionEvent event) {
-
         cleanWorkerFields();
     }
-    
-    private void cleanWorkerFields() {
 
+    private void cleanWorkerFields() {
         searchTxtField.setText("");
         fullNameTxtField.setText("");
         roleComboBox.setValue(null);
@@ -514,27 +493,33 @@ public class WorkersController implements Initializable{
         dailyWageTxtField.setText("");
         userComboBox.setValue(null);
         joinDatePicker.setValue(null);
+        workerTbl.getSelectionModel().clearSelection();
     }
-    
+
     //---------------------- SEARCH WORKER ----------------------
 
     @FXML
     void clickBtnSearch(ActionEvent event) {
-        
-        fillFields(searchTxtField.getText().trim());
+        performSearch();
     }
 
     @FXML
     void pressSearchWorker(KeyEvent event) {
-        
         if (event.getCode() == KeyCode.ENTER) {
-
-            fillFields(searchTxtField.getText().trim());
+            performSearch();
         }
     }
-    
-    private void fillFields(String id) {
 
+    private void performSearch() {
+        int workerId = parseNumericId(searchTxtField.getText());
+        if (workerId <= 0) {
+            new Alert(Alert.AlertType.WARNING, "Please enter a valid Worker ID (e.g., W001 or 1)").show();
+            return;
+        }
+        fillFields(String.valueOf(workerId));
+    }
+
+    private void fillFields(String id) {
         Worker workerModel = searchWorker(id);
 
         if (workerModel != null) {
@@ -546,45 +531,47 @@ public class WorkersController implements Initializable{
             joinDatePicker.setValue(workerModel.getJoinDate());
         }
     }
-    
-    private Worker searchWorker(String id) {
 
+    private Worker searchWorker(String id) {
         Worker workerModel = null;
+        int numericId = parseNumericId(id);
+
+        if (numericId <= 0) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Worker ID!").show();
+            return null;
+        }
 
         try {
-
             conn = DBConnection.getInstance().getConnection();
 
-            String query = "SELECT * FROM workers WHERE worker_id=?";
+            String query = "SELECT * FROM workers WHERE worker_id=? AND is_active = '1'";
             PreparedStatement pstmt = conn.prepareStatement(query);
-
-            String numId = id.substring(2);
-            pstmt.setString(1, numId);
+            pstmt.setInt(1, numericId);
 
             ResultSet result = pstmt.executeQuery();
 
             if (result.next()) {
-
                 String name = result.getString("full_name");
                 String role = result.getString("role_title");
                 String phone = result.getString("phone");
-                double dailyWage = Double.parseDouble(result.getString("daily_wage"));
-                String user = result.getString("user_id");
+                double dailyWage = result.getDouble("daily_wage");
+                String user = String.valueOf(result.getInt("user_id"));
                 String joinedDate = result.getString("join_date");
 
                 workerModel = new Worker();
-
                 workerModel.setFullName(name);
                 workerModel.setRoleTitle(toRole(role));
                 workerModel.setPhone(phone);
                 workerModel.setDailyWage(dailyWage);
                 workerModel.setUserId(user);
-                workerModel.setJoinDate(LocalDate.parse(joinedDate));
-
+                if (joinedDate != null && !joinedDate.isEmpty()) {
+                    workerModel.setJoinDate(LocalDate.parse(joinedDate));
+                }
             } else {
                 new Alert(Alert.AlertType.ERROR, "Worker not found!").show();
             }
 
+            result.close();
             pstmt.close();
 
         } catch (SQLException e) {
@@ -594,27 +581,33 @@ public class WorkersController implements Initializable{
 
         return workerModel;
     }
-    
-    //---------------------- GET USER NAME ----------------------
-    
-    private String getUserById(String userId) {
 
+    //---------------------- GET USER NAME ----------------------
+
+    private String getUserById(String userId) {
         String user = null;
+        int numericUserId = parseNumericId(userId);
+        if (numericUserId <= 0) {
+            return null;
+        }
 
         try {
+            conn = DBConnection.getInstance().getConnection();
 
             String query = "SELECT * FROM users WHERE user_id=?";
             PreparedStatement pstmt = conn.prepareStatement(query);
-
-            pstmt.setString(1, userId);
+            pstmt.setInt(1, numericUserId);
 
             ResultSet result = pstmt.executeQuery();
 
-            while (result.next()) {
+            if (result.next()) {
                 String id = String.format("U%03d", result.getInt("user_id"));
                 String userName = result.getString("username");
                 user = id + "  " + userName;
             }
+
+            result.close();
+            pstmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -623,5 +616,4 @@ public class WorkersController implements Initializable{
 
         return user;
     }
-    
 }

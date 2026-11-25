@@ -17,7 +17,7 @@ public class MetalWorkshopManagementSystem extends Application{
     
     @Override
     public void start(Stage stage) throws Exception {
-        scene = new Scene(loadFxml("Layout"), 1280, 720);
+        scene = new Scene(loadFxml("Login"), 1280, 720);
         stage.setScene(scene);
         stage.show();
     }

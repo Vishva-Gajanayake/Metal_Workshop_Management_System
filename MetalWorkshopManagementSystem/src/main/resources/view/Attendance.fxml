@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="attendancePane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #F4F6FA;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.metalworkshopmanagementsystem.controller.AttendanceController">
+   <children>
+      <Label layoutX="25.0" layoutY="16.0" style="-fx-text-fill: #6B7280;" text="One record per worker per day" />
+
+      <!-- ===== Delivery items ===== -->
+      <AnchorPane layoutX="23.0" layoutY="41.0" prefHeight="297.0" prefWidth="667.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 8; -fx-border-radius: 8;">
+         <children>
+
+            <Label layoutX="16.0" layoutY="12.0" text="Date" />
+
+            <Button fx:id="loadBtn" layoutX="254.0" layoutY="34.0" mnemonicParsing="false" onAction="#clickBtnLoad" prefHeight="32.0" prefWidth="120.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold; -fx-border-color: #D9DEE7; -fx-border-radius: 7; -fx-background-radius: 7;" text="Load" />
+
+            <TableView fx:id="workerTbl" layoutX="16.0" layoutY="78.0" onMouseClicked="#clickGetWorkerRecord" prefHeight="140.0" prefWidth="637.0">
+               <columns>
+                  <TableColumn fx:id="colWorker" prefWidth="273.5999565124512" text="Worker" />
+                  <TableColumn fx:id="colStatus" prefWidth="207.99993896484375" text="Status" />
+                  <TableColumn fx:id="colOvertime" prefWidth="156.800048828125" text="Overtime (hrs)" />
+               </columns>
+            </TableView>
+
+            <Button fx:id="markPresentBtn" layoutX="16.0" layoutY="236.0" mnemonicParsing="false" onAction="#clickBrnPresent" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: #2E9E5B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7;" text="Mark Present" />
+            <Button fx:id="markAbsentBtn" layoutX="179.0" layoutY="236.0" mnemonicParsing="false" onAction="#clickBtnAbsent" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: #D64545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7;" text="Mark Absent" />
+            <Button fx:id="markHalfdayBtn" layoutX="342.0" layoutY="236.0" mnemonicParsing="false" onAction="#clickBtnHalfDay" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: #E8A317; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7;" text="Half Day" />
+            <Button fx:id="markSaveBtn" layoutX="505.0" layoutY="237.0" mnemonicParsing="false" onAction="#clickBtnSave" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: #2E75B6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7;" text="SAVE" />
+            <DatePicker fx:id="datePicker" layoutX="16.0" layoutY="35.0" prefHeight="30.0" prefWidth="221.0" />
+         </children>
+      </AnchorPane>
+
+      <!-- ===== Recent deliveries ===== -->
+      <AnchorPane layoutX="24.0" layoutY="362.0" prefHeight="326.0" prefWidth="1032.0" style="-fx-background-color: white; -fx-border-color: #D9DEE7; -fx-background-radius: 8; -fx-border-radius: 8;">
+         <children>
+            <Label layoutX="16.0" layoutY="10.0" style="-fx-font-weight: bold; -fx-text-fill: #1F3864;" text="Attendance History" />
+            <TableView fx:id="AttendanceTbl" layoutX="16.0" layoutY="36.0" prefHeight="272.0" prefWidth="1000.0">
+               <columns>
+                  <TableColumn fx:id="colDate" prefWidth="151.73331832885742" text="Date" />
+                  <TableColumn fx:id="colAttendWorker" prefWidth="376.26666259765625" text="Worker" />
+                  <TableColumn fx:id="colAttendStatus" prefWidth="252.0" text="Status" />
+                  <TableColumn fx:id="colAttendOvertime" prefWidth="220.2667236328125" text="Overtime (hrs)" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+
+   </children>
+</AnchorPane>
